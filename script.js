@@ -1,10 +1,10 @@
-// ---- Nav scroll effect ----
+// Nav scroll effect
 const nav = document.getElementById('nav');
 window.addEventListener('scroll', () => {
   nav.classList.toggle('scrolled', window.scrollY > 50);
 });
 
-// ---- Mobile nav toggle ----
+// Mobile nav toggle
 const toggle = document.getElementById('nav-toggle');
 const links = document.getElementById('nav-links');
 
@@ -12,12 +12,11 @@ toggle.addEventListener('click', () => {
   links.classList.toggle('open');
 });
 
-// Close mobile nav on link click
 links.querySelectorAll('a').forEach(a => {
   a.addEventListener('click', () => links.classList.remove('open'));
 });
 
-// ---- Hero entrance animations ----
+// Hero entrance animations
 document.addEventListener('DOMContentLoaded', () => {
   const heroEls = document.querySelectorAll('.hero .animate-in');
   heroEls.forEach(el => {
@@ -26,7 +25,7 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 });
 
-// ---- Scroll-triggered fade-ups ----
+// Scroll-triggered fade-ups
 const observerOptions = {
   threshold: 0.05,
   rootMargin: '0px 0px 0px 0px'
@@ -41,20 +40,19 @@ const observer = new IntersectionObserver((entries) => {
   });
 }, observerOptions);
 
-// Add fade-up to section elements
-document.querySelectorAll('.section-label, .section-headline, .thesis-card, .stat-card, .work-card, .writing-category, .writing-item, .keynote-item, .testimonial-card, .contact-inner').forEach(el => {
+document.querySelectorAll('.section-label, .section-headline, .thesis-card, .thesis-intro, .stat-card, .work-card, .writing-category, .writing-item, .keynote-item, .testimonial-card, .contact-inner, .built-card, .built-intro').forEach(el => {
   el.classList.add('fade-up');
   observer.observe(el);
 });
 
 // Stagger cards within groups
-document.querySelectorAll('.thesis-grid, .stats-scroll, .work-grid, .testimonial-scroll').forEach(grid => {
+document.querySelectorAll('.thesis-grid, .stats-scroll, .work-grid, .testimonial-scroll, .built-grid').forEach(grid => {
   grid.querySelectorAll('.fade-up').forEach((card, i) => {
     card.style.transitionDelay = `${i * 100}ms`;
   });
 });
 
-// ---- Smooth scroll for anchor links ----
+// Smooth scroll for anchor links
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
   anchor.addEventListener('click', (e) => {
     const target = document.querySelector(anchor.getAttribute('href'));
