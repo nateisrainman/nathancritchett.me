@@ -19,10 +19,11 @@
 }
 
 :root {
-  --abyss: #080C18;
-  --abyss-light: #0F1628;
-  --nebula-slate: #1A2240;
-  --nebula-hover: #222A4A;
+  /* More contrast between surface layers */
+  --abyss: #060A14;
+  --abyss-light: #101828;
+  --nebula-slate: #1E2A48;
+  --nebula-hover: #283560;
   --dune: #C4874D;
   --dune-hover: #D49A60;
   --peach: #D4735E;
@@ -30,9 +31,10 @@
   --cyan-dim: rgba(0, 212, 184, 0.08);
   --violet: #6B3FA0;
   --violet-dim: rgba(107, 63, 160, 0.15);
-  --star: #E8E4F0;
-  --star-muted: #8A8FA8;
-  --star-dim: #5A6080;
+  /* Brighter text tiers for legibility */
+  --star: #F0ECF8;
+  --star-muted: #B0B4CC;
+  --star-dim: #8088A8;
   --serif: 'DM Serif Display', Georgia, serif;
   --sans: 'Plus Jakarta Sans', -apple-system, sans-serif;
 }
@@ -72,9 +74,9 @@ a { text-decoration: none; color: inherit; }
 /* Typography */
 .section-label {
   font-family: var(--sans);
-  font-size: 0.75rem;
+  font-size: 0.95rem;
   font-weight: 600;
-  letter-spacing: 0.2em;
+  letter-spacing: 0.18em;
   text-transform: uppercase;
   color: var(--dune);
   margin-bottom: 1rem;
@@ -97,7 +99,7 @@ a { text-decoration: none; color: inherit; }
   padding: 0.85rem 2rem;
   border-radius: 100px;
   font-family: var(--sans);
-  font-size: 0.9rem;
+  font-size: 1rem;
   font-weight: 500;
   transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
   cursor: pointer;
@@ -136,7 +138,7 @@ a { text-decoration: none; color: inherit; }
   border-color: rgba(232, 228, 240, 0.3);
 }
 
-.btn-sm { padding: 0.65rem 1.5rem; font-size: 0.85rem; }
+.btn-sm { padding: 0.65rem 1.5rem; font-size: 0.95rem; }
 .btn-lg { padding: 1.1rem 2.8rem; font-size: 1rem; }
 
 .text-link {
@@ -167,7 +169,7 @@ a { text-decoration: none; color: inherit; }
   background: rgba(8, 12, 24, 0.85);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
-  border-bottom: 1px solid rgba(255,255,255,0.04);
+  border-bottom: 1px solid rgba(255,255,255,0.08);
   padding: 0.8rem 0;
 }
 
@@ -183,7 +185,7 @@ a { text-decoration: none; color: inherit; }
 .nav-name {
   font-family: var(--sans);
   font-weight: 600;
-  font-size: 0.85rem;
+  font-size: 0.95rem;
   letter-spacing: 0.2em;
   color: var(--star);
 }
@@ -195,7 +197,7 @@ a { text-decoration: none; color: inherit; }
 }
 
 .nav-links a {
-  font-size: 0.85rem;
+  font-size: 0.95rem;
   font-weight: 400;
   color: var(--star-muted);
   transition: color 0.3s;
@@ -282,7 +284,7 @@ a { text-decoration: none; color: inherit; }
 }
 
 .hero-label {
-  font-size: 0.8rem;
+  font-size: 0.95rem;
   font-weight: 500;
   letter-spacing: 0.15em;
   color: var(--star-muted);
@@ -368,7 +370,7 @@ a { text-decoration: none; color: inherit; }
 }
 
 .ticker-track span {
-  font-size: 0.75rem;
+  font-size: 0.9rem;
   font-weight: 400;
   letter-spacing: 0.08em;
   color: var(--star-dim);
@@ -433,7 +435,7 @@ a { text-decoration: none; color: inherit; }
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 0.85rem;
+  font-size: 0.95rem;
   color: var(--star-dim);
   letter-spacing: 0.1em;
   text-transform: uppercase;
@@ -498,7 +500,7 @@ a { text-decoration: none; color: inherit; }
   background: var(--abyss-light);
   border-radius: 16px;
   padding: 2.5rem;
-  border: 1px solid rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.08);
   transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
   position: relative;
   overflow: hidden;
@@ -534,7 +536,7 @@ a { text-decoration: none; color: inherit; }
 }
 
 .thesis-card p {
-  font-size: 0.92rem;
+  font-size: 1rem;
   color: var(--star-muted);
   line-height: 1.7;
 }
@@ -571,7 +573,7 @@ a { text-decoration: none; color: inherit; }
   background: var(--nebula-slate);
   border-radius: 20px;
   overflow: hidden;
-  border: 1px solid rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.08);
   transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
@@ -618,7 +620,7 @@ a { text-decoration: none; color: inherit; }
 
 .built-screenshot-placeholder {
   color: var(--star-dim);
-  font-size: 0.8rem;
+  font-size: 0.95rem;
   letter-spacing: 0.05em;
   text-transform: uppercase;
   opacity: 0.3;
@@ -639,14 +641,14 @@ a { text-decoration: none; color: inherit; }
 }
 
 .built-tagline {
-  font-size: 0.9rem;
+  font-size: 1rem;
   color: var(--cyan);
   font-weight: 500;
   margin-bottom: 1rem;
 }
 
 .built-card-content > p {
-  font-size: 0.9rem;
+  font-size: 1rem;
   color: var(--star-muted);
   line-height: 1.7;
   margin-bottom: 1.2rem;
@@ -658,7 +660,7 @@ a { text-decoration: none; color: inherit; }
 }
 
 .built-features li {
-  font-size: 0.82rem;
+  font-size: 0.95rem;
   color: var(--star-muted);
   padding: 0.3rem 0;
   padding-left: 1.2rem;
@@ -682,7 +684,7 @@ a { text-decoration: none; color: inherit; }
 .reach {
   padding: 5rem 2.5rem;
   background: var(--abyss);
-  border-top: 1px solid rgba(255,255,255,0.03);
+  border-top: 1px solid rgba(255,255,255,0.06);
 }
 
 .reach-inner {
@@ -703,7 +705,7 @@ a { text-decoration: none; color: inherit; }
   padding: 2.5rem 2rem;
   display: flex;
   flex-direction: column;
-  border: 1px solid rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.08);
   transition: all 0.4s;
 }
 
@@ -722,14 +724,14 @@ a { text-decoration: none; color: inherit; }
 
 .stat-label {
   font-weight: 600;
-  font-size: 0.85rem;
+  font-size: 0.95rem;
   letter-spacing: 0.02em;
   color: var(--star);
   margin-bottom: 0.75rem;
 }
 
 .stat-desc {
-  font-size: 0.82rem;
+  font-size: 0.95rem;
   color: var(--star-dim);
   line-height: 1.6;
 }
@@ -756,7 +758,7 @@ a { text-decoration: none; color: inherit; }
   background: var(--nebula-slate);
   border-radius: 16px;
   padding: 2.5rem;
-  border: 1px solid rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.08);
   transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
@@ -779,7 +781,7 @@ a { text-decoration: none; color: inherit; }
 }
 
 .work-card p {
-  font-size: 0.9rem;
+  font-size: 1rem;
   color: var(--star-muted);
   line-height: 1.7;
 }
@@ -797,7 +799,7 @@ a { text-decoration: none; color: inherit; }
 
 .writing-category {
   font-family: var(--sans);
-  font-size: 0.75rem;
+  font-size: 0.9rem;
   font-weight: 600;
   letter-spacing: 0.2em;
   text-transform: uppercase;
@@ -817,7 +819,7 @@ a { text-decoration: none; color: inherit; }
   gap: 1.5rem;
   align-items: center;
   padding: 1.2rem 0;
-  border-bottom: 1px solid rgba(255,255,255,0.04);
+  border-bottom: 1px solid rgba(255,255,255,0.08);
   transition: all 0.3s;
 }
 
@@ -832,7 +834,7 @@ a { text-decoration: none; color: inherit; }
 }
 
 .writing-desc {
-  font-size: 0.85rem;
+  font-size: 0.95rem;
   color: var(--star-dim);
   line-height: 1.5;
 }
@@ -850,7 +852,7 @@ a { text-decoration: none; color: inherit; }
 
 .all-articles-note {
   margin-top: 2rem;
-  font-size: 0.85rem;
+  font-size: 0.95rem;
   color: var(--star-dim);
 }
 .all-articles-note a {
@@ -892,7 +894,7 @@ a { text-decoration: none; color: inherit; }
 
 .keynote-item {
   padding: 2rem 0;
-  border-bottom: 1px solid rgba(255,255,255,0.04);
+  border-bottom: 1px solid rgba(255,255,255,0.08);
 }
 
 .keynote-item h3 {
@@ -903,7 +905,7 @@ a { text-decoration: none; color: inherit; }
 }
 
 .keynote-item p {
-  font-size: 0.92rem;
+  font-size: 1rem;
   color: var(--star-muted);
   line-height: 1.7;
   max-width: 700px;
@@ -923,7 +925,7 @@ a { text-decoration: none; color: inherit; }
   background: var(--nebula-slate);
   border-radius: 16px;
   padding: 2.5rem;
-  border: 1px solid rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.08);
   transition: all 0.3s;
 }
 
@@ -952,7 +954,7 @@ a { text-decoration: none; color: inherit; }
 }
 
 .quote-attr {
-  font-size: 0.78rem;
+  font-size: 0.9rem;
   color: var(--star-dim);
   font-weight: 500;
 }
@@ -1014,7 +1016,7 @@ a { text-decoration: none; color: inherit; }
 .footer {
   padding: 2rem 2.5rem;
   background: var(--abyss);
-  border-top: 1px solid rgba(255,255,255,0.03);
+  border-top: 1px solid rgba(255,255,255,0.06);
 }
 
 .footer-inner {
@@ -1027,13 +1029,13 @@ a { text-decoration: none; color: inherit; }
 
 .footer-name {
   font-weight: 600;
-  font-size: 0.8rem;
+  font-size: 0.95rem;
   letter-spacing: 0.15em;
   color: var(--star-dim);
 }
 
 .footer-copy {
-  font-size: 0.75rem;
+  font-size: 0.9rem;
   color: var(--star-dim);
   opacity: 0.5;
 }
