@@ -285,27 +285,31 @@ a { text-decoration: none; color: inherit; }
 
 .hero-label {
   font-size: 0.95rem;
-  font-weight: 500;
+  font-weight: 700;
   letter-spacing: 0.15em;
-  color: var(--star-muted);
+  color: var(--star);
   margin-bottom: 2rem;
+  text-shadow: 0 2px 10px rgba(0,0,0,0.5);
 }
 
 .hero-headline {
   font-family: var(--serif);
   font-size: clamp(2.4rem, 5.5vw, 4.2rem);
   line-height: 1.1;
-  color: var(--star);
+  color: #FFFFFF;
   margin-bottom: 1.5rem;
   letter-spacing: -0.02em;
+  text-shadow: 0 2px 20px rgba(0,0,0,0.6);
 }
 
 .hero-sub {
-  font-size: 1.1rem;
-  color: var(--star-muted);
+  font-size: 1.15rem;
+  font-weight: 600;
+  color: var(--star);
   max-width: 620px;
   margin: 0 auto 2.5rem;
   line-height: 1.7;
+  text-shadow: 0 2px 10px rgba(0,0,0,0.5);
 }
 
 .hero-actions {
