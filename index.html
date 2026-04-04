@@ -44,7 +44,7 @@
 
   <!-- Hero -->
   <header class="hero">
-    <video class="hero-video-bg" autoplay muted loop playsinline>
+    <video class="hero-video-bg" autoplay muted loop playsinline preload="auto" poster="">
       <source src="assets/hero-bg.mp4" type="video/mp4">
     </video>
     <div class="hero-inner">
@@ -204,8 +204,8 @@
         <div class="built-card">
           <div class="built-card-visual">
             <div class="built-badge">Research Library</div>
-            <video class="built-video" autoplay muted loop playsinline>
-              <source src="assets/section-bg.mp4" type="video/mp4">
+            <video class="built-video" muted loop playsinline preload="none" data-lazy-video>
+              <source data-src="assets/section-bg.mp4" type="video/mp4">
             </video>
           </div>
           <div class="built-card-content">
@@ -427,7 +427,7 @@
   <section class="contact" id="contact">
     <div class="contact-inner">
       <p class="section-label">Let's Work Together</p>
-      <h2 class="section-headline">The gap is getting wider every quarter.<br>Let's close it.</h2>
+      <h2 class="section-headline">The gap gets wider every quarter.<br>Let's close it together.</h2>
       <p class="contact-sub">Whether you need a session that rewires how your team thinks about AI, a strategic engagement that audits your cognitive capacity, or a conversation about what's coming next, I'd like to hear from you.</p>
       <div class="contact-actions">
         <a href="mailto:nathan.critch@outlook.com" class="btn btn-primary btn-lg">Get in Touch</a>

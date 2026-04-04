@@ -1340,6 +1340,7 @@ a { text-decoration: none; color: inherit; }
 }
 
 @media (max-width: 768px) {
+  /* Nav */
   .nav-links {
     display: none;
     position: fixed;
@@ -1354,30 +1355,78 @@ a { text-decoration: none; color: inherit; }
   .nav-links.open { display: flex; }
   .nav-links a { font-size: 1.2rem; color: var(--star); }
   .nav-toggle { display: flex; z-index: 101; }
-  .hero { padding: 7rem 1.5rem 3rem; min-height: 90vh; }
-  .hero-headline { font-size: clamp(1.8rem, 7vw, 2.8rem); }
-  .book-inner { grid-template-columns: 200px 1fr; gap: 2rem; }
-  .about { grid-template-columns: 1fr; }
-  .about-photo { min-height: 300px; }
-  .about-content { padding: 3rem 1.5rem; }
+
+  /* Hero */
+  .hero { padding: 6rem 1.25rem 2rem; min-height: 100vh; min-height: 100dvh; }
+  .hero-headline { font-size: clamp(1.6rem, 8vw, 2.4rem); }
+  .hero-label { font-size: 0.8rem; letter-spacing: 0.1em; margin-bottom: 1.5rem; }
+  .hero-sub { font-size: 1rem; margin-bottom: 2rem; }
+  .hero-actions { gap: 0.75rem; }
+  .hero-video-bg { display: none; } /* hide video on mobile for speed */
+
+  /* About */
+  .about { grid-template-columns: 1fr; min-height: auto; }
+  .about-photo { min-height: 400px; max-height: 500px; }
+  .about-content { padding: 2.5rem 1.25rem; }
+  .about .section-headline { font-size: clamp(1.4rem, 6vw, 1.8rem); }
+
+  /* Book */
+  .book { padding: 4rem 1.25rem; }
+  .book-inner { grid-template-columns: 140px 1fr; gap: 1.5rem; }
+  .book-subtitle { font-size: 0.95rem; }
+
+  /* Thesis */
+  .thesis { padding: 4rem 1.25rem; }
   .thesis-grid { grid-template-columns: 1fr; }
-  .stats-scroll { grid-template-columns: 1fr 1fr; }
-  .work-grid { grid-template-columns: 1fr; }
-  .writing-item { grid-template-columns: 1fr; gap: 0.3rem; }
-  .writing-arrow { display: none; }
-  .testimonial-scroll { grid-template-columns: 1fr; }
-  .section-headline { font-size: clamp(1.5rem, 5vw, 2.2rem); }
-  .contact { padding: 5rem 1.5rem; }
-  .footer-inner { flex-direction: column; gap: 0.5rem; text-align: center; }
+  .thesis-intro { font-size: 0.95rem; }
+
+  /* Built */
+  .built { padding: 4rem 1.25rem; }
   .built-card { grid-template-columns: 1fr; }
-  .built-card-visual { min-height: 180px; }
-  .built-card-content { padding: 2rem 1.5rem; }
+  .built-card-visual { min-height: 200px; }
+  .built-card-content { padding: 2rem 1.25rem; }
+  .built-tagline { font-size: 0.85rem; }
+
+  /* Stats */
+  .reach { padding: 3rem 1.25rem; }
+  .stats-scroll { grid-template-columns: 1fr 1fr; gap: 1rem; }
+  .stat-card { padding: 1.5rem 1.25rem; }
+  .stat-number { font-size: 2.5rem; }
+
+  /* Work */
+  .work { padding: 4rem 1.25rem; }
+  .work-grid { grid-template-columns: 1fr; }
+
+  /* Writing */
+  .writing { padding: 4rem 1.25rem; }
+  .writing-item { grid-template-columns: 1fr; gap: 0.2rem; padding: 1rem 0; }
+  .writing-arrow { display: none; }
+  .writing-title { font-size: 1rem; }
+  .writing-desc { font-size: 0.85rem; }
+
+  /* Speaking */
+  .speaking { padding: 4rem 1.25rem; }
+  .keynote-item h3 { font-size: 1.25rem; }
+
+  /* Contact */
+  .contact { padding: 4rem 1.25rem; }
+  .section-headline { font-size: clamp(1.4rem, 5.5vw, 2rem); }
+
+  /* Footer */
+  .footer-inner { flex-direction: column; gap: 0.5rem; text-align: center; }
+
+  /* Spotify */
+  .spotify-label { display: none; }
+  .spotify-toggle { width: 48px; padding: 0; border-radius: 50%; }
+  .spotify-player iframe { width: 280px; }
 }
 
 @media (max-width: 480px) {
   .stats-scroll { grid-template-columns: 1fr; }
   .hero-actions { flex-direction: column; align-items: center; }
   .btn { width: 100%; max-width: 280px; }
+  .book-inner { grid-template-columns: 120px 1fr; gap: 1rem; }
+  .about-photo { min-height: 350px; }
 }
 
 @media (prefers-reduced-motion: reduce) {

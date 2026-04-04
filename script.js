@@ -7,7 +7,7 @@ function createParticles() {
   container.classList.add('particles');
   hero.appendChild(container);
 
-  const count = 30;
+  const count = window.innerWidth < 768 ? 10 : 30;
   for (let i = 0; i < count; i++) {
     const p = document.createElement('div');
     p.classList.add('particle');
@@ -270,6 +270,24 @@ if (spotifyToggle && spotifyPlayer) {
     spotifyToggle.classList.toggle('active');
   });
 }
+
+// ---- Lazy video loading ----
+const videoObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      const video = entry.target;
+      const source = video.querySelector('source[data-src]');
+      if (source) {
+        source.src = source.dataset.src;
+        video.load();
+        video.play();
+      }
+      videoObserver.unobserve(video);
+    }
+  });
+}, { threshold: 0.1 });
+
+document.querySelectorAll('[data-lazy-video]').forEach(v => videoObserver.observe(v));
 
 // ---- Smooth scroll ----
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
