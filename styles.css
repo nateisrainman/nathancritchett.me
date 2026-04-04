@@ -1138,11 +1138,7 @@ a, button { cursor: none; }
   background: radial-gradient(circle, rgba(0, 212, 184, 0.06) 0%, transparent 70%);
 }
 
-/* ---- 3D Card Tilt ---- */
-.thesis-card, .work-card, .built-card, .stat-card {
-  transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-  transform-style: preserve-3d;
-}
+/* ---- Cards ---- */
 
 /* ---- Word Reveal ---- */
 .word-reveal {
