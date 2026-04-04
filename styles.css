@@ -1151,30 +1151,48 @@ a, button { cursor: none; }
 }
 
 .spotify-toggle {
-  width: 48px;
   height: 48px;
-  border-radius: 50%;
+  border-radius: 100px;
   border: 1px solid rgba(255,255,255,0.1);
   background: var(--abyss-light);
   color: #1DB954;
   display: flex;
   align-items: center;
   justify-content: center;
+  gap: 0.6rem;
+  padding: 0 1.2rem;
   cursor: none;
   transition: all 0.3s;
   box-shadow: 0 4px 20px rgba(0,0,0,0.4);
 }
 
+.spotify-label {
+  font-family: var(--sans);
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: var(--star-muted);
+  white-space: nowrap;
+  transition: color 0.3s;
+}
+
 .spotify-toggle:hover {
   background: var(--nebula-slate);
   border-color: rgba(29, 185, 84, 0.3);
-  transform: scale(1.05);
+  transform: scale(1.02);
+}
+
+.spotify-toggle:hover .spotify-label {
+  color: var(--star);
 }
 
 .spotify-toggle.active {
   background: #1DB954;
   color: white;
   border-color: #1DB954;
+}
+
+.spotify-toggle.active .spotify-label {
+  color: rgba(255,255,255,0.9);
 }
 
 .spotify-player {
