@@ -305,6 +305,17 @@ document.querySelectorAll('.stat-number').forEach(el => {
   countObserver.observe(el);
 });
 
+// ---- Spotify player toggle ----
+const spotifyToggle = document.getElementById('spotify-toggle');
+const spotifyPlayer = document.getElementById('spotify-player');
+
+if (spotifyToggle && spotifyPlayer) {
+  spotifyToggle.addEventListener('click', () => {
+    spotifyPlayer.classList.toggle('open');
+    spotifyToggle.classList.toggle('active');
+  });
+}
+
 // ---- Smooth scroll ----
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
   anchor.addEventListener('click', (e) => {

@@ -1138,6 +1138,79 @@ a, button { cursor: none; }
   background: radial-gradient(circle, rgba(0, 212, 184, 0.06) 0%, transparent 70%);
 }
 
+/* ---- Floating Spotify Player ---- */
+.spotify-float {
+  position: fixed;
+  bottom: 1.5rem;
+  right: 1.5rem;
+  z-index: 90;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 0.75rem;
+}
+
+.spotify-toggle {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  border: 1px solid rgba(255,255,255,0.1);
+  background: var(--abyss-light);
+  color: #1DB954;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: none;
+  transition: all 0.3s;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+}
+
+.spotify-toggle:hover {
+  background: var(--nebula-slate);
+  border-color: rgba(29, 185, 84, 0.3);
+  transform: scale(1.05);
+}
+
+.spotify-toggle.active {
+  background: #1DB954;
+  color: white;
+  border-color: #1DB954;
+}
+
+.spotify-player {
+  display: none;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 8px 40px rgba(0,0,0,0.5);
+  border: 1px solid rgba(255,255,255,0.08);
+}
+
+.spotify-player.open {
+  display: block;
+  animation: playerSlideUp 0.3s ease;
+}
+
+@keyframes playerSlideUp {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 480px) {
+  .spotify-float {
+    bottom: 1rem;
+    right: 1rem;
+  }
+  .spotify-player iframe {
+    width: 260px;
+  }
+}
+
 /* ---- Cards ---- */
 
 /* ---- Word Reveal ---- */
