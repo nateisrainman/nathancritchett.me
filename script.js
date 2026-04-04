@@ -36,53 +36,8 @@ function createParticles() {
   }
 }
 
-// ---- Custom Cursor (Arq Orbital) ----
-function createCustomCursor() {
-  if (window.innerWidth < 768) return; // mobile skip
-
-  const cursor = document.createElement('div');
-  cursor.classList.add('orbital-cursor');
-  document.body.appendChild(cursor);
-
-  const glow = document.createElement('div');
-  glow.classList.add('cursor-glow');
-  document.body.appendChild(glow);
-
-  let mouseX = 0, mouseY = 0;
-  let cursorX = 0, cursorY = 0;
-  let glowX = 0, glowY = 0;
-
-  document.addEventListener('mousemove', (e) => {
-    mouseX = e.clientX;
-    mouseY = e.clientY;
-  });
-
-  // Smooth follow with lag
-  function animate() {
-    cursorX += (mouseX - cursorX) * 0.15;
-    cursorY += (mouseY - cursorY) * 0.15;
-    glowX += (mouseX - glowX) * 0.08;
-    glowY += (mouseY - glowY) * 0.08;
-
-    cursor.style.transform = `translate(${cursorX - 12}px, ${cursorY - 12}px)`;
-    glow.style.transform = `translate(${glowX - 60}px, ${glowY - 60}px)`;
-
-    requestAnimationFrame(animate);
-  }
-  animate();
-
-  // Scale up on interactive elements
-  document.querySelectorAll('a, button, .thesis-card, .work-card, .built-card, .testimonial-card, .stat-card, .writing-item').forEach(el => {
-    el.addEventListener('mouseenter', () => {
-      cursor.classList.add('cursor-hover');
-      glow.classList.add('glow-hover');
-    });
-    el.addEventListener('mouseleave', () => {
-      cursor.classList.remove('cursor-hover');
-      glow.classList.remove('glow-hover');
-    });
-  });
-}
+// ---- Custom Cursor (removed) ----
+function createCustomCursor() {}
 
 // ---- 3D Card Tilt (disabled) ----
 function initCardTilt() {}

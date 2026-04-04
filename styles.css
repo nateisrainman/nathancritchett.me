@@ -1063,79 +1063,90 @@ a { text-decoration: none; color: inherit; }
   transform: translateY(0);
 }
 
-/* ---- Custom Cursor (Arq Orbital) ---- */
-body { cursor: none; }
-a, button { cursor: none; }
+/* ---- About Image ---- */
+.about-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center top;
+}
 
-.orbital-cursor {
-  position: fixed;
+/* ---- Book Section ---- */
+.book {
+  padding: 6rem 2.5rem;
+  background: var(--abyss);
+  border-top: 1px solid rgba(255,255,255,0.06);
+}
+
+.book-inner {
+  max-width: 1000px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 300px 1fr;
+  gap: 4rem;
+  align-items: center;
+}
+
+.book-cover {
+  position: relative;
+}
+
+.book-cover img {
+  width: 100%;
+  border-radius: 8px;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.5), 0 0 40px rgba(196, 135, 77, 0.1);
+  transition: transform 0.4s;
+}
+
+.book-cover:hover img {
+  transform: scale(1.02) rotate(-1deg);
+}
+
+.book-content .section-headline {
+  margin-bottom: 0.5rem;
+}
+
+.book-subtitle {
+  font-size: 1.1rem;
+  color: var(--dune);
+  font-weight: 500;
+  margin-bottom: 1.5rem;
+  font-style: italic;
+}
+
+.book-content p {
+  font-size: 1rem;
+  color: var(--star-muted);
+  line-height: 1.75;
+  margin-bottom: 0.75rem;
+}
+
+.book-status {
+  font-size: 1rem;
+  color: var(--cyan);
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  margin-top: 1rem;
+}
+
+/* ---- Built Card Images + Video ---- */
+.built-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  position: absolute;
   top: 0;
   left: 0;
-  width: 24px;
-  height: 24px;
-  pointer-events: none;
-  z-index: 10000;
-  transition: width 0.3s, height 0.3s, opacity 0.3s;
 }
 
-.orbital-cursor::before {
-  content: '';
+.built-video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
   position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 20px;
-  height: 20px;
-  border: 1.5px solid var(--dune);
-  border-radius: 50%;
-  transform: translate(-50%, -50%);
-  transition: all 0.3s;
-}
-
-.orbital-cursor::after {
-  content: '';
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 3px;
-  height: 3px;
-  background: var(--cyan);
-  border-radius: 50%;
-  transform: translate(-50%, -50%);
-  box-shadow: 0 0 6px rgba(0, 212, 184, 0.6);
-  transition: all 0.3s;
-}
-
-.orbital-cursor.cursor-hover::before {
-  width: 40px;
-  height: 40px;
-  border-color: var(--cyan);
-  opacity: 0.5;
-}
-
-.orbital-cursor.cursor-hover::after {
-  width: 5px;
-  height: 5px;
-  background: var(--dune);
-  box-shadow: 0 0 10px rgba(196, 135, 77, 0.6);
-}
-
-.cursor-glow {
-  position: fixed;
   top: 0;
   left: 0;
-  width: 120px;
-  height: 120px;
-  border-radius: 50%;
-  background: radial-gradient(circle, rgba(196, 135, 77, 0.06) 0%, transparent 70%);
-  pointer-events: none;
-  z-index: 9998;
-  transition: width 0.4s, height 0.4s;
-}
-
-.cursor-glow.glow-hover {
-  width: 180px;
-  height: 180px;
-  background: radial-gradient(circle, rgba(0, 212, 184, 0.06) 0%, transparent 70%);
+  opacity: 0.6;
 }
 
 /* ---- Floating Spotify Player ---- */
@@ -1161,7 +1172,7 @@ a, button { cursor: none; }
   justify-content: center;
   gap: 0.6rem;
   padding: 0 1.2rem;
-  cursor: none;
+  cursor: pointer;
   transition: all 0.3s;
   box-shadow: 0 4px 20px rgba(0,0,0,0.4);
 }
@@ -1325,9 +1336,6 @@ a, button { cursor: none; }
 }
 
 @media (max-width: 768px) {
-  body { cursor: auto; }
-  a, button { cursor: pointer; }
-  .orbital-cursor, .cursor-glow { display: none; }
   .nav-links {
     display: none;
     position: fixed;
@@ -1344,6 +1352,7 @@ a, button { cursor: none; }
   .nav-toggle { display: flex; z-index: 101; }
   .hero { padding: 7rem 1.5rem 3rem; min-height: 90vh; }
   .hero-headline { font-size: clamp(1.8rem, 7vw, 2.8rem); }
+  .book-inner { grid-template-columns: 200px 1fr; gap: 2rem; }
   .about { grid-template-columns: 1fr; }
   .about-photo { min-height: 300px; }
   .about-content { padding: 3rem 1.5rem; }
@@ -1373,7 +1382,4 @@ a, button { cursor: none; }
   .ticker-track { animation: none; }
   .hero::before { animation: none; }
   .particle { animation: none; }
-  .orbital-cursor, .cursor-glow { display: none; }
-  body { cursor: auto; }
-  a, button { cursor: pointer; }
 }
