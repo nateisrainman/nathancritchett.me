@@ -206,7 +206,8 @@ const observer = new IntersectionObserver((entries) => {
 document.querySelectorAll(
   '.section-label, .thesis-card, .thesis-intro, ' +
   '.stat-card, .work-card, .writing-category, .writing-item, ' +
-  '.keynote-item, .testimonial-card, .contact-inner, .built-card, .built-intro'
+  '.keynote-item, .testimonial-card, .contact-inner, .built-card, .built-intro, ' +
+  '.services-block, .services-block-title'
 ).forEach(el => {
   el.classList.add('fade-up');
   observer.observe(el);

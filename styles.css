@@ -865,14 +865,14 @@ a { text-decoration: none; color: inherit; }
   text-underline-offset: 2px;
 }
 
-/* ---- Speaking ---- */
-.speaking {
+/* ---- Services (Speaking + Consulting) ---- */
+.services {
   padding: 7rem 2.5rem;
   background: var(--abyss-light);
   position: relative;
 }
 
-.speaking::before {
+.services::before {
   content: '';
   position: absolute;
   top: 0;
@@ -883,29 +883,62 @@ a { text-decoration: none; color: inherit; }
   pointer-events: none;
 }
 
-.speaking-inner {
+.services-inner {
   max-width: 1200px;
   margin: 0 auto;
   position: relative;
   z-index: 1;
 }
 
+.services-block {
+  margin-top: 3rem;
+  padding-bottom: 3rem;
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+}
+
+.services-block:last-of-type {
+  border-bottom: none;
+}
+
+.services-block-title {
+  font-family: var(--serif);
+  font-size: 1.6rem;
+  color: var(--star);
+  margin-bottom: 0.75rem;
+}
+
+.services-block-desc {
+  font-size: 1rem;
+  color: var(--star-muted);
+  line-height: 1.75;
+  max-width: 750px;
+  margin-bottom: 1.5rem;
+}
+
+.services-cta {
+  margin-top: 3rem;
+  text-align: center;
+}
+
 .keynotes-list {
   display: flex;
   flex-direction: column;
-  margin-top: 2rem;
 }
 
 .keynote-item {
-  padding: 2rem 0;
-  border-bottom: 1px solid rgba(255,255,255,0.08);
+  padding: 1.5rem 0;
+  border-bottom: 1px solid rgba(255,255,255,0.06);
 }
 
-.keynote-item h3 {
+.keynote-item:last-child {
+  border-bottom: none;
+}
+
+.keynote-item h4 {
   font-family: var(--serif);
-  font-size: 1.5rem;
-  margin-bottom: 0.5rem;
-  color: var(--star);
+  font-size: 1.25rem;
+  margin-bottom: 0.4rem;
+  color: var(--dune);
 }
 
 .keynote-item p {
