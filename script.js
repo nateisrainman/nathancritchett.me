@@ -207,14 +207,14 @@ document.querySelectorAll(
   '.section-label, .thesis-card, .thesis-intro, ' +
   '.stat-card, .work-card, .writing-category, .writing-item, ' +
   '.keynote-item, .testimonial-card, .contact-inner, .built-card, .built-intro, ' +
-  '.services-block, .services-block-title'
+  '.service-card, .session-topic'
 ).forEach(el => {
   el.classList.add('fade-up');
   observer.observe(el);
 });
 
 // Stagger children
-document.querySelectorAll('.thesis-grid, .stats-scroll, .work-grid, .testimonial-scroll, .built-grid').forEach(grid => {
+document.querySelectorAll('.thesis-grid, .stats-scroll, .work-grid, .testimonial-scroll, .built-grid, .services-grid, .session-topics').forEach(grid => {
   grid.querySelectorAll('.fade-up').forEach((card, i) => {
     card.style.transitionDelay = `${i * 100}ms`;
   });

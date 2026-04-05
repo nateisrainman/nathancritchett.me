@@ -890,29 +890,75 @@ a { text-decoration: none; color: inherit; }
   z-index: 1;
 }
 
-.services-block {
-  margin-top: 3rem;
-  padding-bottom: 3rem;
-  border-bottom: 1px solid rgba(255,255,255,0.06);
+.services-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+  margin-top: 2.5rem;
 }
 
-.services-block:last-of-type {
-  border-bottom: none;
+.service-card {
+  background: var(--nebula-slate);
+  border-radius: 16px;
+  padding: 2.5rem;
+  border: 1px solid rgba(255,255,255,0.08);
+  transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
-.services-block-title {
+.service-card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(255,255,255,0.12);
+  box-shadow: 0 12px 40px rgba(0,0,0,0.3);
+}
+
+.service-card-featured {
+  grid-column: 1 / -1;
+}
+
+.service-card-icon {
+  color: var(--dune);
+  margin-bottom: 1.5rem;
+}
+
+.service-card h3 {
   font-family: var(--serif);
-  font-size: 1.6rem;
+  font-size: 1.4rem;
   color: var(--star);
   margin-bottom: 0.75rem;
 }
 
-.services-block-desc {
+.service-card-desc {
   font-size: 1rem;
   color: var(--star-muted);
   line-height: 1.75;
-  max-width: 750px;
   margin-bottom: 1.5rem;
+}
+
+.session-topics {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+  margin-top: 0.5rem;
+}
+
+.session-topic {
+  padding: 1.5rem;
+  background: rgba(255,255,255,0.03);
+  border-radius: 12px;
+  border: 1px solid rgba(255,255,255,0.06);
+}
+
+.session-topic h4 {
+  font-family: var(--serif);
+  font-size: 1.1rem;
+  color: var(--dune);
+  margin-bottom: 0.5rem;
+}
+
+.session-topic p {
+  font-size: 0.95rem;
+  color: var(--star-muted);
+  line-height: 1.65;
 }
 
 .services-cta {
@@ -920,32 +966,10 @@ a { text-decoration: none; color: inherit; }
   text-align: center;
 }
 
-.keynotes-list {
-  display: flex;
-  flex-direction: column;
-}
-
-.keynote-item {
-  padding: 1.5rem 0;
-  border-bottom: 1px solid rgba(255,255,255,0.06);
-}
-
-.keynote-item:last-child {
-  border-bottom: none;
-}
-
-.keynote-item h4 {
-  font-family: var(--serif);
-  font-size: 1.25rem;
-  margin-bottom: 0.4rem;
-  color: var(--dune);
-}
-
-.keynote-item p {
-  font-size: 1rem;
-  color: var(--star-muted);
-  line-height: 1.7;
-  max-width: 700px;
+@media (max-width: 768px) {
+  .services { padding: 4rem 1.25rem; }
+  .services-grid { grid-template-columns: 1fr; }
+  .session-topics { grid-template-columns: 1fr; }
 }
 
 /* Testimonials */
