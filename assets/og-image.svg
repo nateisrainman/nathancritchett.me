@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="1200" viewBox="0 0 1200 1200">
   <defs>
     <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
       <stop offset="0%" style="stop-color:#060A14"/>
@@ -9,52 +9,52 @@
       <stop offset="0%" style="stop-color:#C4874D"/>
       <stop offset="100%" style="stop-color:#D4735E"/>
     </linearGradient>
-    <radialGradient id="glow1" cx="20%" cy="80%" r="40%">
-      <stop offset="0%" style="stop-color:#6B3FA0;stop-opacity:0.18"/>
+    <radialGradient id="glow1" cx="20%" cy="80%" r="50%">
+      <stop offset="0%" style="stop-color:#6B3FA0;stop-opacity:0.2"/>
       <stop offset="100%" style="stop-color:#6B3FA0;stop-opacity:0"/>
     </radialGradient>
-    <radialGradient id="glow2" cx="80%" cy="20%" r="35%">
-      <stop offset="0%" style="stop-color:#C4874D;stop-opacity:0.12"/>
+    <radialGradient id="glow2" cx="80%" cy="20%" r="45%">
+      <stop offset="0%" style="stop-color:#C4874D;stop-opacity:0.14"/>
       <stop offset="100%" style="stop-color:#C4874D;stop-opacity:0"/>
     </radialGradient>
-    <radialGradient id="centerGlow" cx="50%" cy="50%" r="35%">
-      <stop offset="0%" style="stop-color:#00D4B8;stop-opacity:0.05"/>
+    <radialGradient id="centerGlow" cx="50%" cy="50%" r="40%">
+      <stop offset="0%" style="stop-color:#00D4B8;stop-opacity:0.06"/>
       <stop offset="100%" style="stop-color:#00D4B8;stop-opacity:0"/>
     </radialGradient>
   </defs>
 
-  <!-- Background -->
-  <rect width="1200" height="630" fill="url(#bg)"/>
-  <rect width="1200" height="630" fill="url(#glow1)"/>
-  <rect width="1200" height="630" fill="url(#glow2)"/>
-  <rect width="1200" height="630" fill="url(#centerGlow)"/>
+  <rect width="1200" height="1200" fill="url(#bg)"/>
+  <rect width="1200" height="1200" fill="url(#glow1)"/>
+  <rect width="1200" height="1200" fill="url(#glow2)"/>
+  <rect width="1200" height="1200" fill="url(#centerGlow)"/>
 
   <!-- Particles -->
-  <circle cx="200" cy="100" r="2" fill="#00D4B8" opacity="0.5"/>
-  <circle cx="1000" cy="80" r="1.5" fill="#C4874D" opacity="0.5"/>
-  <circle cx="350" cy="540" r="1.5" fill="#00D4B8" opacity="0.4"/>
-  <circle cx="1050" cy="500" r="2" fill="#C4874D" opacity="0.4"/>
-  <circle cx="850" cy="120" r="1" fill="#00D4B8" opacity="0.6"/>
-  <circle cx="280" cy="320" r="1.5" fill="#C4874D" opacity="0.4"/>
-  <circle cx="950" cy="380" r="1" fill="#00D4B8" opacity="0.5"/>
-  <circle cx="180" cy="450" r="1" fill="#C4874D" opacity="0.4"/>
-
-  <!-- Center "safe zone" — everything sits in a 720x630 center column safe for square crops -->
+  <circle cx="200" cy="180" r="3" fill="#00D4B8" opacity="0.5"/>
+  <circle cx="1000" cy="160" r="2" fill="#C4874D" opacity="0.5"/>
+  <circle cx="350" cy="1040" r="2" fill="#00D4B8" opacity="0.4"/>
+  <circle cx="1050" cy="1000" r="3" fill="#C4874D" opacity="0.4"/>
+  <circle cx="850" cy="220" r="1.5" fill="#00D4B8" opacity="0.6"/>
+  <circle cx="280" cy="600" r="2" fill="#C4874D" opacity="0.4"/>
+  <circle cx="950" cy="700" r="1.5" fill="#00D4B8" opacity="0.5"/>
+  <circle cx="180" cy="850" r="1.5" fill="#C4874D" opacity="0.4"/>
+  <circle cx="600" cy="120" r="2" fill="#00D4B8" opacity="0.4"/>
+  <circle cx="600" cy="1080" r="2" fill="#C4874D" opacity="0.4"/>
 
   <!-- Top label -->
-  <text x="600" y="180" text-anchor="middle" font-family="Helvetica, Arial, sans-serif" font-size="18" font-weight="700" letter-spacing="3" fill="#C4874D">NATHAN CRITCHETT</text>
+  <text x="600" y="380" text-anchor="middle" font-family="Helvetica, Arial, sans-serif" font-size="22" font-weight="700" letter-spacing="4" fill="#C4874D">NATHAN CRITCHETT</text>
 
   <!-- Accent bar -->
-  <rect x="540" y="200" width="120" height="2" rx="1" fill="url(#gold)" opacity="0.6"/>
+  <rect x="525" y="410" width="150" height="3" rx="1.5" fill="url(#gold)" opacity="0.7"/>
 
-  <!-- Headline (compact, fits in square) -->
-  <text x="600" y="290" text-anchor="middle" font-family="Georgia, serif" font-size="56" font-weight="700" fill="#F0ECF8">Close the gap</text>
-  <text x="600" y="355" text-anchor="middle" font-family="Georgia, serif" font-size="56" font-weight="700" fill="#F0ECF8">between AI and</text>
-  <text x="600" y="420" text-anchor="middle" font-family="Georgia, serif" font-size="56" font-weight="700" fill="#F0ECF8">the humans using it.</text>
+  <!-- Headline -->
+  <text x="600" y="510" text-anchor="middle" font-family="Georgia, serif" font-size="64" font-weight="700" fill="#F0ECF8">Close the gap</text>
+  <text x="600" y="590" text-anchor="middle" font-family="Georgia, serif" font-size="64" font-weight="700" fill="#F0ECF8">between AI</text>
+  <text x="600" y="670" text-anchor="middle" font-family="Georgia, serif" font-size="64" font-weight="700" fill="#F0ECF8">and the humans</text>
+  <text x="600" y="750" text-anchor="middle" font-family="Georgia, serif" font-size="64" font-weight="700" fill="#F0ECF8">using it.</text>
 
   <!-- Tagline -->
-  <text x="600" y="490" text-anchor="middle" font-family="Helvetica, Arial, sans-serif" font-size="16" font-weight="500" letter-spacing="3" fill="#8088A8">COGNITIVE STRATEGY · SPEAKING · PLATFORMS</text>
+  <text x="600" y="850" text-anchor="middle" font-family="Helvetica, Arial, sans-serif" font-size="20" font-weight="500" letter-spacing="3" fill="#8088A8">COGNITIVE STRATEGY  ·  SPEAKING  ·  PLATFORMS</text>
 
   <!-- URL -->
-  <text x="600" y="540" text-anchor="middle" font-family="Helvetica, Arial, sans-serif" font-size="13" font-weight="400" fill="#5A6080">nathancritchett.me</text>
+  <text x="600" y="900" text-anchor="middle" font-family="Helvetica, Arial, sans-serif" font-size="16" font-weight="400" fill="#5A6080">nathancritchett.me</text>
 </svg>
