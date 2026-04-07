@@ -10,39 +10,51 @@
       <stop offset="100%" style="stop-color:#D4735E"/>
     </linearGradient>
     <radialGradient id="glow1" cx="20%" cy="80%" r="40%">
-      <stop offset="0%" style="stop-color:#6B3FA0;stop-opacity:0.15"/>
+      <stop offset="0%" style="stop-color:#6B3FA0;stop-opacity:0.18"/>
       <stop offset="100%" style="stop-color:#6B3FA0;stop-opacity:0"/>
     </radialGradient>
     <radialGradient id="glow2" cx="80%" cy="20%" r="35%">
-      <stop offset="0%" style="stop-color:#C4874D;stop-opacity:0.1"/>
+      <stop offset="0%" style="stop-color:#C4874D;stop-opacity:0.12"/>
       <stop offset="100%" style="stop-color:#C4874D;stop-opacity:0"/>
     </radialGradient>
-    <radialGradient id="glow3" cx="50%" cy="50%" r="50%">
-      <stop offset="0%" style="stop-color:#00D4B8;stop-opacity:0.04"/>
+    <radialGradient id="centerGlow" cx="50%" cy="50%" r="35%">
+      <stop offset="0%" style="stop-color:#00D4B8;stop-opacity:0.05"/>
       <stop offset="100%" style="stop-color:#00D4B8;stop-opacity:0"/>
     </radialGradient>
   </defs>
+
   <!-- Background -->
   <rect width="1200" height="630" fill="url(#bg)"/>
   <rect width="1200" height="630" fill="url(#glow1)"/>
   <rect width="1200" height="630" fill="url(#glow2)"/>
-  <rect width="1200" height="630" fill="url(#glow3)"/>
-  <!-- Subtle particles -->
-  <circle cx="150" cy="120" r="2" fill="#00D4B8" opacity="0.4"/>
-  <circle cx="980" cy="80" r="1.5" fill="#C4874D" opacity="0.5"/>
-  <circle cx="400" cy="500" r="1.5" fill="#00D4B8" opacity="0.3"/>
-  <circle cx="1050" cy="450" r="2" fill="#C4874D" opacity="0.4"/>
-  <circle cx="700" cy="100" r="1" fill="#00D4B8" opacity="0.5"/>
-  <circle cx="250" cy="350" r="1.5" fill="#C4874D" opacity="0.3"/>
-  <!-- Label -->
-  <text x="600" y="200" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif" font-size="16" font-weight="600" letter-spacing="4" fill="#C4874D">COGNITIVE STRATEGY / SPEAKING / PLATFORM DEVELOPMENT</text>
-  <!-- Headline -->
-  <text x="600" y="300" text-anchor="middle" font-family="Georgia, serif" font-size="52" font-weight="700" fill="#F0ECF8">Close the gap between AI</text>
-  <text x="600" y="365" text-anchor="middle" font-family="Georgia, serif" font-size="52" font-weight="700" fill="#F0ECF8">and the humans using it.</text>
-  <!-- Name -->
-  <text x="600" y="470" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif" font-size="18" font-weight="600" letter-spacing="6" fill="#8088A8">NATHAN CRITCHETT</text>
+  <rect width="1200" height="630" fill="url(#centerGlow)"/>
+
+  <!-- Particles -->
+  <circle cx="200" cy="100" r="2" fill="#00D4B8" opacity="0.5"/>
+  <circle cx="1000" cy="80" r="1.5" fill="#C4874D" opacity="0.5"/>
+  <circle cx="350" cy="540" r="1.5" fill="#00D4B8" opacity="0.4"/>
+  <circle cx="1050" cy="500" r="2" fill="#C4874D" opacity="0.4"/>
+  <circle cx="850" cy="120" r="1" fill="#00D4B8" opacity="0.6"/>
+  <circle cx="280" cy="320" r="1.5" fill="#C4874D" opacity="0.4"/>
+  <circle cx="950" cy="380" r="1" fill="#00D4B8" opacity="0.5"/>
+  <circle cx="180" cy="450" r="1" fill="#C4874D" opacity="0.4"/>
+
+  <!-- Center "safe zone" — everything sits in a 720x630 center column safe for square crops -->
+
+  <!-- Top label -->
+  <text x="600" y="180" text-anchor="middle" font-family="Helvetica, Arial, sans-serif" font-size="18" font-weight="700" letter-spacing="3" fill="#C4874D">NATHAN CRITCHETT</text>
+
+  <!-- Accent bar -->
+  <rect x="540" y="200" width="120" height="2" rx="1" fill="url(#gold)" opacity="0.6"/>
+
+  <!-- Headline (compact, fits in square) -->
+  <text x="600" y="290" text-anchor="middle" font-family="Georgia, serif" font-size="56" font-weight="700" fill="#F0ECF8">Close the gap</text>
+  <text x="600" y="355" text-anchor="middle" font-family="Georgia, serif" font-size="56" font-weight="700" fill="#F0ECF8">between AI and</text>
+  <text x="600" y="420" text-anchor="middle" font-family="Georgia, serif" font-size="56" font-weight="700" fill="#F0ECF8">the humans using it.</text>
+
+  <!-- Tagline -->
+  <text x="600" y="490" text-anchor="middle" font-family="Helvetica, Arial, sans-serif" font-size="16" font-weight="500" letter-spacing="3" fill="#8088A8">COGNITIVE STRATEGY · SPEAKING · PLATFORMS</text>
+
   <!-- URL -->
-  <text x="600" y="510" text-anchor="middle" font-family="system-ui, -apple-system, sans-serif" font-size="14" fill="#8088A8" opacity="0.6">nathancritchett.me</text>
-  <!-- Bottom accent line -->
-  <rect x="500" y="560" width="200" height="2" rx="1" fill="url(#gold)" opacity="0.5"/>
+  <text x="600" y="540" text-anchor="middle" font-family="Helvetica, Arial, sans-serif" font-size="13" font-weight="400" fill="#5A6080">nathancritchett.me</text>
 </svg>
