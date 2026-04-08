@@ -328,7 +328,120 @@
   font-size: 1.1rem;
   line-height: 1.7;
   color: var(--star-muted);
+  margin-bottom: 3rem;
+}
+
+/* Value Stack */
+.value-stack {
+  background: var(--nebula-slate);
+  border-radius: 20px;
+  border: 1px solid rgba(196, 135, 77, 0.25);
+  padding: 2.5rem;
   margin-bottom: 2.5rem;
+  text-align: left;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4), 0 0 60px rgba(196, 135, 77, 0.05);
+}
+
+.stack-header {
+  margin-bottom: 1.5rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  text-align: center;
+}
+
+.stack-label {
+  font-family: var(--sans);
+  font-size: 0.95rem;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--dune);
+  margin: 0;
+}
+
+.stack-item {
+  display: grid;
+  grid-template-columns: 50px 1fr auto;
+  gap: 1.25rem;
+  align-items: start;
+  padding: 1.5rem 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.stack-item:last-of-type {
+  border-bottom: none;
+}
+
+.stack-num {
+  font-family: var(--serif);
+  font-size: 1.75rem;
+  background: linear-gradient(135deg, var(--dune), var(--peach));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  line-height: 1;
+  padding-top: 0.25rem;
+}
+
+.stack-content h3 {
+  font-family: var(--serif);
+  font-size: 1.25rem;
+  color: var(--star);
+  margin-bottom: 0.5rem;
+}
+
+.stack-content p {
+  font-size: 0.95rem;
+  line-height: 1.65;
+  color: var(--star-muted);
+  margin: 0;
+}
+
+.stack-value {
+  font-family: var(--serif);
+  font-size: 1.4rem;
+  color: var(--cyan);
+  font-weight: 700;
+  white-space: nowrap;
+  padding-top: 0.25rem;
+}
+
+.stack-total {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 1.5rem;
+  padding-top: 1.5rem;
+  border-top: 2px solid rgba(196, 135, 77, 0.3);
+}
+
+.stack-total-label {
+  font-family: var(--sans);
+  font-size: 1rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--star);
+}
+
+.stack-total-value {
+  font-family: var(--serif);
+  font-size: 1.75rem;
+  color: var(--star);
+}
+
+.stack-total-value s {
+  color: var(--star-dim);
+  font-size: 1.2rem;
+  margin-right: 0.5rem;
+  font-weight: 400;
+}
+
+@media (max-width: 768px) {
+  .value-stack { padding: 1.75rem 1.5rem; }
+  .stack-item { grid-template-columns: 40px 1fr; gap: 1rem; }
+  .stack-value { grid-column: 2; padding-top: 0.5rem; font-size: 1.2rem; }
+  .stack-total { flex-direction: column; gap: 0.5rem; text-align: center; }
 }
 
 .waitlist-form {
