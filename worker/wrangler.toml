@@ -1,0 +1,9 @@
+name = "architects-list"
+main = "index.js"
+compatibility_date = "2026-04-01"
+
+# RESEND_API_KEY should be set as a secret, not here:
+#   wrangler secret put RESEND_API_KEY
+
+[observability]
+enabled = true

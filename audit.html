@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Cognitive Audit | Nathan Critchett</title>
+  <meta name="description" content="A 5-minute guided self-assessment that scores you against the five frameworks from Cognitive Architecture. Free.">
+
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://nathancritchett.me/audit.html">
+  <meta property="og:title" content="The Cognitive Audit | Nathan Critchett">
+  <meta property="og:description" content="A 5-minute guided self-assessment that scores you against the five frameworks from Cognitive Architecture.">
+  <meta property="og:image" content="https://nathancritchett.me/assets/og-image.png?v=3">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="1200">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="audit.css">
+</head>
+<body>
+
+  <!-- Nav -->
+  <nav class="nav" id="nav">
+    <div class="nav-inner">
+      <a href="/" class="nav-name">NATHAN CRITCHETT</a>
+      <button class="nav-toggle" id="nav-toggle" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
+      <div class="nav-links" id="nav-links">
+        <a href="/#thesis">The Thesis</a>
+        <a href="/#built">Portfolio</a>
+        <a href="/#services">Speaking + Services</a>
+        <a href="/#writing">Writing</a>
+        <a href="/book.html">The Book</a>
+        <a href="/#contact" class="nav-cta">Get in Touch</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Intro Screen -->
+  <section class="audit-screen audit-intro active" id="intro-screen">
+    <div class="audit-inner">
+      <p class="section-label">The Cognitive Audit</p>
+      <h1 class="audit-title">Where is the gap widest in your organization?</h1>
+      <p class="audit-subtitle">A 5-minute guided self-assessment. Fifteen questions across the five frameworks from Cognitive Architecture. At the end, you get a score and a recommendation on which lever to pull first.</p>
+
+      <div class="audit-what-to-expect">
+        <div class="expect-item">
+          <span class="expect-num">01</span>
+          <div>
+            <h3>Five frameworks, fifteen questions</h3>
+            <p>Three questions per framework. Each one maps to how AI is currently flowing through your organization and where the human capacity is lagging.</p>
+          </div>
+        </div>
+        <div class="expect-item">
+          <span class="expect-num">02</span>
+          <div>
+            <h3>An honest score</h3>
+            <p>A cognitive architecture score out of 100, broken down by framework. No vanity metrics, no gotchas.</p>
+          </div>
+        </div>
+        <div class="expect-item">
+          <span class="expect-num">03</span>
+          <div>
+            <h3>The first lever to pull</h3>
+            <p>A single recommendation grounded in your weakest framework. Something you can act on this week, not next quarter.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="audit-cta">
+        <button class="btn btn-primary btn-lg" id="start-audit">Start the Audit</button>
+        <p class="audit-note">Free. No email required to take it. Takes about 5 minutes.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Quiz Screen -->
+  <section class="audit-screen audit-quiz" id="quiz-screen">
+    <div class="audit-inner">
+      <div class="quiz-progress">
+        <div class="progress-track">
+          <div class="progress-fill" id="progress-fill"></div>
+        </div>
+        <div class="progress-label">
+          <span id="progress-current">1</span> of <span id="progress-total">15</span>
+        </div>
+      </div>
+
+      <div class="quiz-framework" id="quiz-framework">The Complexity Gap</div>
+      <h2 class="quiz-question" id="quiz-question">Question loads here.</h2>
+      <div class="quiz-options" id="quiz-options"></div>
+
+      <div class="quiz-nav">
+        <button class="btn btn-ghost" id="prev-btn" disabled>Back</button>
+        <button class="btn btn-primary" id="next-btn" disabled>Next &#8594;</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Results Screen -->
+  <section class="audit-screen audit-results" id="results-screen">
+    <div class="audit-inner">
+      <p class="section-label">Your Audit Results</p>
+      <h2 class="results-title">Your Cognitive Architecture Score</h2>
+
+      <div class="score-hero">
+        <div class="score-circle">
+          <svg viewBox="0 0 160 160" class="score-svg">
+            <circle cx="80" cy="80" r="70" stroke="rgba(255,255,255,0.08)" stroke-width="8" fill="none"/>
+            <circle cx="80" cy="80" r="70" stroke="url(#scoreGradient)" stroke-width="8" fill="none" stroke-linecap="round" class="score-ring" id="score-ring" transform="rotate(-90 80 80)"/>
+            <defs>
+              <linearGradient id="scoreGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#C4874D"/>
+                <stop offset="100%" stop-color="#00D4B8"/>
+              </linearGradient>
+            </defs>
+          </svg>
+          <div class="score-number">
+            <span id="score-value">0</span>
+            <span class="score-denom">/100</span>
+          </div>
+        </div>
+        <div class="score-label" id="score-label">Calculating...</div>
+      </div>
+
+      <div class="framework-breakdown" id="framework-breakdown">
+        <!-- populated by JS -->
+      </div>
+
+      <!-- Email Gate -->
+      <div class="results-gate" id="results-gate">
+        <p class="section-label">Unlock the Full Report</p>
+        <h3>Get your personalized recommendation + the Architects List kit.</h3>
+        <p class="gate-desc">Enter your email to unlock the first lever to pull, plus the full Architects List welcome kit: the Intro, both Supply Chain worksheets, and 30% off launch-day pricing.</p>
+        <form class="gate-form" id="audit-form">
+          <input type="text" name="name" placeholder="Your name" required class="gate-input">
+          <input type="email" name="email" placeholder="your@email.com" required class="gate-input">
+          <button type="submit" class="btn btn-primary btn-lg" id="gate-submit">Unlock My Results</button>
+        </form>
+        <p class="gate-note">No spam. Unsubscribe anytime. The kit arrives within minutes.</p>
+      </div>
+
+      <!-- Unlocked content (hidden until form submitted) -->
+      <div class="results-unlocked" id="results-unlocked">
+        <div class="recommendation" id="recommendation">
+          <!-- populated by JS -->
+        </div>
+
+        <div class="thank-you">
+          <p class="section-label">The Kit Is On Its Way</p>
+          <h3>Check your inbox.</h3>
+          <p>The Intro + Architect's Mandate, the Org Self-Audit, and the Classroom Self-Audit are landing in your inbox right now. If you don't see them in 5 minutes, check your spam folder or email <a href="mailto:nathan.critch@outlook.com">nathan.critch@outlook.com</a>.</p>
+          <div class="thank-you-cta">
+            <a href="/book.html" class="btn btn-primary">Explore the Book</a>
+            <a href="/" class="btn btn-ghost">Back to Home</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="footer-inner">
+      <span class="footer-name">Nathan Critchett</span>
+      <span class="footer-copy">2026. All rights reserved.</span>
+    </div>
+  </footer>
+
+  <script src="audit.js"></script>
+</body>
+</html>
