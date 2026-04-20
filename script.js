@@ -152,6 +152,25 @@ function initActiveNav() {
   });
 }
 
+// ---- Announcement bar dismiss ----
+const annBar = document.getElementById('ann-bar');
+const annDismiss = document.getElementById('ann-dismiss');
+if (annBar && annDismiss) {
+  // Hide if already dismissed this session
+  if (sessionStorage.getItem('ann-dismissed')) {
+    annBar.style.display = 'none';
+  }
+  annDismiss.addEventListener('click', () => {
+    annBar.style.transition = 'opacity 0.3s ease, max-height 0.4s ease, padding 0.4s ease';
+    annBar.style.overflow = 'hidden';
+    annBar.style.opacity = '0';
+    annBar.style.maxHeight = '0';
+    annBar.style.padding = '0';
+    annBar.style.borderBottom = 'none';
+    sessionStorage.setItem('ann-dismissed', '1');
+  });
+}
+
 // ---- Nav scroll ----
 const nav = document.getElementById('nav');
 window.addEventListener('scroll', () => {
