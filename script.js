@@ -152,32 +152,44 @@ function initActiveNav() {
   });
 }
 
-// ---- Announcement bar dismiss ----
-const annBar = document.getElementById('ann-bar');
-const annDismiss = document.getElementById('ann-dismiss');
-if (annBar && annDismiss) {
-  // Hide if already dismissed this session
-  if (sessionStorage.getItem('ann-dismissed')) {
-    annBar.style.display = 'none';
-  }
-  annDismiss.addEventListener('click', () => {
-    annBar.style.transition = 'opacity 0.3s ease, max-height 0.4s ease, padding 0.4s ease';
-    annBar.style.overflow = 'hidden';
-    annBar.style.opacity = '0';
-    annBar.style.maxHeight = '0';
-    annBar.style.padding = '0';
-    annBar.style.borderBottom = 'none';
-    sessionStorage.setItem('ann-dismissed', '1');
-  });
-}
+// ---- Book Pre-sale Popup ----
+(function () {
+  const overlay = document.getElementById('presale-overlay');
+  if (!overlay) return;
 
-// ---- Nav / header scroll ----
+  function closePopup() {
+    overlay.classList.remove('visible');
+    overlay.setAttribute('aria-hidden', 'true');
+    sessionStorage.setItem('presale-dismissed', '1');
+  }
+
+  // Don't show again this session
+  if (sessionStorage.getItem('presale-dismissed')) return;
+
+  // Show after 4 seconds
+  setTimeout(() => {
+    overlay.classList.add('visible');
+    overlay.setAttribute('aria-hidden', 'false');
+  }, 4000);
+
+  document.getElementById('presale-close').addEventListener('click', closePopup);
+  document.getElementById('presale-text-dismiss').addEventListener('click', closePopup);
+
+  // Click outside popup to close
+  overlay.addEventListener('click', (e) => {
+    if (e.target === overlay) closePopup();
+  });
+
+  // ESC key to close
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') closePopup();
+  });
+})();
+
+// ---- Nav scroll ----
 const nav = document.getElementById('nav');
-const siteHeader = document.getElementById('site-header');
 window.addEventListener('scroll', () => {
-  const scrolled = window.scrollY > 50;
-  nav.classList.toggle('scrolled', scrolled);
-  if (siteHeader) siteHeader.classList.toggle('scrolled', scrolled);
+  nav.classList.toggle('scrolled', window.scrollY > 50);
 });
 
 // ---- Mobile nav toggle ----

@@ -43,39 +43,27 @@
 </head>
 <body>
 
-  <!-- Site Header (announcement bar + nav stacked in one fixed block) -->
-  <div class="site-header" id="site-header">
-
-    <!-- Announcement Bar -->
-    <div class="announcement-bar" id="ann-bar">
-      <span><strong>Cognitive Architecture</strong> is coming &mdash; join the Architects List for 30% off launch day + a free welcome kit.</span>
-      <a href="book.html" class="ann-cta">Claim your spot &rarr;</a>
-      <button class="ann-dismiss" id="ann-dismiss" aria-label="Dismiss">&#x2715;</button>
-    </div>
-
-    <!-- Nav -->
-    <nav class="nav" id="nav">
-      <div class="nav-inner">
-        <a href="#" class="nav-name">NATHAN CRITCHETT</a>
-        <div class="nav-right">
-          <a href="#contact" class="nav-mobile-cta">Get in Touch</a>
-          <button class="nav-toggle" id="nav-toggle" aria-label="Menu">
-            <span></span><span></span><span></span>
-          </button>
-        </div>
-        <div class="nav-links" id="nav-links">
-          <a href="#thesis">The Thesis</a>
-          <a href="#built">Portfolio</a>
-          <a href="#services">Speaking + Services</a>
-          <a href="#writing">Writing</a>
-          <a href="book.html">The Book</a>
-          <a href="#about">About</a>
-          <a href="#contact" class="nav-cta">Get in Touch</a>
-        </div>
+  <!-- Nav -->
+  <nav class="nav" id="nav">
+    <div class="nav-inner">
+      <a href="#" class="nav-name">NATHAN CRITCHETT</a>
+      <div class="nav-right">
+        <a href="book.html" class="nav-mobile-cta">Book Pre-sale</a>
+        <button class="nav-toggle" id="nav-toggle" aria-label="Menu">
+          <span></span><span></span><span></span>
+        </button>
       </div>
-    </nav>
-
-  </div>
+      <div class="nav-links" id="nav-links">
+        <a href="#thesis">The Thesis</a>
+        <a href="#built">Portfolio</a>
+        <a href="#services">Speaking + Services</a>
+        <a href="#writing">Writing</a>
+        <a href="book.html">The Book</a>
+        <a href="#about">About</a>
+        <a href="#contact" class="nav-cta">Get in Touch</a>
+      </div>
+    </div>
+  </nav>
 
   <!-- Hero -->
   <header class="hero">
@@ -165,8 +153,8 @@
         </div>
 
         <div class="book-cta-row">
-          <a href="book.html" class="btn btn-primary">Join the Architects List &rarr;</a>
-          <span class="book-cta-note">Free to join. <a href="book.html#faq">What's included?</a></span>
+          <a href="book.html" class="btn btn-primary">Book Pre-sale &rarr;</a>
+          <span class="book-cta-note">Free to join. <a href="book.html">What's included?</a></span>
         </div>
       </div>
     </div>
@@ -456,6 +444,23 @@
       <span class="footer-copy">2026. All rights reserved.</span>
     </div>
   </footer>
+
+  <!-- Book Pre-sale Popup -->
+  <div class="presale-overlay" id="presale-overlay" aria-hidden="true">
+    <div class="presale-popup" role="dialog" aria-labelledby="presale-title">
+      <button class="presale-close" id="presale-close" aria-label="Close">&times;</button>
+      <div class="presale-eyebrow">Coming Soon</div>
+      <h2 class="presale-title" id="presale-title">Cognitive Architecture</h2>
+      <p class="presale-sub">A short guide for leaders. Pre-sale is open now.</p>
+      <ul class="presale-perks">
+        <li><span>&#10003;</span> 30% off on launch day &mdash; $20 instead of $30</li>
+        <li><span>&#10003;</span> Free welcome kit sent today: the Cognitive Audit + book intro + two worksheets</li>
+        <li><span>&#10003;</span> First-edition guarantee</li>
+      </ul>
+      <a href="book.html" class="btn btn-primary presale-btn">Book Pre-sale &rarr;</a>
+      <p class="presale-dismiss-note">Free to join &middot; <button class="presale-text-dismiss" id="presale-text-dismiss">No thanks</button></p>
+    </div>
+  </div>
 
   <script src="script.js"></script>
 </body>
