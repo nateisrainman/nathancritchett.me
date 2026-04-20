@@ -171,10 +171,13 @@ if (annBar && annDismiss) {
   });
 }
 
-// ---- Nav scroll ----
+// ---- Nav / header scroll ----
 const nav = document.getElementById('nav');
+const siteHeader = document.getElementById('site-header');
 window.addEventListener('scroll', () => {
-  nav.classList.toggle('scrolled', window.scrollY > 50);
+  const scrolled = window.scrollY > 50;
+  nav.classList.toggle('scrolled', scrolled);
+  if (siteHeader) siteHeader.classList.toggle('scrolled', scrolled);
 });
 
 // ---- Mobile nav toggle ----
