@@ -170,6 +170,12 @@ links.querySelectorAll('a').forEach(a => {
   a.addEventListener('click', () => links.classList.remove('open'));
 });
 
+// Mobile CTA also closes nav if open
+const mobileCta = document.querySelector('.nav-mobile-cta');
+if (mobileCta) {
+  mobileCta.addEventListener('click', () => links.classList.remove('open'));
+}
+
 // ---- Hero entrance ----
 document.addEventListener('DOMContentLoaded', () => {
   createParticles();
