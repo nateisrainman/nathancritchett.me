@@ -33,15 +33,19 @@
   <nav class="nav" id="nav">
     <div class="nav-inner">
       <a href="/" class="nav-name">NATHAN CRITCHETT</a>
-      <button class="nav-toggle" id="nav-toggle" aria-label="Menu">
-        <span></span><span></span><span></span>
-      </button>
+      <div class="nav-right">
+        <a href="#preorder" class="nav-mobile-cta">Reserve Now</a>
+        <button class="nav-toggle" id="nav-toggle" aria-label="Menu">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
       <div class="nav-links" id="nav-links">
-        <a href="/#thesis">The Thesis</a>
-        <a href="/#built">Portfolio</a>
-        <a href="/#services">Speaking + Services</a>
-        <a href="/#writing">Writing</a>
+        <a href="/#stakes">The Problem</a>
         <a href="/book.html" class="nav-active">The Book</a>
+        <a href="/#built">Portfolio</a>
+        <a href="/#services">Speaking</a>
+        <a href="/#writing">Research</a>
+        <a href="/#about">About</a>
         <a href="/#contact" class="nav-cta">Get in Touch</a>
       </div>
     </div>
@@ -322,6 +326,8 @@
     const links = document.getElementById('nav-links');
     toggle.addEventListener('click', () => links.classList.toggle('open'));
     links.querySelectorAll('a').forEach(a => a.addEventListener('click', () => links.classList.remove('open')));
+    const mobileCta = document.querySelector('.nav-mobile-cta');
+    if (mobileCta) mobileCta.addEventListener('click', () => links.classList.remove('open'));
   </script>
 </body>
 </html>

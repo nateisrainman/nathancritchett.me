@@ -222,6 +222,8 @@ const navToggle = document.getElementById('nav-toggle');
 const navLinks = document.getElementById('nav-links');
 navToggle.addEventListener('click', () => navLinks.classList.toggle('open'));
 navLinks.querySelectorAll('a').forEach(a => a.addEventListener('click', () => navLinks.classList.remove('open')));
+const navMobileCta = document.querySelector('.nav-mobile-cta');
+if (navMobileCta) navMobileCta.addEventListener('click', () => navLinks.classList.remove('open'));
 
 // ---- Start ----
 progressTotal.textContent = QUESTIONS.length;

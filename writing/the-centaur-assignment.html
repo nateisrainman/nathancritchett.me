@@ -15,10 +15,19 @@
   <nav class="nav" id="nav">
     <div class="nav-inner">
       <a href="../" class="nav-name">NATHAN CRITCHETT</a>
+      <div class="nav-right">
+        <a href="../book.html" class="nav-mobile-cta">Book Pre-sale</a>
+        <button class="nav-toggle" id="nav-toggle" aria-label="Menu">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
       <div class="nav-links" id="nav-links">
-        <a href="../#thesis">The Thesis</a>
-        <a href="../#built">What I&#39;ve Built</a>
-        <a href="../#writing">Writing</a>
+        <a href="../#stakes">The Problem</a>
+        <a href="../book.html">The Book</a>
+        <a href="../#built">Portfolio</a>
+        <a href="../#services">Speaking</a>
+        <a href="../#writing">Research</a>
+        <a href="../#about">About</a>
         <a href="../#contact" class="nav-cta">Get in Touch</a>
       </div>
     </div>
@@ -143,6 +152,12 @@
     window.addEventListener('scroll', () => {
       nav.classList.toggle('scrolled', window.scrollY > 50);
     });
+    const navToggle = document.getElementById('nav-toggle');
+    const navLinks = document.getElementById('nav-links');
+    if (navToggle) navToggle.addEventListener('click', () => navLinks.classList.toggle('open'));
+    navLinks.querySelectorAll('a').forEach(a => a.addEventListener('click', () => navLinks.classList.remove('open')));
+    const navMobileCta = document.querySelector('.nav-mobile-cta');
+    if (navMobileCta) navMobileCta.addEventListener('click', () => navLinks.classList.remove('open'));
   </script>
 </body>
 </html>
