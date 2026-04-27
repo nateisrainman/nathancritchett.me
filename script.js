@@ -157,20 +157,44 @@ function initActiveNav() {
   const overlay = document.getElementById('presale-overlay');
   if (!overlay) return;
 
+  // Don't show again this session
+  if (sessionStorage.getItem('presale-dismissed')) return;
+
+  let shown = false;
+  let timerId = null;
+
   function closePopup() {
     overlay.classList.remove('visible');
     overlay.setAttribute('aria-hidden', 'true');
     sessionStorage.setItem('presale-dismissed', '1');
   }
 
-  // Don't show again this session
-  if (sessionStorage.getItem('presale-dismissed')) return;
+  function showPopup() {
+    if (shown) return;
+    shown = true;
 
-  // Show after 4 seconds
-  setTimeout(() => {
+    // Cancel any pending triggers so it can't fire twice
+    if (timerId) clearTimeout(timerId);
+    window.removeEventListener('scroll', onScroll);
+
     overlay.classList.add('visible');
     overlay.setAttribute('aria-hidden', 'false');
-  }, 4000);
+  }
+
+  function onScroll() {
+    const scrollTop = window.scrollY || document.documentElement.scrollTop;
+    const scrollable = document.documentElement.scrollHeight - window.innerHeight;
+    if (scrollable <= 0) return;
+    if (scrollTop / scrollable >= 0.5) {
+      showPopup();
+    }
+  }
+
+  // Trigger 1: 30 seconds elapsed
+  timerId = setTimeout(showPopup, 30000);
+
+  // Trigger 2: scrolled past halfway
+  window.addEventListener('scroll', onScroll, { passive: true });
 
   document.getElementById('presale-close').addEventListener('click', closePopup);
   document.getElementById('presale-text-dismiss').addEventListener('click', closePopup);
