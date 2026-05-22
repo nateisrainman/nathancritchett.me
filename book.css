@@ -313,6 +313,8 @@
   background: var(--abyss-light);
   border-top: 1px solid rgba(255, 255, 255, 0.05);
   text-align: center;
+  /* Offset for fixed nav when arriving via #preorder anchor */
+  scroll-margin-top: 90px;
 }
 
 .preorder-inner {

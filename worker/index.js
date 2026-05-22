@@ -36,57 +36,102 @@ export default {
 
     const firstName = (name || 'there').split(' ')[0].trim();
 
-    // Build the email HTML
+    // Build the welcome email
     const html = welcomeEmailHtml(firstName, source, score);
     const text = welcomeEmailText(firstName, source, score);
 
-    // Send via Resend
-    try {
-      const resendRes = await fetch('https://api.resend.com/emails', {
-        method: 'POST',
-        headers: {
-          'Authorization': `Bearer ${env.RESEND_API_KEY}`,
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          from: 'Nathan Critchett <nathan@nathancritchett.me>',
-          to: [email],
-          reply_to: 'nathan.critch@outlook.com',
-          subject: `${firstName}, welcome to The Architects List`,
-          html,
-          text,
-        }),
-      });
+    // Fire BOTH emails in parallel. The admin notification must
+    // fire whether or not the user welcome email succeeds, so that
+    // Nathan never misses a signup even if Resend is rate-limited,
+    // the user's domain bounces, or the welcome template fails.
+    const welcomePromise = fetch('https://api.resend.com/emails', {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${env.RESEND_API_KEY}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        from: 'Nathan Critchett <nathan@nathancritchett.me>',
+        to: [email],
+        reply_to: 'nathan.critch@outlook.com',
+        subject: `${firstName}, welcome to The Architects List`,
+        html,
+        text,
+      }),
+    });
 
-      if (!resendRes.ok) {
-        const err = await resendRes.text();
-        console.error('Resend error:', err);
-        return json({ error: 'Email send failed' }, 500);
+    const notifyPromise = fetch('https://api.resend.com/emails', {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${env.RESEND_API_KEY}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        from: 'Architects List <nathan@nathancritchett.me>',
+        to: ['nathan.critch@outlook.com'],
+        reply_to: email,
+        subject: `🔔 New signup: ${name || firstName} (${source || 'book'})`,
+        html: notifyHtml(name || firstName, email, source, score),
+        text: notifyText(name || firstName, email, source, score),
+      }),
+    });
+
+    const [welcomeResult, notifyResult] = await Promise.allSettled([
+      welcomePromise,
+      notifyPromise,
+    ]);
+
+    // Log diagnostics so Cloudflare's Worker logs show what happened.
+    const welcomeOk = await inspectResendResult('welcome', welcomeResult);
+    const notifyOk = await inspectResendResult('notify', notifyResult);
+
+    // If the admin notification failed, retry once with a plain-text
+    // fallback addressed to an alternate route. Better to alert Nathan
+    // with a degraded message than to miss the lead entirely.
+    if (!notifyOk) {
+      try {
+        await fetch('https://api.resend.com/emails', {
+          method: 'POST',
+          headers: {
+            'Authorization': `Bearer ${env.RESEND_API_KEY}`,
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            from: 'onboarding@resend.dev',
+            to: ['nathan.critch@outlook.com'],
+            subject: `🔔 [FALLBACK] New signup: ${name || firstName}`,
+            text: `New Architects List signup\n\nName: ${name || firstName}\nEmail: ${email}\nSource: ${source || 'book'}\n\n(Primary notification failed — sent from fallback sender.)`,
+          }),
+        });
+      } catch (e) {
+        console.error('Fallback admin notify also failed:', e);
       }
-
-      // Also notify Nathan
-      await fetch('https://api.resend.com/emails', {
-        method: 'POST',
-        headers: {
-          'Authorization': `Bearer ${env.RESEND_API_KEY}`,
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          from: 'Architects List <nathan@nathancritchett.me>',
-          to: ['nathan.critch@outlook.com'],
-          subject: `New Architects List signup: ${firstName} (${source || 'book'})`,
-          html: notifyHtml(name || firstName, email, source, score),
-          text: notifyText(name || firstName, email, source, score),
-        }),
-      });
-
-      return json({ success: true });
-    } catch (err) {
-      console.error('Worker error:', err);
-      return json({ error: 'Server error' }, 500);
     }
+
+    // Always return success to the form if the admin alert went through.
+    // The user's welcome email failing is recoverable — they're on the
+    // list and Nathan can follow up manually.
+    if (notifyOk || welcomeOk) {
+      return json({ success: true, welcome: welcomeOk, notify: notifyOk });
+    }
+
+    return json({ error: 'Email send failed' }, 500);
   },
 };
+
+async function inspectResendResult(label, result) {
+  if (result.status !== 'fulfilled') {
+    console.error(`${label} fetch rejected:`, result.reason);
+    return false;
+  }
+  const res = result.value;
+  if (!res.ok) {
+    const errText = await res.text().catch(() => '<no body>');
+    console.error(`${label} Resend error (${res.status}):`, errText);
+    return false;
+  }
+  return true;
+}
 
 function json(data, status = 200) {
   return new Response(JSON.stringify(data), {
