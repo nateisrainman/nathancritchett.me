@@ -12,11 +12,12 @@ Outputs 1200x630 PNGs to assets/og-*.png using the brand palette:
 Run: python3 scripts/generate-og-cards.py
 """
 
-from PIL import Image, ImageDraw, ImageFont
+from PIL import Image, ImageDraw, ImageFont, ImageFilter
 import os
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 OUT_DIR = os.path.join(ROOT, "assets")
+COVER_PATH = os.path.join(OUT_DIR, "book-cover.jpg")
 W, H = 1200, 630
 
 # Brand colors
@@ -145,6 +146,47 @@ def base_card():
     return img
 
 
+def paste_cover(img, target_h=300, right_margin=90, y_center=None):
+    """
+    Paste the book cover on the right side with a soft drop shadow.
+    Cover preserves its native aspect ratio.
+    Returns the rect occupied as (x0, y0, x1, y1) so callers can avoid it.
+    """
+    cover = Image.open(COVER_PATH).convert("RGBA")
+    cw0, ch0 = cover.size
+    target_w = int(target_h * cw0 / ch0)
+    cover = cover.resize((target_w, target_h), Image.LANCZOS)
+
+    if y_center is None:
+        y_center = H // 2
+    x0 = W - right_margin - target_w
+    y0 = y_center - target_h // 2
+
+    # Drop shadow: blurred dark rectangle slightly larger than cover
+    shadow_pad = 24
+    shadow = Image.new(
+        "RGBA",
+        (target_w + shadow_pad * 2, target_h + shadow_pad * 2),
+        (0, 0, 0, 0),
+    )
+    sd = ImageDraw.Draw(shadow)
+    sd.rectangle(
+        [shadow_pad, shadow_pad, shadow_pad + target_w, shadow_pad + target_h],
+        fill=(0, 0, 0, 180),
+    )
+    shadow = shadow.filter(ImageFilter.GaussianBlur(radius=18))
+    img.alpha_composite(shadow, dest=(x0 - shadow_pad, y0 - shadow_pad + 8))
+
+    # Thin gold hairline frame for definition
+    frame = Image.new("RGBA", (target_w + 2, target_h + 2), (0, 0, 0, 0))
+    fd = ImageDraw.Draw(frame)
+    fd.rectangle([0, 0, target_w + 1, target_h + 1], outline=GOLD + (90,), width=1)
+    img.alpha_composite(frame, dest=(x0 - 1, y0 - 1))
+
+    img.alpha_composite(cover, dest=(x0, y0))
+    return (x0, y0, x0 + target_w, y0 + target_h)
+
+
 def draw_arrow(draw, x, y, color=GOLD, length=22, thickness=2):
     """Draw a right-pointing arrow at (x, y)."""
     # shaft
@@ -182,25 +224,28 @@ def add_footer(draw, label_left="NATHANCRITCHETT.ME", label_right=None):
 # -----------------------------------------------------------------
 def card_home():
     img = base_card()
+    paste_cover(img, target_h=300, right_margin=90, y_center=H // 2 - 20)
     d = ImageDraw.Draw(img)
 
     sans = f(SANS, 20)
-    serif = f(SERIF_BOLD, 70)
-    serif_sm = f(SERIF_REG, 28)
+    sans_sm = f(SANS, 16)
+    serif = f(SERIF_BOLD, 60)
+    serif_sm = f(SERIF_REG, 24)
 
     # Eyebrow
     text_left(d, "NATHAN CRITCHETT", sans, 64, 64, fill=GOLD, kern=3)
     hairline(d, 64, 100, 90)
 
-    # Headline (3 lines)
-    d.text((64, 160), "Close the gap between AI", font=serif, fill=CLOUD)
-    d.text((64, 240), "and the humans using it.", font=serif, fill=CLOUD)
+    # Headline
+    d.text((64, 150), "Close the gap between AI", font=serif, fill=CLOUD)
+    d.text((64, 218), "and the humans using it.", font=serif, fill=CLOUD)
 
     # Subhead
-    sub = "Cognitive strategy, speaking, and books for leaders building"
-    sub2 = "in the age of intelligent machines."
-    d.text((64, 360), sub, font=serif_sm, fill=MUTE)
-    d.text((64, 400), sub2, font=serif_sm, fill=MUTE)
+    d.text((64, 310), "Cognitive strategy, speaking, and a", font=serif_sm, fill=MUTE)
+    d.text((64, 344), "new book for leaders in the AI era.", font=serif_sm, fill=MUTE)
+
+    # Tiny cover caption
+    text_left(d, "NEW BOOK · PRE-SALE OPEN", sans_sm, 830, 460, fill=GOLD, kern=2)
 
     add_footer(d, "NATHANCRITCHETT.ME", "Read more")
     return img
@@ -211,31 +256,32 @@ def card_home():
 # -----------------------------------------------------------------
 def card_book():
     img = base_card()
+    # Slightly larger cover on the book card itself
+    paste_cover(img, target_h=400, right_margin=90, y_center=H // 2 - 10)
     d = ImageDraw.Draw(img)
 
     sans = f(SANS, 20)
     sans_sm = f(SANS, 18)
-    title_serif = f(SERIF_BOLD, 96)
-    sub_serif = f(SERIF_REG, 36)
-    label = f(SANS, 18)
+    title_serif = f(SERIF_BOLD, 78)
+    sub_serif = f(SERIF_REG, 28)
 
     # Eyebrow
-    text_left(d, "A NEW BOOK   ·   PRE-SALE OPEN", sans, 64, 64, fill=GOLD, kern=3)
+    text_left(d, "A NEW BOOK  ·  PRE-SALE OPEN", sans, 64, 64, fill=GOLD, kern=3)
     hairline(d, 64, 100, 90)
 
     # Main title — two lines
     d.text((64, 150), "Cognitive", font=title_serif, fill=CLOUD)
-    d.text((64, 250), "Architecture", font=title_serif, fill=CLOUD)
+    d.text((64, 232), "Architecture", font=title_serif, fill=CLOUD)
 
     # Coral underline accent
-    d.rectangle([64, 360, 420, 364], fill=CORAL)
+    d.rectangle([64, 332, 360, 336], fill=CORAL)
 
     # Subtitle
-    d.text((64, 390), "How to Think When", font=sub_serif, fill=GOLD)
-    d.text((64, 432), "Machines Think For You", font=sub_serif, fill=GOLD)
+    d.text((64, 360), "How to Think When", font=sub_serif, fill=GOLD)
+    d.text((64, 396), "Machines Think For You", font=sub_serif, fill=GOLD)
 
     # Byline
-    text_left(d, "BY NATHAN CRITCHETT", sans_sm, 64, 500, fill=MUTE, kern=3)
+    text_left(d, "BY NATHAN CRITCHETT", sans_sm, 64, 460, fill=MUTE, kern=3)
 
     add_footer(d, "NATHANCRITCHETT.ME/BOOK", "Reserve your copy")
     return img
@@ -246,20 +292,25 @@ def card_book():
 # -----------------------------------------------------------------
 def card_audit():
     img = base_card()
+    paste_cover(img, target_h=300, right_margin=90, y_center=H // 2 - 20)
     d = ImageDraw.Draw(img)
 
     sans = f(SANS, 20)
-    serif = f(SERIF_BOLD, 78)
-    serif_sm = f(SERIF_REG, 28)
+    sans_sm = f(SANS, 16)
+    serif = f(SERIF_BOLD, 62)
+    serif_sm = f(SERIF_REG, 24)
 
     text_left(d, "THE COGNITIVE AUDIT", sans, 64, 64, fill=GOLD, kern=3)
     hairline(d, 64, 100, 90)
 
-    d.text((64, 160), "Where is the gap", font=serif, fill=CLOUD)
-    d.text((64, 246), "widest in your", font=serif, fill=CLOUD)
-    d.text((64, 332), "organization?", font=serif, fill=CLOUD)
+    d.text((64, 150), "Where is the gap", font=serif, fill=CLOUD)
+    d.text((64, 222), "widest in your", font=serif, fill=CLOUD)
+    d.text((64, 294), "organization?", font=serif, fill=CLOUD)
 
-    d.text((64, 440), "5 minutes. 15 questions. An honest score.", font=serif_sm, fill=MUTE)
+    d.text((64, 396), "5 minutes. 15 questions. An honest score.", font=serif_sm, fill=MUTE)
+
+    # Tiny cover caption
+    text_left(d, "PAIRS WITH THE BOOK", sans_sm, 850, 460, fill=GOLD, kern=2)
 
     add_footer(d, "NATHANCRITCHETT.ME/AUDIT", "Take the audit")
     return img
@@ -270,20 +321,25 @@ def card_audit():
 # -----------------------------------------------------------------
 def card_writing():
     img = base_card()
+    paste_cover(img, target_h=300, right_margin=90, y_center=H // 2 - 20)
     d = ImageDraw.Draw(img)
 
     sans = f(SANS, 20)
-    serif = f(SERIF_BOLD, 64)
-    serif_sm = f(SERIF_REG, 28)
+    sans_sm = f(SANS, 16)
+    serif = f(SERIF_BOLD, 56)
+    serif_sm = f(SERIF_REG, 24)
 
     text_left(d, "RESEARCH  ·  ESSAYS  ·  FIELD NOTES", sans, 64, 64, fill=GOLD, kern=3)
     hairline(d, 64, 100, 90)
 
-    d.text((64, 160), "Cognitive strategy", font=serif, fill=CLOUD)
-    d.text((64, 232), "for the AI era.", font=serif, fill=CLOUD)
+    d.text((64, 150), "Cognitive strategy", font=serif, fill=CLOUD)
+    d.text((64, 214), "for the AI era.", font=serif, fill=CLOUD)
 
-    d.text((64, 340), "Writing by Nathan Critchett on AI, education,", font=serif_sm, fill=MUTE)
-    d.text((64, 378), "and the future of human judgment.", font=serif_sm, fill=MUTE)
+    d.text((64, 304), "Writing by Nathan Critchett on AI,", font=serif_sm, fill=MUTE)
+    d.text((64, 338), "education, and the future of human judgment.", font=serif_sm, fill=MUTE)
+
+    # Tiny cover caption
+    text_left(d, "NEW BOOK · PRE-SALE OPEN", sans_sm, 830, 460, fill=GOLD, kern=2)
 
     add_footer(d, "NATHANCRITCHETT.ME", "Read the archive")
     return img
