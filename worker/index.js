@@ -100,7 +100,7 @@ export default {
             from: 'onboarding@resend.dev',
             to: ['nathan.critch@outlook.com'],
             subject: `🔔 [FALLBACK] New signup: ${name || firstName}`,
-            text: `New Architects List signup\n\nName: ${name || firstName}\nEmail: ${email}\nSource: ${source || 'book'}\n\n(Primary notification failed — sent from fallback sender.)`,
+            text: `New Architects List signup\n\nName: ${name || firstName}\nEmail: ${email}\nSource: ${source || 'book'}\n\n(Primary notification failed, sent from fallback sender.)`,
           }),
         });
       } catch (e) {
@@ -109,7 +109,7 @@ export default {
     }
 
     // Always return success to the form if the admin alert went through.
-    // The user's welcome email failing is recoverable — they're on the
+    // The user's welcome email failing is recoverable, they're on the
     // list and Nathan can follow up manually.
     if (notifyOk || welcomeOk) {
       return json({ success: true, welcome: welcomeOk, notify: notifyOk });
