@@ -232,6 +232,7 @@ startBtn.addEventListener('click', () => {
   quizScreen.classList.add('active');
   renderQuestion();
   window.scrollTo({ top: 0, behavior: 'smooth' });
+  if (window.track) window.track('audit_started');
 });
 
 // ---- Render question ----
@@ -351,6 +352,13 @@ function showResults() {
     '<p><strong>What to do this week:</strong> ' + insight.action + '</p>';
 
   window._auditResults = { total, breakdown, weakest };
+
+  if (window.track) {
+    window.track('audit_completed', {
+      audit_score: total,
+      audit_weakest: weakest,
+    });
+  }
 }
 
 function getScoreLabel(score) {
@@ -400,9 +408,19 @@ auditForm.addEventListener('submit', async (e) => {
     resultsGate.style.display = 'none';
     resultsUnlocked.classList.add('visible');
     window.scrollTo({ top: resultsUnlocked.offsetTop - 100, behavior: 'smooth' });
+
+    if (window.posthog) {
+      window.posthog.identify(email, { name: name, email: email });
+      window.posthog.capture('signup_completed', {
+        source: 'audit',
+        audit_score: window._auditResults ? window._auditResults.total : null,
+        audit_weakest: window._auditResults ? window._auditResults.weakest : null,
+      });
+    }
   } catch (err) {
     gateSubmit.disabled = false;
     gateSubmit.textContent = 'Try Again';
     alert('Something went wrong. Please try again or email nathan.critch@outlook.com directly.');
+    if (window.track) window.track('signup_failed', { source: 'audit' });
   }
 });

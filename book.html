@@ -40,7 +40,8 @@
   <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
   <link rel="stylesheet" href="styles.css">
-  <link rel="stylesheet" href="book.css">
+  <link rel="stylesheet" href="book.css">  <script defer src="/assets/analytics.js"></script>
+
 </head>
 <body>
 
@@ -293,10 +294,15 @@
               form.style.display = 'none';
               note.style.display = 'none';
               success.style.display = 'block';
+              if (window.posthog) {
+                window.posthog.identify(email, { name: name, email: email });
+                window.posthog.capture('signup_completed', { source: 'book' });
+              }
             } catch (err) {
               submit.disabled = false;
               submit.textContent = 'Try Again';
               alert('Something went wrong. Please try again or email nathan.critch@outlook.com directly.');
+              if (window.track) window.track('signup_failed', { source: 'book' });
             }
           });
         })();

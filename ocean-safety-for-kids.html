@@ -42,7 +42,8 @@
   <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
   <link rel="stylesheet" href="styles.css">
-  <link rel="stylesheet" href="ocean-safety.css">
+  <link rel="stylesheet" href="ocean-safety.css">  <script defer src="/assets/analytics.js"></script>
+
 </head>
 <body>
 
@@ -198,8 +199,37 @@
             btn.textContent = original;
             btn.classList.remove('copied');
           }, 2200);
+          if (window.track) window.track('ocean_safety_link_copied');
         } catch {
           if (note) note.innerHTML = `Copy this link: <code>${url}</code>`;
+        }
+      });
+    })();
+
+    // Video engagement: play / quartile milestones / completed
+    (function () {
+      const video = document.querySelector('.ocean-video');
+      if (!video) return;
+      let started = false;
+      let q25 = false, q50 = false, q75 = false, finished = false;
+
+      video.addEventListener('play', () => {
+        if (!started) {
+          started = true;
+          if (window.track) window.track('ocean_safety_video_play');
+        }
+      });
+      video.addEventListener('timeupdate', () => {
+        if (!video.duration) return;
+        const pct = video.currentTime / video.duration;
+        if (pct >= 0.25 && !q25) { q25 = true; if (window.track) window.track('ocean_safety_video_25'); }
+        if (pct >= 0.50 && !q50) { q50 = true; if (window.track) window.track('ocean_safety_video_50'); }
+        if (pct >= 0.75 && !q75) { q75 = true; if (window.track) window.track('ocean_safety_video_75'); }
+      });
+      video.addEventListener('ended', () => {
+        if (!finished) {
+          finished = true;
+          if (window.track) window.track('ocean_safety_video_completed');
         }
       });
     })();
