@@ -345,6 +345,96 @@ def card_writing():
     return img
 
 
+# -----------------------------------------------------------------
+# CARD 5: OCEAN SAFETY FOR KIDS  (free public-service video)
+# -----------------------------------------------------------------
+def card_ocean_safety():
+    """
+    Uses the video poster frame as the visual anchor on the right
+    instead of the book cover, since this is a free public-service
+    page, not book promotion.
+    """
+    img = base_card()
+    d = ImageDraw.Draw(img)
+
+    # Poster from the video, framed on the right
+    poster_path = os.path.join(OUT_DIR, "video", "ocean-safety-poster.jpg")
+    if os.path.exists(poster_path):
+        poster = Image.open(poster_path).convert("RGBA")
+        # poster is 1280x720 (16:9). Target: 380px wide.
+        target_w = 380
+        target_h = int(target_w * 9 / 16)
+        poster = poster.resize((target_w, target_h), Image.LANCZOS)
+        x0 = W - 90 - target_w
+        y0 = (H - target_h) // 2 - 20
+
+        # Drop shadow
+        shadow_pad = 20
+        shadow = Image.new(
+            "RGBA",
+            (target_w + shadow_pad * 2, target_h + shadow_pad * 2),
+            (0, 0, 0, 0),
+        )
+        sd = ImageDraw.Draw(shadow)
+        sd.rectangle(
+            [shadow_pad, shadow_pad, shadow_pad + target_w, shadow_pad + target_h],
+            fill=(0, 0, 0, 180),
+        )
+        shadow = shadow.filter(ImageFilter.GaussianBlur(radius=16))
+        img.alpha_composite(shadow, dest=(x0 - shadow_pad, y0 - shadow_pad + 8))
+
+        # Cyan hairline frame
+        frame = Image.new("RGBA", (target_w + 2, target_h + 2), (0, 0, 0, 0))
+        fd = ImageDraw.Draw(frame)
+        fd.rectangle(
+            [0, 0, target_w + 1, target_h + 1],
+            outline=PANDORA + (110,),
+            width=1,
+        )
+        img.alpha_composite(frame, dest=(x0 - 1, y0 - 1))
+
+        img.alpha_composite(poster, dest=(x0, y0))
+
+        # Play-button triangle overlay in the center of the poster
+        cx = x0 + target_w // 2
+        cy = y0 + target_h // 2
+        r = 36
+        # circle background
+        circle = Image.new("RGBA", (r * 2 + 4, r * 2 + 4), (0, 0, 0, 0))
+        cd = ImageDraw.Draw(circle)
+        cd.ellipse([2, 2, r * 2 + 2, r * 2 + 2], fill=(255, 255, 255, 225))
+        img.alpha_composite(circle, dest=(cx - r - 2, cy - r - 2))
+        # triangle
+        tri = Image.new("RGBA", (r * 2, r * 2), (0, 0, 0, 0))
+        td = ImageDraw.Draw(tri)
+        td.polygon(
+            [(r - 10, r - 16), (r - 10, r + 16), (r + 16, r)],
+            fill=(6, 10, 20, 255),
+        )
+        img.alpha_composite(tri, dest=(cx - r, cy - r))
+
+    d = ImageDraw.Draw(img)
+
+    sans = f(SANS, 20)
+    sans_sm = f(SANS, 16)
+    serif = f(SERIF_BOLD, 56)
+    serif_sm = f(SERIF_REG, 24)
+
+    text_left(d, "FREE  ·  3-MINUTE VIDEO", sans, 64, 64, fill=GOLD, kern=3)
+    hairline(d, 64, 100, 90)
+
+    d.text((64, 150), "Ocean Safety", font=serif, fill=CLOUD)
+    d.text((64, 214), "for Kids.", font=serif, fill=CLOUD)
+
+    d.text((64, 302), "A short, clear video built to teach", font=serif_sm, fill=MUTE)
+    d.text((64, 336), "the kids in your life to read the ocean.", font=serif_sm, fill=MUTE)
+
+    text_left(d, "FOR PARENTS  ·  FOR EDUCATORS", sans_sm, 64, 410, fill=PANDORA, kern=2)
+
+    add_footer(d, "NATHANCRITCHETT.ME", "Watch and share")
+    return img
+
+
 def save(img, name):
     path = os.path.join(OUT_DIR, name)
     img.convert("RGB").save(path, "PNG", optimize=True)
@@ -357,6 +447,7 @@ def main():
     save(card_book(), "og-book.png")
     save(card_audit(), "og-audit.png")
     save(card_writing(), "og-writing.png")
+    save(card_ocean_safety(), "og-ocean-safety.png")
     print("Done.")
 
 
