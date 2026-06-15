@@ -6,15 +6,39 @@
 
 const CORS_HEADERS = {
   'Access-Control-Allow-Origin': 'https://nathancritchett.me',
-  'Access-Control-Allow-Methods': 'POST, OPTIONS',
-  'Access-Control-Allow-Headers': 'Content-Type',
+  'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
+  'Access-Control-Allow-Headers': 'Content-Type, Authorization',
 };
 
 export default {
   async fetch(request, env) {
+    const url = new URL(request.url);
+
     // CORS preflight
     if (request.method === 'OPTIONS') {
       return new Response(null, { headers: CORS_HEADERS });
+    }
+
+    // ---- Dashboard GET: return all signups ----
+    if (request.method === 'GET' && url.pathname === '/signups') {
+      const auth = request.headers.get('Authorization');
+      if (!env.DASHBOARD_KEY || auth !== `Bearer ${env.DASHBOARD_KEY}`) {
+        return json({ error: 'Unauthorized' }, 401);
+      }
+
+      const all = [];
+      let cursor = null;
+      do {
+        const list = await env.SIGNUPS.list({ prefix: 'signup:', cursor, limit: 500 });
+        for (const key of list.keys) {
+          const val = await env.SIGNUPS.get(key.name, 'json');
+          if (val) all.push(val);
+        }
+        cursor = list.list_complete ? null : list.cursor;
+      } while (cursor);
+
+      all.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
+      return json({ signups: all, total: all.length });
     }
 
     if (request.method !== 'POST') {
@@ -35,6 +59,21 @@ export default {
     }
 
     const firstName = (name || 'there').split(' ')[0].trim();
+
+    // Persist signup to KV
+    const timestamp = new Date().toISOString();
+    const kvKey = `signup:${timestamp}:${email.toLowerCase()}`;
+    try {
+      await env.SIGNUPS.put(kvKey, JSON.stringify({
+        name: name || firstName,
+        email: email.toLowerCase(),
+        source: source || 'book',
+        score: score || null,
+        timestamp,
+      }));
+    } catch (e) {
+      console.error('KV write failed:', e);
+    }
 
     // Build the welcome email
     const html = welcomeEmailHtml(firstName, source, score);

@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Architects List Dashboard</title>
+  <meta name="robots" content="noindex, nofollow">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --abyss: #060A14;
+      --abyss-light: #101828;
+      --slate: #1E2A48;
+      --dune: #C4874D;
+      --cyan: #00D4B8;
+      --peach: #D4735E;
+      --star: #F0ECF8;
+      --star-muted: #B0B4CC;
+      --star-dim: #8088A8;
+      --serif: 'DM Serif Display', Georgia, serif;
+      --sans: 'Plus Jakarta Sans', -apple-system, sans-serif;
+    }
+
+    html { -webkit-font-smoothing: antialiased; }
+    body { background: var(--abyss); color: var(--star); font-family: var(--sans); min-height: 100vh; }
+
+    /* ---- Login gate ---- */
+    .login-gate {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem;
+    }
+    .login-card {
+      max-width: 400px;
+      width: 100%;
+      text-align: center;
+    }
+    .login-card h1 {
+      font-family: var(--serif);
+      font-size: 1.75rem;
+      margin-bottom: 0.5rem;
+    }
+    .login-card p {
+      color: var(--star-muted);
+      font-size: 0.9rem;
+      margin-bottom: 2rem;
+    }
+    .login-input {
+      width: 100%;
+      padding: 14px 18px;
+      background: var(--abyss-light);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 10px;
+      color: var(--star);
+      font-family: var(--sans);
+      font-size: 1rem;
+      margin-bottom: 1rem;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+    .login-input:focus { border-color: var(--dune); }
+    .login-input::placeholder { color: var(--star-dim); }
+    .login-btn {
+      width: 100%;
+      padding: 14px;
+      background: var(--dune);
+      color: var(--abyss);
+      font-family: var(--sans);
+      font-weight: 600;
+      font-size: 1rem;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .login-btn:hover { background: #D49A60; }
+    .login-error {
+      color: var(--peach);
+      font-size: 0.85rem;
+      margin-top: 1rem;
+      display: none;
+    }
+
+    /* ---- Dashboard ---- */
+    .dashboard { display: none; min-height: 100vh; }
+    .dash-header {
+      padding: 2rem 2rem 1.5rem;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+    .dash-header-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+    .dash-title {
+      font-family: var(--serif);
+      font-size: 1.5rem;
+    }
+    .dash-meta {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+    }
+    .dash-stat {
+      text-align: center;
+    }
+    .dash-stat-num {
+      font-family: var(--serif);
+      font-size: 2rem;
+      color: var(--dune);
+      line-height: 1;
+    }
+    .dash-stat-label {
+      font-size: 0.7rem;
+      color: var(--star-dim);
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      margin-top: 4px;
+    }
+
+    .dash-body {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 2rem;
+    }
+
+    /* ---- Filters ---- */
+    .dash-controls {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+      flex-wrap: wrap;
+    }
+    .dash-search {
+      flex: 1;
+      min-width: 200px;
+      padding: 10px 14px;
+      background: var(--abyss-light);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 8px;
+      color: var(--star);
+      font-family: var(--sans);
+      font-size: 0.9rem;
+      outline: none;
+    }
+    .dash-search:focus { border-color: var(--dune); }
+    .dash-search::placeholder { color: var(--star-dim); }
+    .dash-filter {
+      padding: 8px 16px;
+      background: var(--abyss-light);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 8px;
+      color: var(--star-muted);
+      font-family: var(--sans);
+      font-size: 0.85rem;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .dash-filter.active {
+      background: rgba(196,135,77,0.15);
+      border-color: var(--dune);
+      color: var(--dune);
+    }
+    .dash-export {
+      padding: 8px 16px;
+      background: transparent;
+      border: 1px solid rgba(0,212,184,0.3);
+      border-radius: 8px;
+      color: var(--cyan);
+      font-family: var(--sans);
+      font-size: 0.85rem;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .dash-export:hover { background: rgba(0,212,184,0.08); }
+
+    /* ---- Table ---- */
+    .dash-table-wrap {
+      overflow-x: auto;
+      border: 1px solid rgba(255,255,255,0.06);
+      border-radius: 12px;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.9rem;
+    }
+    thead th {
+      text-align: left;
+      padding: 14px 16px;
+      font-size: 0.7rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      color: var(--star-dim);
+      background: var(--abyss-light);
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+      white-space: nowrap;
+      cursor: pointer;
+      user-select: none;
+    }
+    thead th:hover { color: var(--star-muted); }
+    thead th .sort-arrow { margin-left: 4px; font-size: 0.6rem; }
+    tbody tr {
+      border-bottom: 1px solid rgba(255,255,255,0.04);
+      transition: background 0.15s;
+    }
+    tbody tr:hover { background: rgba(255,255,255,0.02); }
+    tbody td {
+      padding: 12px 16px;
+      color: var(--star-muted);
+      white-space: nowrap;
+    }
+    td.name-cell { color: var(--star); font-weight: 500; }
+    td.email-cell a {
+      color: var(--cyan);
+      text-decoration: none;
+    }
+    td.email-cell a:hover { text-decoration: underline; }
+    .source-badge {
+      display: inline-block;
+      padding: 3px 10px;
+      border-radius: 20px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .source-badge.book { background: rgba(196,135,77,0.15); color: var(--dune); }
+    .source-badge.audit { background: rgba(0,212,184,0.12); color: var(--cyan); }
+    .source-badge.other { background: rgba(107,63,160,0.15); color: #A87FDB; }
+
+    .score-pill {
+      display: inline-block;
+      padding: 3px 10px;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      background: rgba(0,212,184,0.1);
+      color: var(--cyan);
+    }
+
+    .empty-state {
+      text-align: center;
+      padding: 4rem 2rem;
+      color: var(--star-dim);
+    }
+    .empty-state h3 {
+      font-family: var(--serif);
+      font-size: 1.25rem;
+      color: var(--star-muted);
+      margin-bottom: 0.5rem;
+    }
+
+    .loading {
+      text-align: center;
+      padding: 4rem 2rem;
+      color: var(--star-dim);
+    }
+
+    @media (max-width: 640px) {
+      .dash-header { padding: 1.5rem 1rem 1rem; }
+      .dash-body { padding: 1rem; }
+      .dash-title { font-size: 1.25rem; }
+      .dash-stat-num { font-size: 1.5rem; }
+      table { font-size: 0.8rem; }
+      thead th, tbody td { padding: 10px 12px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Login -->
+  <div class="login-gate" id="login-gate">
+    <div class="login-card">
+      <h1>Architects List</h1>
+      <p>Enter your dashboard key to view signups.</p>
+      <form id="login-form">
+        <input type="password" class="login-input" id="key-input" placeholder="Dashboard key" autocomplete="off" autofocus>
+        <button type="submit" class="login-btn">Open Dashboard</button>
+      </form>
+      <p class="login-error" id="login-error">Invalid key. Try again.</p>
+    </div>
+  </div>
+
+  <!-- Dashboard -->
+  <div class="dashboard" id="dashboard">
+    <header class="dash-header">
+      <div class="dash-header-inner">
+        <h1 class="dash-title">Architects List</h1>
+        <div class="dash-meta">
+          <div class="dash-stat">
+            <div class="dash-stat-num" id="total-count">--</div>
+            <div class="dash-stat-label">Total Signups</div>
+          </div>
+          <div class="dash-stat">
+            <div class="dash-stat-num" id="today-count">--</div>
+            <div class="dash-stat-label">Today</div>
+          </div>
+          <div class="dash-stat">
+            <div class="dash-stat-num" id="week-count">--</div>
+            <div class="dash-stat-label">This Week</div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <div class="dash-body">
+      <div class="dash-controls">
+        <input type="text" class="dash-search" id="search" placeholder="Search name or email...">
+        <button class="dash-filter active" data-source="all">All</button>
+        <button class="dash-filter" data-source="book">Book</button>
+        <button class="dash-filter" data-source="audit">Audit</button>
+        <button class="dash-export" id="export-csv">Export CSV</button>
+      </div>
+
+      <div class="dash-table-wrap">
+        <div class="loading" id="loading">Loading signups...</div>
+        <table id="signup-table" style="display:none;">
+          <thead>
+            <tr>
+              <th data-sort="name">Name <span class="sort-arrow"></span></th>
+              <th data-sort="email">Email <span class="sort-arrow"></span></th>
+              <th data-sort="source">Source <span class="sort-arrow"></span></th>
+              <th data-sort="score">Score <span class="sort-arrow"></span></th>
+              <th data-sort="timestamp">Date <span class="sort-arrow"></span></th>
+            </tr>
+          </thead>
+          <tbody id="signup-body"></tbody>
+        </table>
+        <div class="empty-state" id="empty" style="display:none;">
+          <h3>No signups yet</h3>
+          <p>When someone joins The Architects List, they will appear here.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const API = 'https://architects-list.nathancritch.workers.dev/signups';
+    let KEY = '';
+    let allSignups = [];
+    let currentFilter = 'all';
+    let sortCol = 'timestamp';
+    let sortAsc = false;
+
+    // Login
+    document.getElementById('login-form').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      KEY = document.getElementById('key-input').value.trim();
+      if (!KEY) return;
+
+      try {
+        const res = await fetch(API, {
+          headers: { 'Authorization': 'Bearer ' + KEY }
+        });
+        if (!res.ok) throw new Error('Unauthorized');
+        const data = await res.json();
+        allSignups = data.signups || [];
+        showDashboard();
+      } catch {
+        document.getElementById('login-error').style.display = 'block';
+      }
+    });
+
+    function showDashboard() {
+      document.getElementById('login-gate').style.display = 'none';
+      document.getElementById('dashboard').style.display = 'block';
+      updateStats();
+      renderTable();
+    }
+
+    function updateStats() {
+      const now = new Date();
+      const todayStr = now.toISOString().slice(0, 10);
+      const weekAgo = new Date(now - 7 * 86400000);
+
+      document.getElementById('total-count').textContent = allSignups.length;
+      document.getElementById('today-count').textContent = allSignups.filter(s => s.timestamp.slice(0, 10) === todayStr).length;
+      document.getElementById('week-count').textContent = allSignups.filter(s => new Date(s.timestamp) >= weekAgo).length;
+    }
+
+    function getFiltered() {
+      const q = document.getElementById('search').value.toLowerCase();
+      return allSignups.filter(s => {
+        if (currentFilter !== 'all' && s.source !== currentFilter) return false;
+        if (q && !s.name.toLowerCase().includes(q) && !s.email.toLowerCase().includes(q)) return false;
+        return true;
+      }).sort((a, b) => {
+        let va = a[sortCol] || '';
+        let vb = b[sortCol] || '';
+        if (sortCol === 'score') {
+          va = (a.score && a.score.total) || 0;
+          vb = (b.score && b.score.total) || 0;
+        }
+        if (va < vb) return sortAsc ? -1 : 1;
+        if (va > vb) return sortAsc ? 1 : -1;
+        return 0;
+      });
+    }
+
+    function renderTable() {
+      const filtered = getFiltered();
+      const tbody = document.getElementById('signup-body');
+      const table = document.getElementById('signup-table');
+      const empty = document.getElementById('empty');
+      const loading = document.getElementById('loading');
+
+      loading.style.display = 'none';
+
+      if (filtered.length === 0) {
+        table.style.display = 'none';
+        empty.style.display = 'block';
+        return;
+      }
+
+      empty.style.display = 'none';
+      table.style.display = 'table';
+
+      tbody.innerHTML = filtered.map(s => {
+        const srcClass = s.source === 'book' ? 'book' : s.source === 'audit' ? 'audit' : 'other';
+        const scoreHtml = s.score && s.score.total
+          ? '<span class="score-pill">' + s.score.total + '/100</span>'
+          : '<span style="color:var(--star-dim);">--</span>';
+        const d = new Date(s.timestamp);
+        const dateStr = d.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+        const timeStr = d.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' });
+        return '<tr>' +
+          '<td class="name-cell">' + esc(s.name) + '</td>' +
+          '<td class="email-cell"><a href="mailto:' + esc(s.email) + '">' + esc(s.email) + '</a></td>' +
+          '<td><span class="source-badge ' + srcClass + '">' + esc(s.source) + '</span></td>' +
+          '<td>' + scoreHtml + '</td>' +
+          '<td>' + dateStr + ' ' + timeStr + '</td>' +
+          '</tr>';
+      }).join('');
+    }
+
+    function esc(str) {
+      const d = document.createElement('div');
+      d.textContent = str || '';
+      return d.innerHTML;
+    }
+
+    // Search
+    document.getElementById('search').addEventListener('input', renderTable);
+
+    // Source filters
+    document.querySelectorAll('.dash-filter').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.dash-filter').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        currentFilter = btn.dataset.source;
+        renderTable();
+      });
+    });
+
+    // Column sorting
+    document.querySelectorAll('thead th[data-sort]').forEach(th => {
+      th.addEventListener('click', () => {
+        const col = th.dataset.sort;
+        if (sortCol === col) { sortAsc = !sortAsc; }
+        else { sortCol = col; sortAsc = true; }
+        renderTable();
+      });
+    });
+
+    // CSV export
+    document.getElementById('export-csv').addEventListener('click', () => {
+      const filtered = getFiltered();
+      const rows = [['Name', 'Email', 'Source', 'Score', 'Date']];
+      filtered.forEach(s => {
+        rows.push([
+          s.name,
+          s.email,
+          s.source,
+          s.score && s.score.total ? s.score.total + '/100' : '',
+          s.timestamp
+        ]);
+      });
+      const csv = rows.map(r => r.map(c => '"' + String(c).replace(/"/g, '""') + '"').join(',')).join('\n');
+      const blob = new Blob([csv], { type: 'text/csv' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'architects-list-' + new Date().toISOString().slice(0, 10) + '.csv';
+      a.click();
+      URL.revokeObjectURL(url);
+    });
+  </script>
+</body>
+</html>

@@ -2,8 +2,16 @@ name = "architects-list"
 main = "index.js"
 compatibility_date = "2026-04-01"
 
-# RESEND_API_KEY should be set as a secret, not here:
-#   wrangler secret put RESEND_API_KEY
+# Secrets (set via `wrangler secret put <NAME>`):
+#   RESEND_API_KEY
+#   DASHBOARD_KEY    — bearer token for the dashboard GET endpoint
+
+[[kv_namespaces]]
+binding = "SIGNUPS"
+id = "PLACEHOLDER"
+# After creating the namespace, replace PLACEHOLDER:
+#   wrangler kv namespace create SIGNUPS
+#   then paste the returned id here
 
 [observability]
 enabled = true
