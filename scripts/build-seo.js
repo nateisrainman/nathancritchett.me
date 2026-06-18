@@ -302,7 +302,7 @@ ${list}
   <meta property="og:url" content="${url}">
   <meta property="og:title" content="Writing by Nathan Critchett">
   <meta property="og:description" content="${articles.length} essays and whitepapers on cognitive strategy for the AI era.">
-  <meta property="og:image" content="${SITE}/assets/og-writing.png">
+  <meta property="og:image" content="${SITE}/assets/og-writing.png?v=3">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:site" content="@nathancritch">
   <meta name="theme-color" content="#060A14">

@@ -74,7 +74,7 @@ const footer = `  <footer class="footer">
     </div>
   </footer>`;
 
-const head = (title, desc, canonical) => `<!DOCTYPE html>
+const head = (title, desc, canonical, ogImage, ogAlt) => `<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -87,9 +87,13 @@ const head = (title, desc, canonical) => `<!DOCTYPE html>
   <meta property="og:url" content="${canonical}">
   <meta property="og:title" content="${esc(title)}">
   <meta property="og:description" content="${esc(desc)}">
-  <meta property="og:image" content="${SITE}/assets/og-home.png?v=2">
+  <meta property="og:image" content="${ogImage}">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="${esc(ogAlt)}">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:site" content="@nathancritch">
+  <meta name="twitter:image" content="${ogImage}">
   <meta name="theme-color" content="#060A14">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -142,8 +146,10 @@ ${list}
     D.breadcrumbNode([{ name: "Home", url: SITE + "/" }, { name: c.label + " Library", url }]),
   ];
 
+  const ogImage = `${SITE}/assets/og-${c.key}.png`;
+  const ogAlt = `${c.label} Library by Nathan Critchett`;
   const noteHtml = c.note ? `    <p class="library-note">${esc(c.note)}</p>\n` : "";
-  const page = `${head(`${c.label} Library by Nathan Critchett`, c.heroSub, url)}
+  const page = `${head(`${c.label} Library by Nathan Critchett`, c.heroSub, url, ogImage, ogAlt)}
 ${jsonLd(graph)}
 </head>
 <body>
@@ -247,7 +253,9 @@ ${siblings.map((s) => `      <a class="kr-card" href="${s.slug}.html">
     </div>
   </section>` : "";
 
-  const page = `${head(`${a.title} | Nathan Critchett`, desc, url)}
+  const ogImage = `${SITE}/assets/og-${c.key}.png`;
+  const ogAlt = `${c.label} Library by Nathan Critchett`;
+  const page = `${head(`${a.title} | Nathan Critchett`, desc, url, ogImage, ogAlt)}
 ${jsonLd(graph)}
 </head>
 <body>
