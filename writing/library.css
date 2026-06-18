@@ -61,6 +61,25 @@
   line-height: 1.55;
 }
 .cluster .writing-arrow { color: var(--dune); font-size: 1.1rem; }
+.cluster .writing-meta {
+  grid-column: 1 / -1;
+  font-size: 0.78rem;
+  color: var(--star-dim);
+  letter-spacing: 0.02em;
+}
+.library-note {
+  font-size: 0.9rem;
+  color: var(--star-dim);
+  border-left: 3px solid var(--dune);
+  padding: 0.5rem 0 0.5rem 1rem;
+  margin: 0 0 2.5rem;
+}
+.library-more {
+  margin-top: 1rem;
+  font-size: 0.9rem;
+  color: var(--star-muted);
+}
+.library-more a { color: var(--dune); }
 
 @media (max-width: 768px) {
   .library-hero { padding: 7rem 1.5rem 1.5rem; }

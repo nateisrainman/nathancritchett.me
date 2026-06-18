@@ -22,6 +22,7 @@ const fs = require("fs");
 const path = require("path");
 const D = require("./site-data");
 const { REVIEW_DATE, clusters, articles } = require("./articles");
+const { collections } = require("./collections");
 
 const ROOT = path.dirname(__dirname);
 const SITE = D.SITE;
@@ -344,12 +345,20 @@ buildWritingIndex();
 
 function buildSitemap() {
   const staticPages = ["/", "/about.html", "/writing/", "/book.html"];
+  const collectionUrls = [];
+  for (const c of Object.values(collections)) {
+    collectionUrls.push({ loc: SITE + c.basePath, lastmod: c.reviewed });
+    for (const a of c.articles) {
+      collectionUrls.push({ loc: SITE + c.basePath + a.slug + ".html", lastmod: c.reviewed });
+    }
+  }
   const urls = [
     ...staticPages.map((p) => ({ loc: SITE + p, lastmod: REVIEW_DATE })),
     ...articles.map((a) => ({
       loc: `${SITE}/writing/${a.slug}.html`,
       lastmod: REVIEW_DATE,
     })),
+    ...collectionUrls,
   ];
   const body = urls.map((u) =>
     `  <url>\n    <loc>${u.loc}</loc>\n    <lastmod>${u.lastmod}</lastmod>\n  </url>`
