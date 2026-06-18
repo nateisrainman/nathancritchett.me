@@ -437,6 +437,13 @@
   color: var(--star-dim);
   margin-top: 1.5rem;
 }
+.source-ref {
+  font-size: 0.85rem;
+  color: var(--star-dim);
+  margin-top: 1.5rem;
+  font-style: italic;
+}
+.source-ref a { color: var(--dune); }
 
 /* ---- Keep reading (cluster cross-links) ---- */
 .keep-reading {

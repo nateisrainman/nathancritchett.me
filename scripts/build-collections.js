@@ -1,23 +1,23 @@
 #!/usr/bin/env node
 /**
  * Generates the cross-venture library sections (/arq/ and /pitching/) on the
- * personal site from scripts/collections.js.
+ * personal site from scripts/collections.js (index metadata) and the full
+ * article text in scripts/content/*.md (parsed by parse-library.js).
  *
  * For each collection it writes:
  *   - <basePath>index.html      a category-grouped library index
- *   - <basePath><slug>.html     a bylined article page per piece
- *
- * Bodies are not yet imported, so each article page presents the real metadata
- * (title, dek, description, read time, source count, category) and links to the
- * full sourced article. When full text is available, the same pages fill in.
+ *   - <basePath><slug>.html     the full bylined article (takeaways, body,
+ *                               callouts, tables, FAQ, linked sources)
  *
  * Brand: reuses /styles.css, /writing/article.css, /writing/library.css.
+ * Output is dash-clean (em/en dashes normalized in parse-library.js).
  */
 
 const fs = require("fs");
 const path = require("path");
 const D = require("./site-data");
 const { collections } = require("./collections");
+const { parseFile, inline, plain } = require("./parse-library");
 
 const ROOT = path.dirname(__dirname);
 const SITE = D.SITE;
@@ -29,6 +29,18 @@ const FANCY = new RegExp("[\\u2013\\u2014]");
 function assertClean(s, where){ if (FANCY.test(s)) throw new Error("em/en dash in "+where); }
 function esc(s){ return s.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;"); }
 function jsonLd(graph){ return `  <script type="application/ld+json">\n${D.jsonLdScript(graph)}\n  </script>`; }
+
+// Parse the full-text markdown once, key by normalized title.
+function loadContent(file) {
+  const arts = parseFile(fs.readFileSync(path.join(ROOT, file), "utf8"));
+  const map = {};
+  for (const a of arts) map[a.title.replace(/\s+/g, " ").trim()] = a;
+  return map;
+}
+const content = {
+  arq: loadContent("scripts/content/arq-full.md"),
+  pitching: loadContent("scripts/content/critchpitch-full.md"),
+};
 
 function nav() {
   return `  <nav class="nav" id="nav">
@@ -70,7 +82,7 @@ const head = (title, desc, canonical) => `<!DOCTYPE html>
   <title>${esc(title)}</title>
   <meta name="description" content="${esc(desc)}">
   <link rel="canonical" href="${canonical}">
-  <meta property="og:type" content="website">
+  <meta property="og:type" content="article">
   <meta property="og:site_name" content="Nathan Critchett">
   <meta property="og:url" content="${canonical}">
   <meta property="og:title" content="${esc(title)}">
@@ -153,7 +165,6 @@ ${navScript}
   assertClean(page, c.basePath + "index.html");
   fs.mkdirSync(path.join(ROOT, c.basePath), { recursive: true });
   fs.writeFileSync(path.join(ROOT, c.basePath, "index.html"), page);
-  return c.articles.length;
 }
 
 /* ---------------- article page ---------------- */
@@ -161,8 +172,44 @@ function buildArticle(c, a) {
   const url = SITE + c.basePath + a.slug + ".html";
   const catLabel = c.categories.find((x) => x.key === a.category).label;
   const desc = a.desc || a.dek;
-  const siblings = c.articles.filter((x) => x.category === a.category && x.slug !== a.slug).slice(0, 3);
+  const sourceUrl = c.sourceBase + "/library/" + a.slug;
+  const parsed = content[c.key][a.title.replace(/\s+/g, " ").trim()];
+  if (!parsed) throw new Error(`No full text matched for "${a.title}" in ${c.key}`);
 
+  const sourcesCount = parsed.sources.length;
+
+  // quick take
+  const quickTake = parsed.takeaways.length ? `      <div class="quick-take">
+        <h2>The quick take</h2>
+        <ul>
+${parsed.takeaways.map((t) => `          <li>${inline(t)}</li>`).join("\n")}
+        </ul>
+      </div>` : "";
+
+  // FAQ
+  const faqHtml = parsed.faq.length ? `      <section class="faq">
+        <h2>Common questions</h2>
+${parsed.faq.map((f) => `        <details class="faq-item">
+          <summary>${esc(f.q)}</summary>
+          <div class="faq-answer">${inline(f.a)}</div>
+        </details>`).join("\n")}
+      </section>` : "";
+
+  // sources
+  const sourcesHtml = parsed.sources.length ? `      <section class="article-sources">
+        <h2>Sources</h2>
+        <p class="sources-note">Where findings are debated, the text says so rather than overstating the certainty.</p>
+        <ol>
+${parsed.sources.map((s) => `          <li id="src-${s.n}">${inline(s.text)}.${s.url ? ` <a href="${s.url}" rel="noopener">${esc(s.url)}</a>` : ""}</li>`).join("\n")}
+        </ol>
+      </section>` : "";
+
+  const disclaimer = c.key === "pitching"
+    ? `        <p class="article-disclaimer"><em>Education, not a medical diagnosis or treatment plan. If your pitcher has pain, consult a qualified sports-medicine professional.</em></p>\n`
+    : "";
+
+  // schema
+  const faqNode = D.faqNode(parsed.faq.map((f) => ({ q: f.q, a: plain(f.a) })));
   const articleNode = D.prune({
     "@type": "Article",
     "@id": url + "#article",
@@ -175,7 +222,7 @@ function buildArticle(c, a) {
     articleSection: catLabel,
     author: { "@id": D.PERSON_ID },
     publisher: { "@id": D.SITEORG_ID },
-    sameAs: [c.sourceBase + "/library/" + a.slug],
+    sameAs: [sourceUrl],
     url,
   });
   const graph = [
@@ -185,8 +232,10 @@ function buildArticle(c, a) {
       { name: c.label + " Library", url: SITE + c.basePath },
       { name: a.title, url },
     ]),
+    faqNode,
   ];
 
+  const siblings = c.articles.filter((x) => x.category === a.category && x.slug !== a.slug).slice(0, 3);
   const keepReading = siblings.length ? `  <section class="keep-reading">
     <h2>Keep reading</h2>
     <div class="kr-grid">
@@ -198,11 +247,6 @@ ${siblings.map((s) => `      <a class="kr-card" href="${s.slug}.html">
     </div>
   </section>` : "";
 
-  const disclaimer = c.key === "pitching"
-    ? `      <p class="article-disclaimer"><em>Education, not a medical diagnosis or treatment plan. If your pitcher has pain, consult a qualified sports-medicine professional.</em></p>\n`
-    : "";
-
-  const sourceUrl = c.sourceBase + "/library/" + a.slug;
   const page = `${head(`${a.title} | Nathan Critchett`, desc, url)}
 ${jsonLd(graph)}
 </head>
@@ -217,20 +261,19 @@ ${nav()}
       <h1 class="article-title">${esc(a.title)}</h1>
       <p class="article-subtitle">${esc(a.dek)}</p>
       <div class="article-byline">
-        <div class="byline-meta">${a.read} min read<span class="byline-dot">&middot;</span>${a.sources} cited sources<span class="byline-dot">&middot;</span>Last reviewed ${humanDate(c.reviewed)}</div>
+        <div class="byline-meta">${a.read} min read<span class="byline-dot">&middot;</span>${sourcesCount} cited sources<span class="byline-dot">&middot;</span>Last reviewed ${humanDate(c.reviewed)}</div>
         <div class="byline-author">
           <span class="byline-avatar">NC</span>
           <span>By <a href="/about.html" rel="author">Nathan Critchett</a>, ${esc(founderTitle(c))}</span>
         </div>
       </div>
+${quickTake}
       <div class="article-body">
-        <p>${esc(desc)}</p>
-        <div class="source-callout">
-          <span class="callout-label">Full article</span>
-          <p>This is the library entry on Nathan's hub. Read the full, fully-sourced piece on ${esc(c.sourceName)}.</p>
-          <a class="btn btn-primary btn-sm" href="${sourceUrl}" rel="noopener">Read on ${esc(c.sourceName)} &#8594;</a>
-        </div>
-${disclaimer}      </div>
+${parsed.bodyHtml}
+${disclaimer}        <p class="source-ref">Originally published on <a href="${sourceUrl}" rel="noopener">${esc(c.sourceName)}</a>.</p>
+      </div>
+${faqHtml}
+${sourcesHtml}
       <aside class="author-box">
         <img class="author-avatar" src="/assets/headshot.jpg" alt="Nathan Critchett" onerror="this.style.display='none'">
         <div>
@@ -255,6 +298,6 @@ for (const c of Object.values(collections)) {
   buildIndex(c);
   c.articles.forEach((a) => buildArticle(c, a));
   total += c.articles.length;
-  console.log(`Built ${c.label}: index + ${c.articles.length} article pages.`);
+  console.log(`Built ${c.label}: index + ${c.articles.length} full article pages.`);
 }
-console.log(`Collections total: ${total} article pages.`);
+console.log(`Collections total: ${total} full article pages.`);

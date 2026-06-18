@@ -6,7 +6,7 @@
   <title>Assessing Thinking, Not Just Knowledge | Nathan Critchett</title>
   <meta name="description" content="Most tests measure recall. They miss how a person reasons. A guide to cognitive diagnostics: what they measure, how, and why it matters more in the AI era.">
   <link rel="canonical" href="https://nathancritchett.me/arq/assessing-thinking-not-knowledge.html">
-  <meta property="og:type" content="website">
+  <meta property="og:type" content="article">
   <meta property="og:site_name" content="Nathan Critchett">
   <meta property="og:url" content="https://nathancritchett.me/arq/assessing-thinking-not-knowledge.html">
   <meta property="og:title" content="Assessing Thinking, Not Just Knowledge | Nathan Critchett">
@@ -89,6 +89,43 @@
           "item": "https://nathancritchett.me/arq/assessing-thinking-not-knowledge.html"
         }
       ]
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "What is the difference between assessing knowledge and assessing thinking?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Assessing knowledge measures whether a person can produce the correct answer. Assessing thinking measures how they reason: the structure and complexity of the cognitive process behind the answer. A person can know a lot and reason simply, or know less and reason with sophistication, which is why the two require different kinds of measurement."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What is a cognitive diagnostic?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "An assessment that examines how someone thinks rather than what they know. Instead of scoring against an answer key, it evaluates the structure of reasoning on open problems, often across multiple cognitive domains such as critical thinking, synthesis, and metacognition."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Why isn't most testing already like this?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Because measuring thinking is hard. It requires open-ended problems and structural scoring of responses, which traditionally meant trained human raters and did not scale. Reliable scoring also requires stages defined structurally, as in the Model of Hierarchical Complexity. New tooling now makes this possible at scale."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Why does assessing thinking matter more in the AI era?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Because AI makes producing answers cheap, so the scarce skill becomes evaluating them. The World Economic Forum ranks analytical thinking as the most essential core skill. An assessment that only measures recall is measuring the part machines now handle, not the human judgment that still carries a premium."
+          }
+        }
+      ]
     }
   ]
 }
@@ -125,14 +162,74 @@
           <span>By <a href="/about.html" rel="author">Nathan Critchett</a>, Founder of Arq.Training</span>
         </div>
       </div>
-      <div class="article-body">
-        <p>Most tests measure recall. They miss how a person reasons. A guide to cognitive diagnostics: what they measure, how, and why it matters more in the AI era.</p>
-        <div class="source-callout">
-          <span class="callout-label">Full article</span>
-          <p>This is the library entry on Nathan's hub. Read the full, fully-sourced piece on Arq.</p>
-          <a class="btn btn-primary btn-sm" href="https://www.arq.training/library/assessing-thinking-not-knowledge" rel="noopener">Read on Arq &#8594;</a>
-        </div>
+      <div class="quick-take">
+        <h2>The quick take</h2>
+        <ul>
+          <li>Most assessments measure what a person knows. A cognitive diagnostic measures how a person thinks: the structure and complexity of their reasoning. Arq.training is built to do the latter.</li>
+          <li>The distinction is real and measurable. Developmental scoring systems evaluate the order of complexity in reasoning rather than the correctness of an answer. <sup><a href="#src-3">3</a></sup></li>
+          <li>Knowledge and thinking come apart: a person can know a great deal and reason simply, or know less and reason with sophistication.</li>
+          <li>This matters more in the AI era, when answers are cheap and the scarce skill is the judgment to evaluate them. <sup><a href="#src-4">4</a></sup></li>
+          <li>Assessing thinking requires open problems and structural scoring, not multiple-choice keys, which is why it has historically been rare and expensive. <sup><a href="#src-1">1</a></sup></li>
+        </ul>
       </div>
+      <div class="article-body">
+        <h2>Introduction</h2>
+        <p>Almost every test you have ever taken was built to measure one thing: whether you knew the answer. Multiple choice, short answer, fill in the blank. The format assumes a correct response exists and asks whether you can produce it. That design is efficient, it scales, and it captures something real. It also misses the thing that increasingly matters most: how you think.</p>
+        <p>A cognitive diagnostic asks a different question. Not did you get the right answer, but how did you reason your way through the problem? What did you consider, what did you coordinate, where did your thinking stop? This is the difference between measuring knowledge and measuring thinking, and it is the distinction Arq.training is built around.</p>
+        <p>The distinction is not philosophical hand-waving. It is measurable, it has decades of research behind it, and it has become far more urgent now that machines can produce the correct answer faster than any person can.</p>
+        <h2>Knowledge and thinking are not the same thing</h2>
+        <p>It is tempting to assume that a high test score means a strong thinker. Often the two travel together, but they come apart more than people expect. A student can memorize the structure of a persuasive essay and reproduce it flawlessly without ever evaluating whether its argument is sound. An employee can know every step of a process and never question whether the process still makes sense.</p>
+        <p>The research treats these as distinct. The Delphi Report's definition of critical thinking centers on operations like evaluation, inference, and self-regulation, none of which are the same as recall. <sup><a href="#src-1">1</a></sup> A person rich in content knowledge can be poor at these, and vice versa. That is precisely why a knowledge test cannot stand in for a thinking measure.</p>
+        <p>Standardized assessment was never designed to capture this. It tells you the symptom, whether the answer was right, but not the cognitive architecture that produced it. A diagnostic aims at the architecture itself.</p>
+        <h2>What a cognitive diagnostic measures</h2>
+        <p>Rather than scoring against an answer key, a cognitive diagnostic examines the structure of reasoning. The clearest established example is developmental scoring. The Lectical Assessment System, built by Theo Dawson and Lectica, scores written or spoken responses for their order of complexity on a validated developmental scale, grounded in the Model of Hierarchical Complexity. <sup><a href="#src-3">3</a></sup> The question is not whether the conclusion is correct, but how complex the reasoning that reached it is.</p>
+        <p>Arq measures across several cognitive domains rather than a single global score: critical thinking, adaptive reasoning, creative problem solving, information synthesis, and metacognition. These are not knowledge areas and they are not personality traits. They are observable cognitive operations, and a person can be strong in one and weak in another, which is what makes the result diagnostic rather than a single verdict.</p>
+        <p>The output is a picture of how someone thinks, with enough resolution to show where their reasoning is strong, where it tops out, and where to aim the next challenge. That is something a percentile rank on a content test cannot provide.</p>
+        <h2>Why this has always been hard</h2>
+        <p>If measuring thinking is so valuable, why is almost every test still a knowledge test? Because measuring thinking is hard. It requires open-ended problems with no single right answer, and it requires judging the structure of a response, which traditionally meant trained human raters reading each one. That does not scale to a classroom, let alone a district or a company.</p>
+        <p>The reliability bar is also high. For a developmental measure to be trustworthy, different raters have to agree on what they are seeing, which is only possible when stages are defined structurally rather than by impression. The Model of Hierarchical Complexity provides exactly that kind of analytic definition, which is what made reliable developmental scoring possible in the first place. <sup><a href="#src-2">2</a></sup></p>
+        <p>What has changed is the tooling. Reasoning can now be elicited through interactive conversation and scored for structure at scale, which removes the bottleneck that kept cognitive diagnostics rare and expensive. The science is decades old. The ability to deliver it to everyone is new.</p>
+        <h2>Why it matters more now</h2>
+        <p>The case for assessing thinking over knowledge was always strong. The AI era makes it urgent. When a language model can produce a fluent, correct-looking answer to almost any question, the ability to produce answers stops being scarce. What becomes scarce is the judgment to evaluate them.</p>
+        <p>The labor market is already reflecting this. The World Economic Forum ranks analytical thinking as the most essential core skill, named by seven in ten employers, and projects that a large share of current skill sets will be transformed by 2030. <sup><a href="#src-4">4</a></sup> An assessment that only measures recall is measuring the very thing machines now do for free.</p>
+        <ul>
+<li>A knowledge test asks: do you have the answer? A machine can now answer that for almost anyone.</li>
+</ul>
+        <ul>
+<li>A thinking diagnostic asks: can you evaluate, integrate, and direct? That is the human capacity that still carries a premium.</li>
+</ul>
+        <p>This is the bet behind Arq. Measure how people think, make that visible to teachers, leaders, and learners, and then train it. In a world where answers are cheap, the quality of thinking is the thing worth measuring, and the thing worth growing.</p>
+        <p class="source-ref">Originally published on <a href="https://www.arq.training/library/assessing-thinking-not-knowledge" rel="noopener">Arq</a>.</p>
+      </div>
+      <section class="faq">
+        <h2>Common questions</h2>
+        <details class="faq-item">
+          <summary>What is the difference between assessing knowledge and assessing thinking?</summary>
+          <div class="faq-answer">Assessing knowledge measures whether a person can produce the correct answer. Assessing thinking measures how they reason: the structure and complexity of the cognitive process behind the answer. A person can know a lot and reason simply, or know less and reason with sophistication, which is why the two require different kinds of measurement. <sup><a href="#src-1">1</a></sup></div>
+        </details>
+        <details class="faq-item">
+          <summary>What is a cognitive diagnostic?</summary>
+          <div class="faq-answer">An assessment that examines how someone thinks rather than what they know. Instead of scoring against an answer key, it evaluates the structure of reasoning on open problems, often across multiple cognitive domains such as critical thinking, synthesis, and metacognition. <sup><a href="#src-3">3</a></sup></div>
+        </details>
+        <details class="faq-item">
+          <summary>Why isn't most testing already like this?</summary>
+          <div class="faq-answer">Because measuring thinking is hard. It requires open-ended problems and structural scoring of responses, which traditionally meant trained human raters and did not scale. Reliable scoring also requires stages defined structurally, as in the Model of Hierarchical Complexity. New tooling now makes this possible at scale. <sup><a href="#src-2">2</a></sup></div>
+        </details>
+        <details class="faq-item">
+          <summary>Why does assessing thinking matter more in the AI era?</summary>
+          <div class="faq-answer">Because AI makes producing answers cheap, so the scarce skill becomes evaluating them. The World Economic Forum ranks analytical thinking as the most essential core skill. An assessment that only measures recall is measuring the part machines now handle, not the human judgment that still carries a premium. <sup><a href="#src-4">4</a></sup></div>
+        </details>
+      </section>
+      <section class="article-sources">
+        <h2>Sources</h2>
+        <p class="sources-note">Where findings are debated, the text says so rather than overstating the certainty.</p>
+        <ol>
+          <li id="src-1">Facione, P. A. (1990). Critical Thinking: A Statement of Expert Consensus (The Delphi Report). American Philosophical Association. Defines critical thinking through operations like evaluation, inference, and self-regulation, distinct from recall. <a href="https://eric.ed.gov/?id=ED315423" rel="noopener">https://eric.ed.gov/?id=ED315423</a></li>
+          <li id="src-2">Commons, M. L. Trudeau, E. J. Stein, S. A. Richards, F. A. &amp; Krause, S. R. (1998). Hierarchical Complexity of Tasks Shows the Existence of Developmental Stages. Developmental Review, 18(3), 237-278. Provides an analytic, structure-based definition of stages that makes reliable developmental scoring possible. <a href="https://doi.org/10.1006/drev.1998.0467" rel="noopener">https://doi.org/10.1006/drev.1998.0467</a></li>
+          <li id="src-3">Dawson, T. L. (2024). The Lectical Assessment System (CLAS). Lectica, Inc.. Scores responses for the order of complexity of reasoning on a validated developmental scale, not for correctness. <a href="https://lectica.org/about/clas" rel="noopener">https://lectica.org/about/clas</a></li>
+          <li id="src-4">World Economic Forum (2025). Future of Jobs Report 2025. World Economic Forum. Ranks analytical thinking the most essential core skill and projects major change in required skill sets by 2030. <a href="https://www.weforum.org/publications/the-future-of-jobs-report-2025/" rel="noopener">https://www.weforum.org/publications/the-future-of-jobs-report-2025/</a></li>
+        </ol>
+      </section>
       <aside class="author-box">
         <img class="author-avatar" src="/assets/headshot.jpg" alt="Nathan Critchett" onerror="this.style.display='none'">
         <div>
