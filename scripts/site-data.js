@@ -21,7 +21,7 @@ const SITEORG_ID = SITE + "/#org";
  * --------------------------------------------------------------- */
 
 const profiles = {
-  linkedin: "https://www.linkedin.com/in/nathancritchett/",
+  linkedin: "https://www.linkedin.com/in/nathan-critchett/",
   // Conflict on the live site: nav links twitter.com/nathancritchett but
   // meta tags use @nathancritch. Left blank until confirmed so we never
   // ship a wrong sameAs. Set to the correct full profile URL, e.g.
