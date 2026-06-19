@@ -18,6 +18,7 @@ const path = require("path");
 const D = require("./site-data");
 const { collections } = require("./collections");
 const { parseFile, inline, plain } = require("./parse-library");
+const { navHtml, librarySwitch } = require("./nav");
 
 const ROOT = path.dirname(__dirname);
 const SITE = D.SITE;
@@ -42,23 +43,6 @@ const content = {
   pitching: loadContent("scripts/content/critchpitch-full.md"),
 };
 
-function nav() {
-  return `  <nav class="nav" id="nav">
-    <div class="nav-inner">
-      <a href="/" class="nav-name">NATHAN CRITCHETT</a>
-      <div class="nav-right">
-        <button class="nav-toggle" id="nav-toggle" aria-label="Menu"><span></span><span></span><span></span></button>
-      </div>
-      <div class="nav-links" id="nav-links">
-        <a href="/writing/">Writing</a>
-        <a href="/arq/">Arq</a>
-        <a href="/pitching/">Pitching</a>
-        <a href="/about.html">About</a>
-        <a href="/#contact" class="nav-cta">Get in Touch</a>
-      </div>
-    </div>
-  </nav>`;
-}
 const navScript = `  <script>
     const nav = document.getElementById('nav');
     window.addEventListener('scroll', () => nav.classList.toggle('scrolled', window.scrollY > 50));
@@ -153,15 +137,15 @@ ${list}
 ${jsonLd(graph)}
 </head>
 <body>
-${nav()}
+${navHtml()}
   <header class="library-hero">
     <p class="section-label">${esc(c.heroEyebrow)}</p>
     <h1>${esc(c.heroTitle)}</h1>
     <p class="library-sub">${esc(c.heroSub)}</p>
   </header>
   <main class="library">
+${librarySwitch(c.key)}
 ${noteHtml}${sections}
-    <p class="library-more">More from Nathan: <a href="/writing/">AI &amp; Cognition</a> &middot; <a href="/arq/">Arq</a> &middot; <a href="/pitching/">Pitching</a></p>
   </main>
 ${footer}
 ${navScript}
@@ -259,7 +243,7 @@ ${siblings.map((s) => `      <a class="kr-card" href="${s.slug}.html">
 ${jsonLd(graph)}
 </head>
 <body>
-${nav()}
+${navHtml()}
   <article class="article">
     <div class="article-inner">
       <div class="article-meta">

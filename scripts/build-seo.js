@@ -23,6 +23,7 @@ const path = require("path");
 const D = require("./site-data");
 const { REVIEW_DATE, clusters, articles } = require("./articles");
 const { collections } = require("./collections");
+const { navHtml: siteNav, librarySwitch } = require("./nav");
 
 const ROOT = path.dirname(__dirname);
 const SITE = D.SITE;
@@ -206,6 +207,8 @@ for (const a of articles) {
     ? '<div class="article-cta">'
     : "<footer";
   html = injectRegion(html, "KEEPREADING", keepReading, krAnchor);
+  // Unify the (previously stale) AI article nav with the rest of the site.
+  html = html.replace(/<nav class="nav" id="nav">[\s\S]*?<\/nav>/, () => siteNav());
 
   write(file, html);
   count++;
@@ -316,13 +319,14 @@ ${list}
 ${jsonld}
 </head>
 <body>
-${navHtml("../")}
+${siteNav()}
   <header class="library-hero">
-    <p class="section-label">The Library</p>
+    <p class="section-label">My Writing</p>
     <h1>Writing on cognitive strategy for the AI era</h1>
     <p class="library-sub">${articles.length} essays and whitepapers, grouped into the ideas they build. Every piece is written and bylined by Nathan Critchett.</p>
   </header>
   <main class="library">
+${librarySwitch("writing")}
 ${sections}
   </main>
   <footer class="footer">

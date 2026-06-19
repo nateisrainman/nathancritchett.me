@@ -22,6 +22,35 @@
   margin: 0 auto;
   padding: 2rem 2.5rem 5rem;
 }
+
+/* ---- Library switcher (three libraries) ---- */
+.lib-switch {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.75rem;
+  margin-bottom: 2.5rem;
+}
+.lib-tab {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  padding: 0.9rem 1.1rem;
+  background: var(--abyss-light);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 10px;
+  transition: border-color 0.2s, background 0.2s;
+}
+.lib-tab:hover { border-color: var(--dune); }
+.lib-tab.is-active {
+  border-color: var(--dune);
+  background: rgba(196, 135, 77, 0.10);
+}
+.lib-tab-label { font-weight: 600; color: var(--star); font-size: 0.98rem; }
+.lib-tab-meta { font-size: 0.78rem; color: var(--star-dim); }
+
+@media (max-width: 640px) {
+  .lib-switch { grid-template-columns: 1fr; }
+}
 .cluster { margin-bottom: 3.5rem; }
 .cluster-title {
   font-family: var(--serif);
