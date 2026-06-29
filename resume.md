@@ -33,8 +33,9 @@ Stakeholder Engagement
 ## Selected Tools, Products & Prototypes
 
 **Arq.Training, Founder & Builder.** Live, arq.training.
-Cognitive diagnostic platform for education. Maps how students reason, not just
-what they score. Built on the Model of Hierarchical Complexity.
+Cognitive diagnostic platform for education and workforce. Maps how people reason,
+not just what they score, to identify and grow talent density. Built on the Model
+of Hierarchical Complexity.
 *LLM-assisted analysis, assessment design, EdTech.*
 
 **CritchPitch, Founder & Builder.** Live, critchpitch.com.
@@ -55,11 +56,6 @@ human at the center of every decision.
 **Architects List, Serverless backend.** Shipped.
 Automated signup and welcome-kit delivery powering the book and audit funnels.
 *Cloudflare Workers, KV storage, Resend API, auth dashboard.*
-
-**nathancritchett.me, Content & SEO platform.** Shipped.
-Solo-built publishing system. A programmatic pipeline generates Open Graph cards,
-sitemaps, and schema.org structured data across three libraries.
-*Python, Node, structured data, analytics.*
 
 ---
 
@@ -97,9 +93,16 @@ Selected audiences:
 
 ---
 
+## Education & Awards
+
+**B.S. in Entrepreneurship**, Loyola Marymount University (LMU). **Rising Star
+Award** winner.
+
+---
+
 ## Ventures & Earlier
 
-- **Arq.Training**, Founder. Cognitive diagnostics for education.
+- **Arq.Training**, Founder. Cognitive diagnostics for education and workforce.
 - **CritchPitch**, Founder. Youth pitching screening and arm-health.
 
 Division I pitcher and sports-medicine All-American. Former first responder, LA
