@@ -25,8 +25,8 @@ the future of work.
 AI Strategy · Generative AI · Large Language Models (LLMs) · Prompt Engineering ·
 AI Adoption & Change · Human-in-the-Loop Design · Rapid Prototyping · Product
 Strategy · Learning Experience Design · Instructional Design · EdTech · Assessment
-& Diagnostics · Computer Vision · JavaScript · Python · Serverless (Cloudflare
-Workers) · Technical Writing · Keynote Speaking · Stakeholder Engagement
+& Diagnostics · Computer Vision · Technical Writing · Keynote Speaking ·
+Stakeholder Engagement
 
 ---
 
