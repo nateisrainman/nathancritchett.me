@@ -1,42 +1,72 @@
 # Architects List Worker
 
-Cloudflare Worker that handles Architects List signups and sends the welcome kit via Resend.
+Cloudflare Worker behind the book waitlist (the "Architects List"). It stores
+every signup in a D1 table and sends a welcome kit + admin notification via
+Resend.
 
-## Deploy
+## How it works (important)
+
+A signup is treated as **successful the moment it is stored in the database**.
+Emails are best-effort: if Resend is misconfigured (e.g. the sending domain
+is not verified yet), the visitor still gets a success response and the lead is
+safely in the `waitlist` table. The worker only returns an error if it could
+not record the signup at all.
+
+`book.html` and `audit.html` POST `{ name, email, source, score }` to the
+worker root. The dashboard (`/dashboard.html`) GETs `/signups` with a bearer key.
+
+## One-time setup
 
 ```bash
-# 1. Install wrangler if you do not have it
-npm install -g wrangler
+cd worker
 
-# 2. Login to Cloudflare
+# 1. Install wrangler + log in
+npm install -g wrangler
 wrangler login
 
-# 3. Set your Resend API key as a secret
-cd worker
-wrangler secret put RESEND_API_KEY
-# Paste your Resend API key when prompted
+# 2. Create the D1 database, then paste the printed database_id into wrangler.toml
+wrangler d1 create architects-list
 
-# 4. Deploy
+# 3. Create the waitlist table
+wrangler d1 execute architects-list --remote --file=./schema.sql
+
+# 4. Set secrets
+wrangler secret put RESEND_API_KEY     # from https://resend.com
+wrangler secret put DASHBOARD_KEY      # any strong string; used by dashboard.html
+
+# 5. Deploy
 wrangler deploy
 ```
 
-After deploying, wrangler will print a URL like `https://architects-list.YOUR-SUBDOMAIN.workers.dev`. Update the `fetch` URLs in both `book.html` and `audit.js` to point to that URL if it differs from `architects-list.nathancritch.workers.dev`.
+After deploying, wrangler prints a URL like
+`https://architects-list.<subdomain>.workers.dev`. The site currently posts to
+`https://architects-list.nathancritch.workers.dev` (in `book.html` and
+`audit.js`); update those if your URL differs.
 
-## Resend Setup
+## Resend setup (for the emails)
+
+The signup is captured without this, but to actually send the welcome kit:
 
 1. Sign up at https://resend.com
-2. Verify `nathancritchett.me` as a sending domain (add the DNS records Resend provides to GoDaddy)
-3. Generate an API key from the dashboard
-4. Paste it into the `wrangler secret put` command above
+2. Verify `nathancritchett.me` as a sending domain (add the DNS records Resend
+   gives you). Until this is done, sends from `nathan@nathancritchett.me` fail,
+   which is the most common cause of "the welcome email never arrived."
+3. Generate an API key and set it with `wrangler secret put RESEND_API_KEY`.
 
-## What it does
+## Viewing / exporting signups
 
-- Accepts POST requests from the book page and audit page
-- Validates the email
-- Sends a welcome email to the signup with all five kit links
-- Sends a notification email to nathan.critch@outlook.com with the signup details
-- Returns JSON success/error
+```bash
+# Recent rows straight from the database
+wrangler d1 execute architects-list --remote \
+  --command "SELECT created_at, email, name, source, score_total FROM waitlist ORDER BY created_at DESC LIMIT 50"
+
+# Full export
+wrangler d1 execute architects-list --remote --command "SELECT * FROM waitlist" --json > signups.json
+```
+
+The `/dashboard.html` page also lists signups (enter your `DASHBOARD_KEY`).
 
 ## CORS
 
-The worker only accepts requests from `https://nathancritchett.me`. Update `CORS_HEADERS` in `index.js` if you need to allow other origins (like a local dev server).
+The worker only accepts browser requests from `https://nathancritchett.me`
+(`CORS_HEADERS` in `index.js`). Add other origins there if needed.

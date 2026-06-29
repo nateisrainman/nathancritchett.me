@@ -25,20 +25,7 @@ export default {
       if (!env.DASHBOARD_KEY || auth !== `Bearer ${env.DASHBOARD_KEY}`) {
         return json({ error: 'Unauthorized' }, 401);
       }
-
-      const all = [];
-      let cursor = null;
-      do {
-        const list = await env.SIGNUPS.list({ prefix: 'signup:', cursor, limit: 500 });
-        for (const key of list.keys) {
-          const val = await env.SIGNUPS.get(key.name, 'json');
-          if (val) all.push(val);
-        }
-        cursor = list.list_complete ? null : list.cursor;
-      } while (cursor);
-
-      all.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
-      return json({ signups: all, total: all.length });
+      return json(await listSignups(env));
     }
 
     if (request.method !== 'POST') {
@@ -59,30 +46,23 @@ export default {
     }
 
     const firstName = (name || 'there').split(' ')[0].trim();
-
-    // Persist signup to KV
     const timestamp = new Date().toISOString();
-    const kvKey = `signup:${timestamp}:${email.toLowerCase()}`;
-    try {
-      await env.SIGNUPS.put(kvKey, JSON.stringify({
-        name: name || firstName,
-        email: email.toLowerCase(),
-        source: source || 'book',
-        score: score || null,
-        timestamp,
-      }));
-    } catch (e) {
-      console.error('KV write failed:', e);
-    }
+    const record = {
+      name: name || firstName,
+      email: email.toLowerCase(),
+      source: source || 'book',
+      score: score || null,
+      timestamp,
+    };
 
-    // Build the welcome email
+    // 1) Persist FIRST. Capturing the lead is the whole job; a signup that is
+    //    durably stored is a success even if every email later fails.
+    const stored = await storeSignup(env, record);
+
+    // 2) Emails are best-effort. They never decide whether the signup worked.
     const html = welcomeEmailHtml(firstName, source, score);
     const text = welcomeEmailText(firstName, source, score);
 
-    // Fire BOTH emails in parallel. The admin notification must
-    // fire whether or not the user welcome email succeeds, so that
-    // Nathan never misses a signup even if Resend is rate-limited,
-    // the user's domain bounces, or the welcome template fails.
     const welcomePromise = fetch('https://api.resend.com/emails', {
       method: 'POST',
       headers: {
@@ -120,13 +100,11 @@ export default {
       notifyPromise,
     ]);
 
-    // Log diagnostics so Cloudflare's Worker logs show what happened.
     const welcomeOk = await inspectResendResult('welcome', welcomeResult);
     const notifyOk = await inspectResendResult('notify', notifyResult);
 
-    // If the admin notification failed, retry once with a plain-text
-    // fallback addressed to an alternate route. Better to alert Nathan
-    // with a degraded message than to miss the lead entirely.
+    // If the admin notification failed, retry once from a fallback sender so
+    // Nathan still hears about the lead even if his domain is mid-setup.
     if (!notifyOk) {
       try {
         await fetch('https://api.resend.com/emails', {
@@ -147,16 +125,98 @@ export default {
       }
     }
 
-    // Always return success to the form if the admin alert went through.
-    // The user's welcome email failing is recoverable, they're on the
-    // list and Nathan can follow up manually.
-    if (notifyOk || welcomeOk) {
-      return json({ success: true, welcome: welcomeOk, notify: notifyOk });
+    // Success if the signup was captured by ANY durable means (table, KV, or
+    // at least an admin email made it through). Only error if we truly lost it.
+    if (stored || notifyOk || welcomeOk) {
+      return json({ success: true, stored, welcome: welcomeOk, notify: notifyOk });
     }
 
-    return json({ error: 'Email send failed' }, 500);
+    return json({ error: 'Could not record signup' }, 500);
   },
 };
+
+// Store the signup in the D1 `waitlist` table (primary), mirroring to KV if a
+// legacy namespace is still bound. Returns true if any store succeeded.
+async function storeSignup(env, rec) {
+  let stored = false;
+
+  if (env.DB) {
+    try {
+      await env.DB.prepare(
+        `INSERT INTO waitlist (email, name, source, score_total, score_weakest, created_at, updated_at)
+         VALUES (?, ?, ?, ?, ?, ?, ?)
+         ON CONFLICT(email) DO UPDATE SET
+           name = excluded.name,
+           source = excluded.source,
+           score_total = COALESCE(excluded.score_total, waitlist.score_total),
+           score_weakest = COALESCE(excluded.score_weakest, waitlist.score_weakest),
+           updated_at = excluded.updated_at`
+      ).bind(
+        rec.email,
+        rec.name,
+        rec.source,
+        rec.score && rec.score.total != null ? rec.score.total : null,
+        rec.score && rec.score.weakest ? rec.score.weakest : null,
+        rec.timestamp,
+        rec.timestamp
+      ).run();
+      stored = true;
+    } catch (e) {
+      console.error('D1 write failed:', e);
+    }
+  }
+
+  if (env.SIGNUPS) {
+    try {
+      await env.SIGNUPS.put(`signup:${rec.timestamp}:${rec.email}`, JSON.stringify(rec));
+      stored = true;
+    } catch (e) {
+      console.error('KV write failed:', e);
+    }
+  }
+
+  return stored;
+}
+
+// Read all signups for the dashboard, from D1 (preferred) or legacy KV.
+// Returns the shape the dashboard expects: { signups: [...], total }.
+async function listSignups(env) {
+  if (env.DB) {
+    try {
+      const { results } = await env.DB.prepare(
+        `SELECT email, name, source, score_total, score_weakest, created_at
+         FROM waitlist ORDER BY created_at DESC`
+      ).all();
+      const signups = (results || []).map((r) => ({
+        name: r.name,
+        email: r.email,
+        source: r.source,
+        score: r.score_total != null ? { total: r.score_total, weakest: r.score_weakest } : null,
+        timestamp: r.created_at,
+      }));
+      return { signups, total: signups.length };
+    } catch (e) {
+      console.error('D1 read failed:', e);
+    }
+  }
+
+  if (env.SIGNUPS) {
+    const all = [];
+    let cursor = null;
+    do {
+      const list = await env.SIGNUPS.list({ prefix: 'signup:', cursor, limit: 500 });
+      for (const key of list.keys) {
+        const val = await env.SIGNUPS.get(key.name, 'json');
+        if (val) all.push(val);
+      }
+      cursor = list.list_complete ? null : list.cursor;
+    } while (cursor);
+    all.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
+    return { signups: all, total: all.length };
+  }
+
+  return { signups: [], total: 0 };
+}
 
 async function inspectResendResult(label, result) {
   if (result.status !== 'fulfilled') {

@@ -3,15 +3,22 @@ main = "index.js"
 compatibility_date = "2026-04-01"
 
 # Secrets (set via `wrangler secret put <NAME>`):
-#   RESEND_API_KEY
-#   DASHBOARD_KEY    — bearer token for the dashboard GET endpoint
+#   RESEND_API_KEY   - Resend API key (verify nathancritchett.me as a sending domain)
+#   DASHBOARD_KEY    - bearer token for the dashboard GET /signups endpoint
 
-[[kv_namespaces]]
-binding = "SIGNUPS"
-id = "PLACEHOLDER"
-# After creating the namespace, replace PLACEHOLDER:
-#   wrangler kv namespace create SIGNUPS
-#   then paste the returned id here
+# Waitlist storage. Create the database, then paste its id below:
+#   wrangler d1 create architects-list
+#   wrangler d1 execute architects-list --remote --file=./schema.sql
+[[d1_databases]]
+binding = "DB"
+database_name = "architects-list"
+database_id = "PLACEHOLDER"
+
+# Optional legacy KV mirror. Leave commented out unless you already have a
+# namespace id (an unset/placeholder id breaks `wrangler deploy`).
+# [[kv_namespaces]]
+# binding = "SIGNUPS"
+# id = "<your-kv-namespace-id>"
 
 [observability]
 enabled = true
