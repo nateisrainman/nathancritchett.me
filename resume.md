@@ -1,118 +1,106 @@
 # Nathan Critchett
-**Cognitive Strategist · AI Builder · Author**
+**AI Strategist · Builder · Author**
 
-I work at the seam between what AI can produce and what the humans using it can
-actually evaluate — designing the systems, products, and training that make
-people sharper with AI instead of dependent on it.
+I close the gap between what AI can produce and what the people using it can
+evaluate. Strategy, shipped tools, and adoption, grounded in cognitive science.
 
 nathan.critch@outlook.com · nathancritchett.me · linkedin.com/in/nathan-critchett
-· critchpitch.com · arq.training
+· arq.training · critchpitch.com
 
 ---
 
-## Summary
+## Profile
 
-Part strategist, part builder. I turn cognitive-science research into shipped
-products and real adoption — two live platforms, an interactive diagnostic
-engine, and a serverless content/automation stack, all built solo. The thinking
-behind them comes from field work inside 100+ organizations, distilled into a
-forthcoming book and a library of 60+ evidence-based articles. I move comfortably
-between writing the strategy, prototyping the tool, designing the learning, and
-standing on stage to teach it.
+AI strategist and hands-on builder working at the intersection of AI capability
+and human capability. I translate cognitive-science research into shipped
+products, LLM-assisted tools, and adoption programs, drawing on field work across
+100+ organizations. Two live platforms, an interactive diagnostic engine, a
+forthcoming book, and 60+ published articles on AI strategy, learning design, and
+the future of work.
 
 ---
 
-## Selected AI Tools, Products & Prototypes
+## Core Competencies
 
-**Arq.Training — Founder & Builder** · *Live · arq.training*
-A cognitive diagnostic platform for education. Curriculum and test scores go in;
-a visible map of *how students actually reason* comes out — the thinking in
-between that standardized tests miss. Built on the Model of Hierarchical
-Complexity and adult-development research.
+AI Strategy · Generative AI · Large Language Models (LLMs) · Prompt Engineering ·
+AI Adoption & Change · Human-in-the-Loop Design · Rapid Prototyping · Product
+Strategy · Learning Experience Design · Instructional Design · EdTech · Assessment
+& Diagnostics · Computer Vision · JavaScript · Python · Serverless (Cloudflare
+Workers) · Technical Writing · Keynote Speaking · Stakeholder Engagement
 
-**CritchPitch — Founder & Builder** · *Live · critchpitch.com*
-Puts a pitching-biomechanics lab in a parent's pocket: screens a young pitcher's
-mechanics and arm-injury risk from a single phone video. Paired with a 25-article,
-fully cited library on youth arm health.
+---
 
-**The Cognitive Audit — Designer & Developer** · *Live · nathancritchett.me/audit*
-An interactive 15-question diagnostic web app that scores an organization against
-five frameworks, weights the responses, surfaces the weakest link, and returns a
-single prioritized recommendation. Custom scoring engine, results UI, and
-email-gated reporting.
+## Selected Tools, Products & Prototypes
 
-**AI-Native Portfolio CRM — Prototype** · *In development*
-A context-extraction system that mines expert context across an entire portfolio
-of companies and surfaces the patterns that matter — keeping a human at the
-center of every conversation.
+**Arq.Training, Founder & Builder.** Live, arq.training.
+Cognitive diagnostic platform for education. Maps how students reason, not just
+what they score. Built on the Model of Hierarchical Complexity.
+*LLM-assisted analysis, assessment design, EdTech.*
 
-**Architects List — Serverless backend** · *Shipped*
-Email-capture and automated welcome-kit delivery powering the book and audit
-funnels. Cloudflare Workers, KV storage, Resend email API, and an auth-gated
-dashboard.
+**CritchPitch, Founder & Builder.** Live, critchpitch.com.
+Screens youth pitching mechanics and injury risk from a single phone video.
+Paired with a 25-article, fully cited arm-health library.
+*Computer vision, mobile capture, content engine.*
 
-**nathancritchett.me — Content & SEO platform** · *Shipped*
-A hand-built publishing system — designed, written, and engineered solo — with a
-programmatic build pipeline that generates Open Graph cards, sitemaps, and
-schema.org structured data across three libraries. Python + Node build tooling.
+**The Cognitive Audit, Designer & Developer.** Live, nathancritchett.me/audit.
+Interactive 15-question diagnostic. A weighted scoring engine surfaces the weakest
+framework and the single first action to take.
+*JavaScript, scoring engine, lead capture.*
+
+**AI-Native Portfolio CRM, Prototype.** In development.
+Context-extraction system that surfaces cross-portfolio patterns while keeping a
+human at the center of every decision.
+*LLM, retrieval, human-in-the-loop.*
+
+**Architects List, Serverless backend.** Shipped.
+Automated signup and welcome-kit delivery powering the book and audit funnels.
+*Cloudflare Workers, KV storage, Resend API, auth dashboard.*
+
+**nathancritchett.me, Content & SEO platform.** Shipped.
+Solo-built publishing system. A programmatic pipeline generates Open Graph cards,
+sitemaps, and schema.org structured data across three libraries.
+*Python, Node, structured data, analytics.*
 
 ---
 
 ## Author & Published Research
 
-**Cognitive Architecture: How to Think When Machines Think For You** — Author (2026)
-A short field guide for leaders, built from data inside 100+ organizations. Five
+**Cognitive Architecture: How to Think When Machines Think For You.** Author, 2026.
+A field guide for leaders built from data inside 100+ organizations. Five
 frameworks: the Cognitive Supply Chain, the Centaur Architecture, the Antifragile
-Ego, the Horizontal/Vertical distinction, and the identity shift from worker to
-Architect of Intelligence.
+Ego, the Horizontal/Vertical distinction, and the shift from worker to Architect
+of Intelligence.
 
-**8 whitepapers + 16 essays on AI & cognition** — including *The Complexity Gap*,
-*Cognitive Offloading*, *Universal Basic Upgrading*, *Stop Grading AI Output*, and
-*Two Careers AI Can't Kill*. Grounded in cognitive science (Kegan, Commons,
-cognitive-load theory) and tested in the field.
+**8 whitepapers and 16 essays on AI and cognition.** Including *The Complexity
+Gap*, *Cognitive Offloading*, *Universal Basic Upgrading*, and *Stop Grading AI
+Output*. Grounded in cognitive science and tested in the field.
 
-**60+ evidence-based articles across three libraries** — AI & Cognition (24),
-Cognitive Development / Arq (14), and Youth Pitching / CritchPitch (25), each
-fully sourced.
+**60+ evidence-based articles across three libraries.** AI and Cognition (24),
+Cognitive Development (14), Youth Pitching (25). Each fully sourced.
 
 ---
 
 ## Speaking & Advisory
 
-Keynotes, half- and full-day sessions, and professional development on cognitive
-strategy for the AI era. Signature talks: *The Complexity Gap*, *AI as Mirror,
-Not GPS*, and *Building the Thinkers the Future Needs*. District work delivered in
-partnership with **Edapt** and Christian Jackson.
+Keynotes, half- and full-day sessions, and professional development on AI strategy
+and cognitive development. Signature talks: *The Complexity Gap*, *AI as Mirror,
+Not GPS*, and *Building the Thinkers the Future Needs*. District work delivered
+with **Edapt** and Christian Jackson.
 
 Selected audiences:
 - Greater Ozarks Cooperating School Districts (GOCSD)
 - Association of California School Administrators (ACSA)
-- AAEA — educational administrators
+- AAEA, educational administrators
 - Small School Districts' Association (SSDA)
-- LA County Fire Department — Lifeguard Division
+- LA County Fire Department, Lifeguard Division
 - Multiple K-12 school districts
 
 ---
 
-## Ventures Founded
+## Ventures & Earlier
 
-- **Arq.Training** — Founder. Cognitive diagnostics for education.
-- **CritchPitch** — Founder. Youth pitching screening & arm-health.
+- **Arq.Training**, Founder. Cognitive diagnostics for education.
+- **CritchPitch**, Founder. Youth pitching screening and arm-health.
 
----
-
-## Core Skills
-
-AI strategy & adoption · Learning & cognitive-development design · Rapid
-prototyping · LLM-assisted product design · Serverless (Cloudflare Workers) ·
-JavaScript · Python build tooling · Diagnostic & assessment design · Programmatic
-SEO & content systems · Keynote speaking & PD facilitation · District & stakeholder
-engagement · Technical writing
-
----
-
-## Earlier
-
-Division I pitcher & sports-medicine All-American — carried the same intensity
-into a new problem: building the thinkers the future actually needs. Former first
-responder, LA County Fire Department, Lifeguard Division (ocean rescue).
+Division I pitcher and sports-medicine All-American. Former first responder, LA
+County Fire Department, Lifeguard Division (ocean rescue).

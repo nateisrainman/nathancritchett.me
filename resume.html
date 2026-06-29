@@ -3,16 +3,16 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Nathan Critchett — Resume | Technical AI Strategist</title>
-  <meta name="description" content="Resume of Nathan Critchett: cognitive strategist, AI builder, and author. Two live platforms shipped, a book, 60+ published articles, and field work inside 100+ organizations.">
+  <title>Nathan Critchett, CV | AI Strategist</title>
+  <meta name="description" content="CV of Nathan Critchett: AI strategist, builder, and author. Two live platforms shipped, LLM-assisted tools, a book, and field work across 100+ organizations.">
   <link rel="canonical" href="https://nathancritchett.me/resume.html">
   <meta name="robots" content="noindex, follow">
 
   <meta property="og:type" content="profile">
   <meta property="og:site_name" content="Nathan Critchett">
   <meta property="og:url" content="https://nathancritchett.me/resume.html">
-  <meta property="og:title" content="Nathan Critchett — Resume">
-  <meta property="og:description" content="Cognitive strategist and AI builder. Two live platforms shipped, a book, 60+ published articles, field work inside 100+ organizations.">
+  <meta property="og:title" content="Nathan Critchett, CV">
+  <meta property="og:description" content="AI strategist and builder. Two live platforms shipped, LLM-assisted tools, a book, and field work across 100+ organizations.">
   <meta property="og:image" content="https://nathancritchett.me/assets/og-home.png?v=2">
   <meta name="theme-color" content="#060A14">
 
@@ -24,10 +24,8 @@
     :root {
       --abyss: #060A14;
       --ink: #1A2233;
-      --ink-soft: #4A5269;
-      --ink-dim: #6B7088;
+      --ink-soft: #454D63;
       --line: #E2E4EC;
-      --line-soft: #EDEEF3;
       --dune: #B5732E;
       --dune-soft: #C4874D;
       --cyan: #0B8C7C;
@@ -42,11 +40,10 @@
       font-family: var(--sans);
       color: var(--ink);
       background: #ECEDF1;
-      line-height: 1.5;
-      font-size: 14px;
+      line-height: 1.45;
+      font-size: 13.5px;
       padding: 32px 16px;
     }
-
     .sheet {
       max-width: 820px;
       margin: 0 auto;
@@ -56,11 +53,11 @@
       overflow: hidden;
     }
 
-    /* ---- Header ---- */
+    /* Header */
     .head {
       background: var(--abyss);
       color: #F0ECF8;
-      padding: 38px 48px 32px;
+      padding: 34px 48px 28px;
       position: relative;
     }
     .head::after {
@@ -68,174 +65,97 @@
       position: absolute; left: 0; right: 0; bottom: 0; height: 4px;
       background: linear-gradient(90deg, var(--dune-soft), var(--cyan));
     }
-    .name {
-      font-family: var(--serif);
-      font-size: 40px;
-      line-height: 1.05;
-      letter-spacing: 0.5px;
-    }
+    .name { font-family: var(--serif); font-size: 38px; line-height: 1.05; letter-spacing: 0.5px; }
     .role {
-      margin-top: 10px;
-      font-size: 13px;
-      font-weight: 600;
-      letter-spacing: 2.5px;
-      text-transform: uppercase;
-      color: var(--dune-soft);
+      margin-top: 9px; font-size: 12.5px; font-weight: 600;
+      letter-spacing: 2.5px; text-transform: uppercase; color: var(--dune-soft);
     }
-    .tag {
-      margin-top: 14px;
-      font-size: 15px;
-      color: #C7CADB;
-      max-width: 580px;
-      line-height: 1.55;
-    }
+    .tag { margin-top: 12px; font-size: 14px; color: #C7CADB; max-width: 600px; line-height: 1.5; }
     .contact {
-      margin-top: 20px;
-      display: flex;
-      flex-wrap: wrap;
-      gap: 6px 20px;
-      font-size: 12.5px;
-      color: #AEB2C8;
+      margin-top: 16px; display: flex; flex-wrap: wrap; gap: 5px 18px;
+      font-size: 12px; color: #AEB2C8;
     }
     .contact a { color: #AEB2C8; text-decoration: none; }
-    .contact a:hover { color: var(--cyan); }
     .contact span { color: var(--dune-soft); }
 
-    /* ---- Body ---- */
-    .body { padding: 30px 48px 44px; }
-    section { margin-top: 26px; }
+    /* Body */
+    .body { padding: 26px 48px 40px; }
+    section { margin-top: 22px; }
     section:first-child { margin-top: 0; }
-
     .sec-label {
-      font-size: 11px;
-      font-weight: 700;
-      letter-spacing: 2.5px;
-      text-transform: uppercase;
-      color: var(--dune);
-      padding-bottom: 7px;
-      margin-bottom: 14px;
-      border-bottom: 2px solid var(--line);
+      font-size: 10.5px; font-weight: 700; letter-spacing: 2.5px; text-transform: uppercase;
+      color: var(--dune); padding-bottom: 6px; margin-bottom: 13px; border-bottom: 2px solid var(--line);
     }
 
-    .summary { font-size: 14.5px; color: var(--ink-soft); line-height: 1.6; }
+    .summary { font-size: 13.5px; color: var(--ink-soft); line-height: 1.55; }
     .summary strong { color: var(--ink); font-weight: 600; }
 
-    /* ---- Entry blocks ---- */
-    .entry { margin-bottom: 16px; }
+    /* Competency keyword strip */
+    .keywords { display: flex; flex-wrap: wrap; gap: 6px; }
+    .kw {
+      font-size: 11.5px; color: var(--ink); background: var(--paper-tint);
+      border: 1px solid var(--line); border-radius: 4px; padding: 4px 10px; font-weight: 500;
+    }
+
+    /* Project entries */
+    .entry { margin-bottom: 13px; }
     .entry:last-child { margin-bottom: 0; }
-    .entry-head {
-      display: flex;
-      justify-content: space-between;
-      align-items: baseline;
-      gap: 12px;
-      flex-wrap: wrap;
-    }
-    .entry-title { font-size: 15px; font-weight: 700; color: var(--ink); }
+    .entry-head { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; flex-wrap: wrap; }
+    .entry-title { font-size: 14.5px; font-weight: 700; color: var(--ink); }
     .entry-title .at { color: var(--ink-soft); font-weight: 500; }
-    .entry-meta {
-      font-size: 11.5px;
-      font-weight: 600;
-      letter-spacing: 0.4px;
-      color: var(--cyan);
-      white-space: nowrap;
-    }
+    .entry-meta { font-size: 11px; font-weight: 600; letter-spacing: 0.3px; color: var(--cyan); white-space: nowrap; }
     .entry-meta.live::before {
-      content: "";
-      display: inline-block;
-      width: 7px; height: 7px; border-radius: 50%;
-      background: var(--cyan);
-      margin-right: 6px;
-      vertical-align: middle;
+      content: ""; display: inline-block; width: 7px; height: 7px; border-radius: 50%;
+      background: var(--cyan); margin-right: 6px; vertical-align: middle;
     }
     .entry-meta.proto { color: var(--dune); }
-    .entry-sub {
-      font-size: 12px;
-      color: var(--ink-soft);
-      margin-top: 1px;
-    }
-    .entry-sub a { color: var(--ink-soft); text-decoration: none; border-bottom: 1px dotted var(--line); }
-    .entry-desc { font-size: 13.5px; color: var(--ink-soft); margin-top: 5px; line-height: 1.55; }
-    .entry-desc .stack {
-      display: block;
-      margin-top: 4px;
-      font-size: 11.5px;
-      color: var(--ink);
-      font-weight: 600;
-      letter-spacing: 0.2px;
-    }
+    .entry-desc { font-size: 13px; color: var(--ink-soft); margin-top: 3px; line-height: 1.5; }
+    .stack { display: block; margin-top: 3px; font-size: 11px; color: var(--ink); font-weight: 600; letter-spacing: 0.2px; }
 
-    /* ---- Two-column grid for compact sections ---- */
-    .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 8px 30px; }
-    .pub { font-size: 13.5px; color: var(--ink-soft); margin-bottom: 9px; line-height: 1.5; }
+    /* Publications */
+    .pub { font-size: 13px; color: var(--ink-soft); margin-bottom: 8px; line-height: 1.5; }
     .pub strong { color: var(--ink); font-weight: 600; }
+    .pub em { color: var(--ink); font-style: normal; font-weight: 500; }
 
-    /* ---- Lists ---- */
+    /* Speaking */
+    .talks { font-size: 13px; color: var(--ink-soft); margin-bottom: 10px; line-height: 1.5; }
+    .talks em { color: var(--ink); font-style: normal; font-weight: 600; }
     .speak-list { list-style: none; display: grid; grid-template-columns: 1fr 1fr; gap: 5px 30px; }
-    .speak-list li {
-      font-size: 13.5px;
-      color: var(--ink-soft);
-      padding-left: 16px;
-      position: relative;
-    }
+    .speak-list li { font-size: 13px; color: var(--ink-soft); padding-left: 15px; position: relative; }
     .speak-list li::before {
-      content: "";
-      position: absolute; left: 0; top: 9px;
-      width: 6px; height: 6px;
-      background: var(--dune-soft);
-      border-radius: 1px;
-      transform: rotate(45deg);
+      content: ""; position: absolute; left: 0; top: 8px; width: 6px; height: 6px;
+      background: var(--dune-soft); border-radius: 1px; transform: rotate(45deg);
     }
     .speak-list li b { color: var(--ink); font-weight: 600; }
 
-    .talks { font-size: 13.5px; color: var(--ink-soft); margin-bottom: 12px; line-height: 1.55; }
-    .talks em { color: var(--ink); font-style: normal; font-weight: 600; }
-
-    .chips { display: flex; flex-wrap: wrap; gap: 7px; }
-    .chip {
-      font-size: 12px;
-      color: var(--ink);
-      background: var(--paper-tint);
-      border: 1px solid var(--line);
-      border-radius: 20px;
-      padding: 4px 12px;
-      font-weight: 500;
-    }
-
-    .earlier { font-size: 13.5px; color: var(--ink-soft); line-height: 1.6; }
+    .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 6px 30px; }
+    .earlier { font-size: 13px; color: var(--ink-soft); line-height: 1.55; }
     .earlier strong { color: var(--ink); font-weight: 600; }
 
     .foot {
-      margin-top: 30px;
-      padding-top: 14px;
-      border-top: 1px solid var(--line);
-      font-size: 11.5px;
-      color: var(--ink-soft);
-      display: flex;
-      justify-content: space-between;
-      flex-wrap: wrap;
-      gap: 6px;
+      margin-top: 26px; padding-top: 12px; border-top: 1px solid var(--line);
+      font-size: 11px; color: var(--ink-soft); display: flex; justify-content: space-between; flex-wrap: wrap; gap: 6px;
     }
     .foot a { color: var(--cyan); text-decoration: none; }
 
     @media (max-width: 640px) {
       .head, .body { padding-left: 26px; padding-right: 26px; }
-      .name { font-size: 32px; }
+      .name { font-size: 30px; }
       .grid2, .speak-list { grid-template-columns: 1fr; }
     }
 
-    /* ---- Print / PDF ---- */
     @page { margin: 0; }
     @media print {
-      body { background: #fff; padding: 0; font-size: 10.5pt; }
+      body { background: #fff; padding: 0; font-size: 10pt; }
       .sheet { box-shadow: none; max-width: 100%; border-radius: 0; }
-      .head { padding: 30px 44px 26px; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
-      .body { padding: 26px 44px 30px; }
-      .head, .entry-meta, .sec-label, .head::after, .speak-list li::before {
+      .head { padding: 28px 44px 24px; }
+      .body { padding: 24px 44px 28px; }
+      .head, .entry-meta, .sec-label, .head::after, .speak-list li::before, .kw {
         -webkit-print-color-adjust: exact; print-color-adjust: exact;
       }
-      section { margin-top: 18px; }
+      section { margin-top: 16px; }
       .entry, .pub { page-break-inside: avoid; }
-      .name { font-size: 30pt; }
+      .name { font-size: 28pt; }
       a { color: inherit; }
     }
   </style>
@@ -245,8 +165,8 @@
 
     <header class="head">
       <h1 class="name">Nathan Critchett</h1>
-      <p class="role">Cognitive Strategist · AI Builder · Author</p>
-      <p class="tag">I work at the seam between what AI can produce and what the humans using it can actually evaluate — designing the systems, products, and training that make people sharper with AI instead of dependent on it.</p>
+      <p class="role">AI Strategist · Builder · Author</p>
+      <p class="tag">I close the gap between what AI can produce and what the people using it can evaluate. Strategy, shipped tools, and adoption, grounded in cognitive science.</p>
       <div class="contact">
         <a href="mailto:nathan.critch@outlook.com">nathan.critch@outlook.com</a>
         <span>·</span>
@@ -254,132 +174,128 @@
         <span>·</span>
         <a href="https://www.linkedin.com/in/nathan-critchett/">linkedin.com/in/nathan-critchett</a>
         <span>·</span>
-        <a href="https://critchpitch.com">critchpitch.com</a>
-        <span>·</span>
         <a href="https://arq.training">arq.training</a>
+        <span>·</span>
+        <a href="https://critchpitch.com">critchpitch.com</a>
       </div>
     </header>
 
     <div class="body">
 
-      <!-- Summary -->
       <section>
-        <div class="sec-label">Summary</div>
-        <p class="summary">Part strategist, part builder. I turn cognitive-science research into <strong>shipped products and real adoption</strong> — two live platforms, an interactive diagnostic engine, and a serverless content/automation stack, all built solo. The thinking behind them comes from field work inside <strong>100+ organizations</strong>, distilled into a forthcoming book and a library of <strong>60+ evidence-based articles</strong>. I move comfortably between writing the strategy, prototyping the tool, designing the learning, and standing on stage to teach it.</p>
+        <div class="sec-label">Profile</div>
+        <p class="summary">AI strategist and hands-on builder working at the intersection of AI capability and human capability. I translate cognitive-science research into <strong>shipped products, LLM-assisted tools, and adoption programs</strong>, drawing on field work across <strong>100+ organizations</strong>. Two live platforms, an interactive diagnostic engine, a forthcoming book, and <strong>60+ published articles</strong> on AI strategy, learning design, and the future of work.</p>
       </section>
 
-      <!-- Tools / Projects / Prototypes -->
       <section>
-        <div class="sec-label">Selected AI Tools, Products &amp; Prototypes</div>
+        <div class="sec-label">Core Competencies</div>
+        <div class="keywords">
+          <span class="kw">AI Strategy</span>
+          <span class="kw">Generative AI</span>
+          <span class="kw">Large Language Models (LLMs)</span>
+          <span class="kw">Prompt Engineering</span>
+          <span class="kw">AI Adoption &amp; Change</span>
+          <span class="kw">Human-in-the-Loop Design</span>
+          <span class="kw">Rapid Prototyping</span>
+          <span class="kw">Product Strategy</span>
+          <span class="kw">Learning Experience Design</span>
+          <span class="kw">Instructional Design</span>
+          <span class="kw">EdTech</span>
+          <span class="kw">Assessment &amp; Diagnostics</span>
+          <span class="kw">Computer Vision</span>
+          <span class="kw">JavaScript</span>
+          <span class="kw">Python</span>
+          <span class="kw">Serverless (Cloudflare Workers)</span>
+          <span class="kw">Technical Writing</span>
+          <span class="kw">Keynote Speaking</span>
+          <span class="kw">Stakeholder Engagement</span>
+        </div>
+      </section>
+
+      <section>
+        <div class="sec-label">Selected Tools, Products &amp; Prototypes</div>
 
         <div class="entry">
           <div class="entry-head">
-            <div class="entry-title">Arq.Training <span class="at">— Founder &amp; Builder</span></div>
+            <div class="entry-title">Arq.Training <span class="at">/ Founder &amp; Builder</span></div>
             <div class="entry-meta live">Live · arq.training</div>
           </div>
-          <p class="entry-desc">A cognitive diagnostic platform for education. Curriculum and test scores go in; a visible map of <em>how students actually reason</em> comes out — the thinking in between that standardized tests miss. Built on the Model of Hierarchical Complexity and adult-development research.</p>
+          <p class="entry-desc">Cognitive diagnostic platform for education. Maps how students reason, not just what they score. Built on the Model of Hierarchical Complexity.<span class="stack">LLM-assisted analysis · assessment design · EdTech</span></p>
         </div>
 
         <div class="entry">
           <div class="entry-head">
-            <div class="entry-title">CritchPitch <span class="at">— Founder &amp; Builder</span></div>
+            <div class="entry-title">CritchPitch <span class="at">/ Founder &amp; Builder</span></div>
             <div class="entry-meta live">Live · critchpitch.com</div>
           </div>
-          <p class="entry-desc">Puts a pitching-biomechanics lab in a parent's pocket: screens a young pitcher's mechanics and arm-injury risk from a single phone video. Paired with a 25-article, fully cited library on youth arm health.</p>
+          <p class="entry-desc">Screens youth pitching mechanics and injury risk from a single phone video. Paired with a 25-article, fully cited arm-health library.<span class="stack">Computer vision · mobile capture · content engine</span></p>
         </div>
 
         <div class="entry">
           <div class="entry-head">
-            <div class="entry-title">The Cognitive Audit <span class="at">— Designer &amp; Developer</span></div>
+            <div class="entry-title">The Cognitive Audit <span class="at">/ Designer &amp; Developer</span></div>
             <div class="entry-meta live">Live · /audit</div>
           </div>
-          <p class="entry-desc">An interactive 15-question diagnostic web app that scores an organization against five frameworks, weights the responses, surfaces the weakest link, and returns a single prioritized recommendation.<span class="stack">Custom scoring engine · results UI · email-gated reporting</span></p>
+          <p class="entry-desc">Interactive 15-question diagnostic. A weighted scoring engine surfaces the weakest framework and the single first action to take.<span class="stack">JavaScript · scoring engine · lead capture</span></p>
         </div>
 
         <div class="entry">
           <div class="entry-head">
-            <div class="entry-title">AI-Native Portfolio CRM <span class="at">— Prototype</span></div>
+            <div class="entry-title">AI-Native Portfolio CRM <span class="at">/ Prototype</span></div>
             <div class="entry-meta proto">In development</div>
           </div>
-          <p class="entry-desc">A context-extraction system that mines expert context across an entire portfolio of companies and surfaces the patterns that matter — keeping a human at the center of every conversation.</p>
+          <p class="entry-desc">Context-extraction system that surfaces cross-portfolio patterns while keeping a human at the center of every decision.<span class="stack">LLM · retrieval · human-in-the-loop</span></p>
         </div>
 
         <div class="entry">
           <div class="entry-head">
-            <div class="entry-title">Architects List <span class="at">— Serverless backend</span></div>
+            <div class="entry-title">Architects List <span class="at">/ Serverless backend</span></div>
             <div class="entry-meta">Shipped</div>
           </div>
-          <p class="entry-desc">Email-capture and automated welcome-kit delivery powering the book and audit funnels.<span class="stack">Cloudflare Workers · KV storage · Resend email API · auth-gated dashboard</span></p>
+          <p class="entry-desc">Automated signup and welcome-kit delivery powering the book and audit funnels.<span class="stack">Cloudflare Workers · KV storage · Resend API · auth dashboard</span></p>
         </div>
 
         <div class="entry">
           <div class="entry-head">
-            <div class="entry-title">nathancritchett.me <span class="at">— Content &amp; SEO platform</span></div>
+            <div class="entry-title">nathancritchett.me <span class="at">/ Content &amp; SEO platform</span></div>
             <div class="entry-meta">Shipped</div>
           </div>
-          <p class="entry-desc">A hand-built publishing system — designed, written, and engineered solo — with a programmatic build pipeline that generates Open Graph cards, sitemaps, and schema.org structured data across three libraries.<span class="stack">Python + Node build tooling · structured data · analytics</span></p>
+          <p class="entry-desc">Solo-built publishing system. A programmatic pipeline generates Open Graph cards, sitemaps, and schema.org structured data across three libraries.<span class="stack">Python · Node · structured data · analytics</span></p>
         </div>
       </section>
 
-      <!-- Author & Research -->
       <section>
         <div class="sec-label">Author &amp; Published Research</div>
-        <p class="pub"><strong>Cognitive Architecture: How to Think When Machines Think For You</strong> — Author (2026). A short field guide for leaders, built from data inside 100+ organizations. Five frameworks: the Cognitive Supply Chain, the Centaur Architecture, the Antifragile Ego, the Horizontal/Vertical distinction, and the identity shift from worker to Architect of Intelligence.</p>
-        <p class="pub"><strong>8 whitepapers + 16 essays on AI &amp; cognition</strong> — including <em>The Complexity Gap</em>, <em>Cognitive Offloading</em>, <em>Universal Basic Upgrading</em>, <em>Stop Grading AI Output</em>, and <em>Two Careers AI Can't Kill</em>. Grounded in cognitive science (Kegan, Commons, cognitive-load theory) and tested in the field.</p>
-        <p class="pub"><strong>60+ evidence-based articles across three libraries</strong> — AI &amp; Cognition (24), Cognitive Development / Arq (14), and Youth Pitching / CritchPitch (25), each fully sourced.</p>
+        <p class="pub"><strong>Cognitive Architecture: How to Think When Machines Think For You.</strong> Author, 2026. A field guide for leaders built from data inside 100+ organizations. Five frameworks: the Cognitive Supply Chain, the Centaur Architecture, the Antifragile Ego, the Horizontal/Vertical distinction, and the shift from worker to Architect of Intelligence.</p>
+        <p class="pub"><strong>8 whitepapers and 16 essays on AI and cognition.</strong> Including <em>The Complexity Gap</em>, <em>Cognitive Offloading</em>, <em>Universal Basic Upgrading</em>, and <em>Stop Grading AI Output</em>. Grounded in cognitive science and tested in the field.</p>
+        <p class="pub"><strong>60+ evidence-based articles across three libraries.</strong> AI and Cognition (24), Cognitive Development (14), Youth Pitching (25). Each fully sourced.</p>
       </section>
 
-      <!-- Speaking -->
       <section>
         <div class="sec-label">Speaking &amp; Advisory</div>
-        <p class="talks">Keynotes, half- and full-day sessions, and professional development on cognitive strategy for the AI era. Signature talks: <em>The Complexity Gap</em>, <em>AI as Mirror, Not GPS</em>, and <em>Building the Thinkers the Future Needs</em>. District work delivered in partnership with <em>Edapt</em> and Christian Jackson. Selected audiences:</p>
+        <p class="talks">Keynotes, half- and full-day sessions, and professional development on AI strategy and cognitive development. Signature talks: <em>The Complexity Gap</em>, <em>AI as Mirror, Not GPS</em>, and <em>Building the Thinkers the Future Needs</em>. District work delivered with <em>Edapt</em> and Christian Jackson. Selected audiences:</p>
         <ul class="speak-list">
           <li><b>Greater Ozarks Cooperating School Districts</b> (GOCSD)</li>
           <li><b>Association of California School Administrators</b> (ACSA)</li>
-          <li><b>AAEA</b> — educational administrators</li>
+          <li><b>AAEA</b>, educational administrators</li>
           <li><b>Small School Districts' Association</b> (SSDA)</li>
-          <li><b>LA County Fire Department</b> — Lifeguard Division</li>
+          <li><b>LA County Fire Department</b>, Lifeguard Division</li>
           <li><b>Multiple K-12 school districts</b></li>
         </ul>
       </section>
 
-      <!-- Ventures -->
       <section>
-        <div class="sec-label">Ventures Founded</div>
+        <div class="sec-label">Ventures &amp; Earlier</div>
         <div class="grid2">
-          <p class="pub"><strong>Arq.Training</strong> — Founder. Cognitive diagnostics for education.</p>
-          <p class="pub"><strong>CritchPitch</strong> — Founder. Youth pitching screening &amp; arm-health.</p>
+          <p class="pub"><strong>Arq.Training</strong>, Founder. Cognitive diagnostics for education.</p>
+          <p class="pub"><strong>CritchPitch</strong>, Founder. Youth pitching screening and arm-health.</p>
         </div>
-      </section>
-
-      <!-- Skills -->
-      <section>
-        <div class="sec-label">Core Skills</div>
-        <div class="chips">
-          <span class="chip">AI strategy &amp; adoption</span>
-          <span class="chip">Learning &amp; cognitive-development design</span>
-          <span class="chip">Rapid prototyping</span>
-          <span class="chip">LLM-assisted product design</span>
-          <span class="chip">Serverless (Cloudflare Workers)</span>
-          <span class="chip">JavaScript</span>
-          <span class="chip">Python build tooling</span>
-          <span class="chip">Diagnostic &amp; assessment design</span>
-          <span class="chip">Programmatic SEO &amp; content systems</span>
-          <span class="chip">Keynote speaking &amp; PD facilitation</span>
-          <span class="chip">District &amp; stakeholder engagement</span>
-          <span class="chip">Technical writing</span>
-        </div>
-      </section>
-
-      <!-- Earlier -->
-      <section>
-        <div class="sec-label">Earlier</div>
-        <p class="earlier"><strong>Division I pitcher &amp; sports-medicine All-American.</strong> Carried the same intensity into a new problem: building the thinkers the future actually needs. <strong>Former first responder</strong> — LA County Fire Department, Lifeguard Division (ocean rescue).</p>
+        <p class="earlier" style="margin-top:6px;"><strong>Division I pitcher and sports-medicine All-American.</strong> Former first responder, LA County Fire Department, Lifeguard Division (ocean rescue).</p>
       </section>
 
       <div class="foot">
-        <span>Nathan Critchett — Cognitive Strategist &amp; AI Builder</span>
-        <span>Portfolio &amp; live tools: <a href="https://nathancritchett.me">nathancritchett.me</a></span>
+        <span>Nathan Critchett, AI Strategist and Builder</span>
+        <span>Portfolio and live tools: <a href="https://nathancritchett.me">nathancritchett.me</a></span>
       </div>
 
     </div>
