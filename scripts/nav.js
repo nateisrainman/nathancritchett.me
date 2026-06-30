@@ -31,6 +31,7 @@ function navHtml() {
       <div class="nav-links" id="nav-links">
         <a href="/book.html">The Book</a>
         ${writingDropdown()}
+        <a href="/hire.html">Hire</a>
         <a href="/about.html">About</a>
         <a href="/#contact" class="nav-cta">Get in Touch</a>
       </div>

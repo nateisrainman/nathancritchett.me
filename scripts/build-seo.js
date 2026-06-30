@@ -348,7 +348,7 @@ buildWritingIndex();
 /* ------------------------- sitemap + robots ------------------------- */
 
 function buildSitemap() {
-  const staticPages = ["/", "/about.html", "/writing/", "/book.html"];
+  const staticPages = ["/", "/about.html", "/hire.html", "/writing/", "/book.html"];
   const collectionUrls = [];
   for (const c of Object.values(collections)) {
     collectionUrls.push({ loc: SITE + c.basePath, lastmod: c.reviewed });
@@ -426,7 +426,46 @@ const aboutGraph = [
 ];
 const didAbout = injectHeadSchema(path.join(ROOT, "about.html"), aboutGraph);
 
+// Hire page: WebPage + Service offering + full Person + FAQPage.
+const hireUrl = SITE + "/hire.html";
+const HIRE_FAQ = [
+  { q: "What is a fractional Chief AI Officer?", a: "Senior AI leadership on a part-time or contract basis. The role sets AI priorities, oversees the build, and owns adoption, without the cost or commitment of a full-time executive hire." },
+  { q: "How long is a typical engagement?", a: "An AI Adoption Sprint runs over a few focused weeks around a single pilot. Fractional leadership runs as an ongoing monthly engagement. Keynotes and workshops are scoped to the event." },
+  { q: "Is the work remote or on-site?", a: "Both. Engagements run remotely, with on-site sessions when a workshop or leadership offsite calls for it." },
+  { q: "What does it cost?", a: "Pricing is scoped per engagement against the outcome it targets. Fractional AI leadership commonly runs as a monthly retainer. Book a call for a quote." },
+  { q: "Which industries and organizations?", a: "Field work spans education and the public sector, across 100+ organizations. The adoption method is domain-general and transfers to any organization rolling out AI." },
+  { q: "Available for advisory or select full-time roles?", a: "Open to advisory, fractional, and select roles. Reach out to start a conversation." },
+];
+const hireGraph = [
+  D.prune({
+    "@type": "WebPage",
+    "@id": hireUrl + "#page",
+    url: hireUrl,
+    name: "Hire Nathan Critchett",
+    about: { "@id": D.PERSON_ID },
+    isPartOf: { "@id": D.SITEORG_ID },
+  }),
+  D.personNode({ full: true }),
+  D.siteOrgNode(),
+  D.prune({
+    "@type": "Service",
+    "@id": hireUrl + "#service",
+    name: "Fractional Chief AI Officer and AI adoption advisory",
+    serviceType: "AI strategy and adoption",
+    provider: { "@id": D.PERSON_ID },
+    areaServed: "Worldwide",
+    description: "Fractional AI leadership, AI adoption sprints, keynotes, and workshops that turn enterprise AI spend into measurable ROI.",
+  }),
+  D.breadcrumbNode([
+    { name: "Home", url: SITE + "/" },
+    { name: "Hire", url: hireUrl },
+  ]),
+  D.faqNode(HIRE_FAQ),
+];
+const didHire = injectHeadSchema(path.join(ROOT, "hire.html"), hireGraph);
+
 console.log(`Injected schema + byline into ${count} articles.`);
+console.log(`Hire schema: ${didHire ? "ok" : "hire.html not found"}.`);
 console.log(`Wrote writing/index.html, sitemap.xml, robots.txt.`);
 console.log(`Homepage schema: ${didHome ? "ok" : "skipped (no index.html marker)"}.`);
 console.log(`About schema: ${didAbout ? "ok" : "about.html not found yet"}.`);

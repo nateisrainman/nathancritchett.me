@@ -92,3 +92,87 @@
   .hub-head { flex-direction: column; align-items: flex-start; gap: 1.25rem; }
   .hub-photo { width: 110px; height: 110px; }
 }
+
+/* ---- Hire page ---- */
+.hire-hero { max-width: 760px; margin-bottom: 1rem; }
+.hire-hero .section-label { color: var(--dune); }
+.hire-hero h1 {
+  font-family: var(--serif);
+  font-size: clamp(2.2rem, 5vw, 3.4rem);
+  line-height: 1.12;
+  color: var(--star);
+  margin: 0.4rem 0 1rem;
+}
+.hire-hero p.lead {
+  font-size: 1.15rem;
+  line-height: 1.75;
+  color: var(--star-muted);
+  margin-bottom: 1.75rem;
+}
+.hire-cta-row { display: flex; flex-wrap: wrap; gap: 0.75rem; }
+
+.hire-stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+  margin: 1rem 0 0;
+}
+.hire-stat {
+  background: var(--abyss-light);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 12px;
+  padding: 1.25rem;
+}
+.hire-stat .num { font-family: var(--serif); font-size: 2.2rem; color: var(--dune); line-height: 1; }
+.hire-stat .lbl { font-size: 0.85rem; color: var(--star-muted); line-height: 1.5; margin-top: 0.5rem; }
+
+.venture .you-get {
+  margin: 0.75rem 0 0;
+  padding-left: 1.1rem;
+  list-style: none;
+}
+.venture .you-get li {
+  position: relative;
+  font-size: 0.9rem;
+  color: var(--star-muted);
+  line-height: 1.55;
+  margin-bottom: 0.35rem;
+  padding-left: 1rem;
+}
+.venture .you-get li::before {
+  content: "";
+  position: absolute;
+  left: 0; top: 0.6em;
+  width: 5px; height: 5px;
+  background: var(--dune);
+  border-radius: 50%;
+}
+.venture .fit { font-size: 0.85rem; color: var(--star-dim); margin: 0.6rem 0 0; }
+
+.hire-steps { display: grid; gap: 0.9rem; }
+.hire-step {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 1rem;
+  align-items: start;
+  padding: 1.1rem 1.3rem;
+  background: var(--abyss-light);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 12px;
+}
+.hire-step .step-num {
+  font-family: var(--serif);
+  font-size: 1.3rem;
+  color: var(--dune);
+  line-height: 1;
+  width: 1.6rem;
+}
+.hire-step h3 { color: var(--star); font-size: 1.02rem; margin: 0 0 0.25rem; }
+.hire-step p { font-size: 0.92rem; color: var(--star-muted); line-height: 1.6; margin: 0; }
+
+.hire-sources { font-size: 0.82rem; color: var(--star-dim); line-height: 1.6; margin-top: 1rem; }
+.hire-sources a { color: var(--dune); }
+
+@media (max-width: 640px) {
+  .hire-stats { grid-template-columns: 1fr; }
+}
