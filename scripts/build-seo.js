@@ -110,7 +110,7 @@ function bylineHtml({ readMins, sources, type }) {
         <div class="byline-meta">${meta}</div>
         <div class="byline-author">
           <span class="byline-avatar">NC</span>
-          <span>By <a href="/about.html" rel="author">Nathan Critchett</a>, Cognitive Strategist &amp; Founder</span>
+          <span>By <a href="/about.html" rel="author">Nathan Critchett</a>, ${htmlEscape(D.person.jobTitle)}</span>
         </div>
       </div>`;
 }

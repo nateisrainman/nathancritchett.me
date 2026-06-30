@@ -39,35 +39,41 @@ const profiles = {
 
 // Schools attended. Leave name blank to omit alumniOf entirely.
 const alumni = [
-  { name: "", url: "" }, // e.g. { name: "University of X", url: "https://x.edu" }
+  { name: "Loyola Marymount University", url: "https://www.lmu.edu" },
 ];
 
 const person = {
   name: "Nathan Critchett",
   givenName: "Nathan",
   familyName: "Critchett",
-  jobTitle: "Cognitive Strategist & Founder",
+  jobTitle: "AI Strategist & Builder",
   // Used as a brand tagline in copy, not in schema jobTitle.
-  tagline: "Cognitive Strategist for the AI Era",
+  tagline: "AI Strategist & Builder",
   description:
-    "Nathan Critchett is a cognitive strategist and builder focused on closing " +
-    "the gap between what AI can produce and what humans can evaluate. A former " +
-    "Division I pitcher and sports-medicine All-American, he founded CritchPitch " +
-    "and Arq.Training, and speaks on cognitive strategy for the AI era.",
+    "Nathan Critchett is an AI strategist and hands-on builder who helps " +
+    "enterprises close the gap between what AI can produce and what their people " +
+    "can evaluate. He translates cognitive-science research into shipped products, " +
+    "LLM-assisted tools, and adoption programs across 100+ organizations, and is " +
+    "the author of Cognitive Architecture. Founder of Arq.Training and CritchPitch. " +
+    "Open to advisory, fractional, and enterprise AI engagements.",
   url: SITE,
   image: SITE + "/assets/headshot.jpg",
   email: "nathan.critch@outlook.com",
   knowsAbout: [
-    "Cognitive strategy",
-    "Artificial intelligence strategy",
+    "AI strategy",
+    "Enterprise AI adoption",
+    "Generative AI",
+    "Large language models (LLMs)",
+    "Prompt engineering",
+    "AI adoption and change management",
+    "Human-in-the-loop design",
+    "AI ROI and measurement",
+    "Product strategy",
+    "Learning experience design",
     "Cognitive offloading",
-    "Vertical development (adult cognitive development)",
     "Human-AI collaboration",
-    "The Centaur model of human-AI work",
-    "Cognitive load and working memory",
-    "AI in education",
     "Future of work",
-    "Critical thinking in the age of AI",
+    "AI in education",
   ],
 };
 
