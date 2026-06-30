@@ -43,7 +43,7 @@ function navHtml() {
 // libraries are reachable from any one of them. `active` = writing|arq|pitching.
 function librarySwitch(active) {
   const libs = [
-    { key: "writing", href: "/writing/", label: "AI &amp; Cognition", n: 24 },
+    { key: "writing", href: "/writing/", label: "AI &amp; Cognition", n: 25 },
     { key: "arq", href: "/arq/", label: "Cognitive Development", n: 14 },
     { key: "pitching", href: "/pitching/", label: "Pitching", n: 25 },
   ];

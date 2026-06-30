@@ -79,7 +79,9 @@ function bodyStats(html) {
   let sources = 0;
   if (refIdx !== -1) {
     const refRegion = region.slice(refIdx);
-    sources = (refRegion.match(/<p[\s>]/g) || []).length;
+    // Numbered <li> sources (newer style) or <p> entries (older articles).
+    const lis = (refRegion.match(/<li[\s>]/g) || []).length;
+    sources = lis || (refRegion.match(/<p[\s>]/g) || []).length;
   }
   return { readMins, sources };
 }

@@ -136,5 +136,10 @@ card("og-arq.png", "ARQ LIBRARY", PANDORA,
 
 card("og-writing.png", "WRITING", GOLD,
      "Cognitive Strategy for the AI Era",
-     "24 essays and whitepapers on closing the gap between AI and human thinking.",
+     "Essays and whitepapers on closing the gap between AI and human thinking.",
      "Nathan Critchett, Cognitive Strategist")
+
+card("og-home.png", "FRACTIONAL CHIEF AI OFFICER", GOLD,
+     "Get a return on the AI you already pay for.",
+     "AI strategy, shipped tools, and adoption that turns spend into outcomes.",
+     "Nathan Critchett, AI Strategist & Builder")

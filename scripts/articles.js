@@ -64,6 +64,28 @@ const articles = [
       },
     ],
   },
+  {
+    slug: "why-enterprise-ai-pilots-stall",
+    cluster: "complexity-gap",
+    faq: [
+      {
+        q: "Why do most enterprise AI pilots fail?",
+        a: "Research points to workflow fit, the absence of a defined outcome, and weak adoption, not the underlying model. When confident AI output meets a team that was never set up to evaluate it, judgment gets offloaded and value never lands.",
+      },
+      {
+        q: "Is the technology usually the problem?",
+        a: "Rarely. The MIT findings are explicit that failures trace to data readiness, integration, and adoption. The model is capable; the organization around it is what stalls.",
+      },
+      {
+        q: "What separates the roughly 5% of pilots that work?",
+        a: "They aim AI at workflows people actually use, integrate it deeply rather than bolting it on, build systems their people learn to trust, and measure value such as time and cost rather than adoption rates.",
+      },
+      {
+        q: "How should AI ROI be measured?",
+        a: "By practical results: time saved, cost reduced, cycle times shortened, errors cut, and risk lowered. Login counts and adoption percentages are vanity metrics, not value.",
+      },
+    ],
+  },
   { slug: "the-bottleneck-isnt-technology", cluster: "complexity-gap" },
   { slug: "nobody-using-ai-tools", cluster: "complexity-gap" },
 

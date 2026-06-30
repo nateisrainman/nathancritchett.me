@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Why Most Enterprise AI Pilots Stall (and the Adoption Gap Behind It) | Nathan Critchett</title>
+  <meta name="description" content="Around 95% of enterprise AI pilots return nothing, and the model is rarely the reason. What the data shows about why pilots stall, and the sequence that turns AI spend into measurable ROI.">
+  <link rel="canonical" href="https://nathancritchett.me/writing/why-enterprise-ai-pilots-stall.html">
+
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="Nathan Critchett">
+  <meta property="og:url" content="https://nathancritchett.me/writing/why-enterprise-ai-pilots-stall.html">
+  <meta property="og:title" content="Why Most Enterprise AI Pilots Stall (and the Adoption Gap Behind It)">
+  <meta property="og:description" content="Around 95% of enterprise AI pilots return nothing, and the model is rarely the reason. What the data shows, and what actually closes the gap.">
+  <meta property="og:image" content="https://nathancritchett.me/assets/og-writing.png?v=3">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:site" content="@nathancritch">
+  <meta name="theme-color" content="#060A14">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../styles.css">
+  <link rel="stylesheet" href="article.css">
+  <script defer src="/assets/analytics.js"></script>
+<!--SEO:HEAD-->
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Person",
+      "@id": "https://nathancritchett.me/#nathan",
+      "name": "Nathan Critchett",
+      "givenName": "Nathan",
+      "familyName": "Critchett",
+      "jobTitle": "AI Strategist & Builder",
+      "description": "Nathan Critchett is an AI strategist and hands-on builder who helps enterprises close the gap between what AI can produce and what their people can evaluate. He translates cognitive-science research into shipped products, LLM-assisted tools, and adoption programs across 100+ organizations, and is the author of Cognitive Architecture. Founder of Arq.Training and CritchPitch. Open to advisory, fractional, and enterprise AI engagements.",
+      "url": "https://nathancritchett.me",
+      "image": "https://nathancritchett.me/assets/headshot.jpg",
+      "sameAs": [
+        "https://www.linkedin.com/in/nathan-critchett/",
+        "https://critchpitch.com",
+        "https://arq.training"
+      ]
+    },
+    {
+      "@type": "Organization",
+      "@id": "https://nathancritchett.me/#org",
+      "name": "Nathan Critchett",
+      "url": "https://nathancritchett.me",
+      "logo": "https://nathancritchett.me/assets/headshot.jpg"
+    },
+    {
+      "@type": "Article",
+      "@id": "https://nathancritchett.me/writing/why-enterprise-ai-pilots-stall.html#article",
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://nathancritchett.me/writing/why-enterprise-ai-pilots-stall.html"
+      },
+      "headline": "Why Most Enterprise AI Pilots Stall (and the Adoption Gap Behind It)",
+      "description": "Around 95% of enterprise AI pilots return nothing, and the model is rarely the reason. The gap is the people and workflows around it. Here is what the data shows, and what actually closes it.",
+      "image": "https://nathancritchett.me/assets/og-writing.png",
+      "datePublished": "2026-06-17",
+      "dateModified": "2026-06-17",
+      "articleSection": "The Complexity Gap",
+      "url": "https://nathancritchett.me/writing/why-enterprise-ai-pilots-stall.html"
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://nathancritchett.me/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Writing",
+          "item": "https://nathancritchett.me/writing/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Why Most Enterprise AI Pilots Stall (and the Adoption Gap Behind It)",
+          "item": "https://nathancritchett.me/writing/why-enterprise-ai-pilots-stall.html"
+        }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Why do most enterprise AI pilots fail?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Research points to workflow fit, the absence of a defined outcome, and weak adoption, not the underlying model. When confident AI output meets a team that was never set up to evaluate it, judgment gets offloaded and value never lands."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Is the technology usually the problem?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Rarely. The MIT findings are explicit that failures trace to data readiness, integration, and adoption. The model is capable; the organization around it is what stalls."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What separates the roughly 5% of pilots that work?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "They aim AI at workflows people actually use, integrate it deeply rather than bolting it on, build systems their people learn to trust, and measure value such as time and cost rather than adoption rates."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How should AI ROI be measured?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "By practical results: time saved, cost reduced, cycle times shortened, errors cut, and risk lowered. Login counts and adoption percentages are vanity metrics, not value."
+          }
+        }
+      ]
+    }
+  ]
+}
+  </script>
+<!--/SEO:HEAD-->
+</head>
+<body>
+    <nav class="nav" id="nav">
+    <div class="nav-inner">
+      <a href="/" class="nav-name">NATHAN CRITCHETT</a>
+      <div class="nav-right">
+        <a href="/book.html#preorder" class="nav-mobile-cta">Book Pre-sale</a>
+        <button class="nav-toggle" id="nav-toggle" aria-label="Menu">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+      <div class="nav-links" id="nav-links">
+        <a href="/book.html">The Book</a>
+        <div class="nav-dropdown">
+          <a href="/writing/" class="nav-dropbtn">Writing</a>
+          <div class="nav-submenu">
+            <a href="/writing/">AI &amp; Cognition</a>
+            <a href="/arq/">Cognitive Development</a>
+            <a href="/pitching/">Pitching</a>
+          </div>
+        </div>
+        <a href="/hire.html">Hire</a>
+        <a href="/about.html">About</a>
+        <a href="/#contact" class="nav-cta">Get in Touch</a>
+      </div>
+    </div>
+  </nav>
+
+  <article class="article">
+    <div class="article-inner">
+      <div class="article-meta">
+        <a href="/writing/" class="back-link">&larr; All Writing</a>
+        <span class="article-type">Article</span>
+      </div>
+      <h1 class="article-title">Why Most Enterprise AI Pilots Stall (and the Adoption Gap Behind It)</h1>
+      <p class="article-subtitle">Around 95% of enterprise AI pilots return nothing, and the model is rarely the reason. The gap is the people and workflows around it. Here is what the data shows, and what actually closes it.</p>
+
+      <!--SEO:BYLINE-->
+      <div class="article-byline">
+        <div class="byline-meta">4 min read<span class="byline-dot">&middot;</span>5 cited sources<span class="byline-dot">&middot;</span>Last updated June 17, 2026</div>
+        <div class="byline-author">
+          <span class="byline-avatar">NC</span>
+          <span>By <a href="/about.html" rel="author">Nathan Critchett</a>, AI Strategist &amp; Builder</span>
+        </div>
+      </div>
+<!--/SEO:BYLINE-->
+<div class="article-body">
+        <div class="quick-take">
+          <h2>The quick take</h2>
+          <ul>
+            <li>Roughly 95% of enterprise generative-AI pilots deliver no measurable return, despite tens of billions in spend.<sup><a href="#src-1">1</a></sup></li>
+            <li>Fewer than one in five pilots ever reach production. The rest sit as proofs of concept that quietly consume budget.<sup><a href="#src-2">2</a></sup></li>
+            <li>The failures trace to workflow fit, undefined outcomes, and adoption, not to the underlying model.<sup><a href="#src-1">1</a></sup></li>
+            <li>The fix is a sequence: prioritize the few use cases that matter, fit the workflow, and build the human capability to evaluate the output.</li>
+          </ul>
+        </div>
+
+        <h2>The number that should reframe every AI budget</h2>
+        <p>A 2025 study out of MIT looked at more than 300 enterprise AI initiatives and found that about 95% of organizations saw no measurable return on their generative-AI spend, even as the market poured an estimated 30 to 40 billion dollars into it.<sup><a href="#src-1">1</a></sup> That is not a rounding error. It is the base rate.</p>
+        <p>The rest of the picture rhymes. McKinsey reports that fewer than one in five AI pilots cross into enterprise-scale production, leaving roughly 80% stuck as indefinite proofs of concept.<sup><a href="#src-2">2</a></sup> Deloitte finds that a majority of CEOs, around 56%, have not yet seen significant financial benefit from their AI investments.<sup><a href="#src-3">3</a></sup></p>
+        <div class="callout"><span class="callout-label">Key idea</span><p>When the failure rate is this consistent across this many companies and this much spend, the problem is structural, not a matter of picking the wrong vendor.</p></div>
+
+        <h2>It is almost never the model</h2>
+        <p>The most useful finding in the MIT work is what does not explain the failures. It is rarely the model. The recurring causes are data readiness, weak workflow integration, the absence of a defined outcome before the build starts, and a tendency to avoid the friction that real adoption requires.<sup><a href="#src-1">1</a></sup></p>
+        <p>Underneath those causes sits a single dynamic. AI now produces fluent, confident output faster than most teams can evaluate it. The Harvard Business School study of consultants working with GPT-4 captured the cost: inside the tool's reliable boundary, output improved, but on tasks just outside that boundary, people who trusted the confident output were about 19 percentage points less accurate than peers working without it.<sup><a href="#src-4">4</a></sup> The tool did not just fail to help. It degraded judgment.</p>
+        <div class="callout"><span class="callout-label">Watch for</span><p>A polished demo that no one in the room can actually evaluate is a liability, not an asset. The gap between what the tool produces and what the team can judge is where pilots quietly die.</p></div>
+
+        <h2>Where the value actually is</h2>
+        <p>The same research points to where returns do show up, and it is not where most budgets go. More than half of generative-AI spend lands on sales and marketing tools, while the larger and more reliable ROI sits in back-office automation: cutting external agency costs, streamlining operations, and removing repetitive process work.<sup><a href="#src-1">1</a></sup> Buying from specialized vendors and partnering also succeeds roughly twice as often as building internally.<sup><a href="#src-1">1</a></sup></p>
+        <p>And the organizations that measure well do not measure adoption. They track practical results: time saved, cost reduced, cycle times shortened, errors cut, and risk lowered.<sup><a href="#src-3">3</a></sup> Those are the numbers a pilot has to move to survive.</p>
+
+        <h2>The adoption gap, named</h2>
+        <p>The roughly 5% that get a return share a pattern. They aim AI at workflows people actually use, they integrate it deeply rather than bolting it on, and they build systems their people learn to trust.<sup><a href="#src-1">1</a></sup> In other words, they close the gap between what the tool can produce and what the humans around it can evaluate and apply.</p>
+        <p>That gap is a human one. When confident output meets a team that was never set up to interrogate it, people offload their judgment to the machine. Research on cognitive offloading links heavier reliance on AI to weaker independent reasoning, which is exactly the capacity an enterprise needs when the stakes are real.<sup><a href="#src-5">5</a></sup> Adoption that lasts is closer to organizational redesign than to a software rollout.<sup><a href="#src-3">3</a></sup></p>
+
+        <h2>A sequence that does not stall</h2>
+        <p>The path out is not a better model. It is a sequence that the successful minority tends to follow:</p>
+        <ol>
+          <li><strong>Prioritize.</strong> Find the few use cases with real, measurable ROI, and decline the rest. Most failed programs are busy rather than focused.</li>
+          <li><strong>Fit the workflow.</strong> Shape the tool to how people already work, instead of asking people to bend around a generic demo.</li>
+          <li><strong>Build the capability.</strong> Develop the human ability to evaluate, question, and trust the output. This is the step the 95% skip.</li>
+          <li><strong>Measure value.</strong> Track time, cost, and quality, not license counts or login rates.</li>
+        </ol>
+        <p>It is the same logic that applies to any capable tool placed in human hands. Grow the capacity around the tool, not just the tool, and the pilot has somewhere to land.</p>
+
+        <h2>The bottom line</h2>
+        <p>The technology is ready. The open question is whether the organization around it is, and pilots stall when that question goes unasked. The 95% number is not a verdict on AI. It is a verdict on how AI is being adopted.</p>
+
+        <section class="article-sources">
+          <h2>Sources</h2>
+          <p class="sources-note">Where findings are debated, the text says so rather than overstating the certainty. Some publisher links may block automated tools but resolve in a browser.</p>
+          <ol>
+            <li id="src-1">MIT report coverage (2025): roughly 95% of enterprise generative-AI pilots show no measurable return. Fortune. <a href="https://fortune.com/2025/08/18/mit-report-95-percent-generative-ai-pilots-at-companies-failing-cfo/" rel="noopener">https://fortune.com/2025/08/18/mit-report-95-percent-generative-ai-pilots-at-companies-failing-cfo/</a></li>
+            <li id="src-2">McKinsey. The State of AI (2026). Share of AI pilots reaching production. <a href="https://www.mckinsey.com/capabilities/quantumblack/our-insights/the-state-of-ai" rel="noopener">https://www.mckinsey.com/capabilities/quantumblack/our-insights/the-state-of-ai</a></li>
+            <li id="src-3">Deloitte. State of AI in the Enterprise (2026). <a href="https://www.deloitte.com/us/en/what-we-do/capabilities/applied-artificial-intelligence/content/state-of-ai-in-the-enterprise.html" rel="noopener">https://www.deloitte.com/us/en/what-we-do/capabilities/applied-artificial-intelligence/content/state-of-ai-in-the-enterprise.html</a></li>
+            <li id="src-4">Dell'Acqua, F. et al. (2023). Navigating the Jagged Technological Frontier. Harvard Business School Working Paper 24-013. <a href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=4573321" rel="noopener">https://papers.ssrn.com/sol3/papers.cfm?abstract_id=4573321</a></li>
+            <li id="src-5">Gerlich, M. (2025). AI Tools in Society: Impacts on Cognitive Offloading and the Future of Critical Thinking. Societies, 15(1), 6. <a href="https://www.mdpi.com/2075-4698/15/1/6" rel="noopener">https://www.mdpi.com/2075-4698/15/1/6</a></li>
+          </ol>
+        </section>
+      </div>
+    </div>
+<!--SEO:FAQAUTHOR-->
+      <section class="faq">
+        <h2>Common questions</h2>
+        <details class="faq-item">
+          <summary>Why do most enterprise AI pilots fail?</summary>
+          <div class="faq-answer">Research points to workflow fit, the absence of a defined outcome, and weak adoption, not the underlying model. When confident AI output meets a team that was never set up to evaluate it, judgment gets offloaded and value never lands.</div>
+        </details>
+        <details class="faq-item">
+          <summary>Is the technology usually the problem?</summary>
+          <div class="faq-answer">Rarely. The MIT findings are explicit that failures trace to data readiness, integration, and adoption. The model is capable; the organization around it is what stalls.</div>
+        </details>
+        <details class="faq-item">
+          <summary>What separates the roughly 5% of pilots that work?</summary>
+          <div class="faq-answer">They aim AI at workflows people actually use, integrate it deeply rather than bolting it on, build systems their people learn to trust, and measure value such as time and cost rather than adoption rates.</div>
+        </details>
+        <details class="faq-item">
+          <summary>How should AI ROI be measured?</summary>
+          <div class="faq-answer">By practical results: time saved, cost reduced, cycle times shortened, errors cut, and risk lowered. Login counts and adoption percentages are vanity metrics, not value.</div>
+        </details>
+      </section>
+      <aside class="author-box">
+        <img class="author-avatar" src="/assets/headshot.jpg" alt="Nathan Critchett" onerror="this.style.display='none'">
+        <div>
+          <div class="author-name">Nathan Critchett</div>
+          <p>Cognitive strategist and builder focused on closing the gap between what AI can produce and what people can evaluate. Founder of <a href="https://critchpitch.com" rel="noopener">CritchPitch</a> and <a href="https://arq.training" rel="noopener">Arq.Training</a>, and a former Division I pitcher. <a href="/about.html">More about Nathan</a>.</p>
+        </div>
+      </aside>
+<!--/SEO:FAQAUTHOR-->
+  </article>
+
+  <!--SEO:KEEPREADING-->
+  <section class="keep-reading">
+    <h2>Keep reading</h2>
+    <div class="kr-grid">
+      <a class="kr-card" href="the-complexity-gap.html">
+        <span class="kr-tag">The Complexity Gap</span>
+        <h3>The Complexity Gap: Why Your District's AI Strategy Is Solving the Wrong Problem</h3>
+        <p>Districts are investing in AI tools while the real bottleneck is cognitive capacity. More technology without deeper thinking does not close the gap -- it widens it.</p>
+      </a>
+      <a class="kr-card" href="the-bottleneck-isnt-technology.html">
+        <span class="kr-tag">The Complexity Gap</span>
+        <h3>The Bottleneck Isn't Technology. It's Cognition.</h3>
+        <p>Corporate AI rollouts failed because they upgraded tools without upgrading thinkers. School districts are repeating the same expensive mistake -- with higher stakes.</p>
+      </a>
+      <a class="kr-card" href="nobody-using-ai-tools.html">
+        <span class="kr-tag">The Complexity Gap</span>
+        <h3>Your District Bought 7 AI Tools. Here's Why Nobody's Using Them.</h3>
+        <p>Your CTO demoed seven AI tools. Your best teachers stopped using them within weeks. The bottleneck is not the technology -- it is the cognitive capacity to evaluate what AI produces.</p>
+      </a>
+    </div>
+  </section>
+<!--/SEO:KEEPREADING-->
+<div class="article-cta">
+    <div class="article-cta-inner">
+      <h2>Turn this into a return on your AI.</h2>
+      <p>Fractional AI leadership and adoption sprints that prioritize the use cases that matter, fit the workflow, and build the capability to use them.</p>
+      <a href="/hire.html" class="btn btn-primary">See engagements</a>
+      <a href="/writing/" class="btn btn-ghost" style="margin-left: 1rem;">Explore all writing</a>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <div class="footer-inner">
+      <span class="footer-name">Nathan Critchett</span>
+      <span class="footer-copy">2026. All rights reserved.</span>
+    </div>
+  </footer>
+</body>
+</html>
