@@ -270,6 +270,7 @@
 
       <p class="preorder-note" id="architects-note">No spam. No filler. The kit arrives within minutes of signing up. Or email <a href="mailto:nathan.critch@outlook.com">nathan.critch@outlook.com</a> to inquire about bulk pricing for organizations and conferences.</p>
 
+      <script src="/assets/waitlist.js"></script>
       <script>
         (function() {
           var form = document.getElementById('architects-form');
@@ -285,12 +286,7 @@
             submit.textContent = 'Sending...';
 
             try {
-              var res = await fetch('https://architects-list.nathancritch.workers.dev', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ name: name, email: email, source: 'book' })
-              });
-              if (!res.ok) throw new Error('Failed');
+              await window.submitWaitlist({ name: name, email: email, source: 'book' });
               form.style.display = 'none';
               note.style.display = 'none';
               success.style.display = 'block';

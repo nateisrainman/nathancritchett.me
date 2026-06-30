@@ -392,18 +392,12 @@ auditForm.addEventListener('submit', async (e) => {
   gateSubmit.textContent = 'Sending...';
 
   try {
-    const res = await fetch('https://architects-list.nathancritch.workers.dev', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        name,
-        email,
-        source: 'audit',
-        score: window._auditResults
-      })
+    await window.submitWaitlist({
+      name,
+      email,
+      source: 'audit',
+      score: window._auditResults
     });
-
-    if (!res.ok) throw new Error('Submission failed');
 
     resultsGate.style.display = 'none';
     resultsUnlocked.classList.add('visible');
