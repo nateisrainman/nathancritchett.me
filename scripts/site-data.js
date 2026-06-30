@@ -61,7 +61,9 @@ const person = {
   email: "nathan.critch@outlook.com",
   knowsAbout: [
     "AI strategy",
+    "Fractional Chief AI Officer (CAIO)",
     "Enterprise AI adoption",
+    "AI advisory",
     "Generative AI",
     "Large language models (LLMs)",
     "Prompt engineering",
