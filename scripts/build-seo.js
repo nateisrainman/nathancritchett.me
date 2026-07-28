@@ -350,7 +350,7 @@ buildWritingIndex();
 /* ------------------------- sitemap + robots ------------------------- */
 
 function buildSitemap() {
-  const staticPages = ["/", "/about.html", "/hire.html", "/writing/", "/book.html"];
+  const staticPages = ["/", "/about.html", "/hire.html", "/writing/", "/book.html", "/about-the-book.html"];
   const collectionUrls = [];
   for (const c of Object.values(collections)) {
     collectionUrls.push({ loc: SITE + c.basePath, lastmod: c.reviewed });
@@ -466,8 +466,39 @@ const hireGraph = [
 ];
 const didHire = injectHeadSchema(path.join(ROOT, "hire.html"), hireGraph);
 
+// Book page: Book + WebPage + Person.
+const bookUrl = SITE + "/book.html";
+const bookGraph = [
+  D.prune({
+    "@type": "WebPage",
+    "@id": bookUrl + "#page",
+    url: bookUrl,
+    name: "Cognitive Architecture",
+    about: { "@id": bookUrl + "#book" },
+    isPartOf: { "@id": D.SITEORG_ID },
+  }),
+  D.prune({
+    "@type": "Book",
+    "@id": bookUrl + "#book",
+    name: "Cognitive Architecture: How to Think When Machines Think For You",
+    author: { "@id": D.PERSON_ID },
+    url: bookUrl,
+    inLanguage: "en",
+    image: SITE + "/assets/og-book.png",
+    description: "A book by Nathan Critchett on designing AI systems that make people sharper instead of more obsolete. Frameworks include the Cognitive Supply Chain, the Centaur Architecture, the Antifragile Ego, and the horizontal versus vertical distinction.",
+  }),
+  D.personNode({ full: true }),
+  D.siteOrgNode(),
+  D.breadcrumbNode([
+    { name: "Home", url: SITE + "/" },
+    { name: "The Book", url: bookUrl },
+  ]),
+];
+const didBook = injectHeadSchema(path.join(ROOT, "book.html"), bookGraph);
+
 console.log(`Injected schema + byline into ${count} articles.`);
 console.log(`Hire schema: ${didHire ? "ok" : "hire.html not found"}.`);
+console.log(`Book schema: ${didBook ? "ok" : "book.html not found"}.`);
 console.log(`Wrote writing/index.html, sitemap.xml, robots.txt.`);
 console.log(`Homepage schema: ${didHome ? "ok" : "skipped (no index.html marker)"}.`);
 console.log(`About schema: ${didAbout ? "ok" : "about.html not found yet"}.`);
