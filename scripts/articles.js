@@ -88,6 +88,28 @@ const articles = [
   },
   { slug: "the-bottleneck-isnt-technology", cluster: "complexity-gap" },
   { slug: "nobody-using-ai-tools", cluster: "complexity-gap" },
+  {
+    slug: "fractional-ai-strategist",
+    cluster: "complexity-gap",
+    faq: [
+      {
+        q: "What is a fractional AI strategist?",
+        a: "Senior AI leadership on a part-time or contract basis. The role sets AI priorities, oversees the build, owns adoption, and reports on outcomes, without the cost or commitment of a full-time executive hire.",
+      },
+      {
+        q: "How is a fractional AI strategist different from an AI consultant?",
+        a: "A consultant delivers analysis and a strategy, then leaves. A fractional strategist owns outcomes and stays through adoption, the hardest part, so the organization actually changes rather than just receiving a recommendation.",
+      },
+      {
+        q: "When should a company hire a fractional AI strategist instead of a full-time Chief AI Officer?",
+        a: "When AI has become important enough to need an owner but a full-time executive is premature: spend is climbing, pilots keep stalling, and no single person owns whether any of it pays off. Fractional gives senior ownership sized to the need.",
+      },
+      {
+        q: "What does a fractional AI strategist cost?",
+        a: "Pricing is scoped per engagement against the outcome it targets, and fractional leadership commonly runs as a monthly retainer, far below the cost of a full-time AI executive.",
+      },
+    ],
+  },
 
   // ---- Cluster 2: Vertical Development ----
   {
