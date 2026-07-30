@@ -1237,6 +1237,110 @@ a { text-decoration: none; color: inherit; }
   text-underline-offset: 2px;
 }
 
+/* ---- Free Playbook / Downloadable Resource ---- */
+.resource {
+  padding: 7rem 2.5rem;
+  background: var(--abyss-light);
+  position: relative;
+}
+
+.resource-inner {
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.resource-intro {
+  font-size: 1.05rem;
+  line-height: 1.7;
+  color: var(--star-muted);
+  max-width: 720px;
+  margin-bottom: 2.5rem;
+}
+
+.resource-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.resource-card {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  padding: 1.75rem;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.03);
+  transition: border-color 0.3s, transform 0.3s;
+}
+
+.resource-actions {
+  flex-shrink: 0;
+  display: flex;
+  gap: 0.6rem;
+  flex-wrap: wrap;
+}
+
+.resource-card:hover {
+  border-color: rgba(196, 135, 77, 0.4);
+  transform: translateY(-2px);
+}
+
+.resource-card-icon {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 56px;
+  height: 56px;
+  border-radius: 12px;
+  color: var(--dune);
+  background: rgba(196, 135, 77, 0.1);
+}
+
+.resource-card-body {
+  flex: 1;
+  min-width: 0;
+}
+
+.resource-card-title {
+  font-family: var(--serif);
+  font-size: 1.2rem;
+  color: var(--star);
+  margin-bottom: 0.35rem;
+}
+
+.resource-card-meta {
+  font-size: 0.9rem;
+  color: var(--star-dim);
+  line-height: 1.5;
+}
+
+.resource-download {
+  flex-shrink: 0;
+  white-space: nowrap;
+}
+
+.resource-note {
+  margin-top: 1.5rem;
+  font-size: 0.95rem;
+  color: var(--star-dim);
+}
+
+@media (max-width: 640px) {
+  .resource-card {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1.1rem;
+  }
+  .resource-actions {
+    width: 100%;
+  }
+  .resource-actions .resource-download {
+    flex: 1;
+  }
+}
+
 /* ---- Services (Speaking + Consulting) ---- */
 .services {
   padding: 7rem 2.5rem;
