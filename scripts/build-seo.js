@@ -447,7 +447,7 @@ const bookGraph = [
     url: bookUrl,
     inLanguage: "en",
     image: SITE + "/assets/og-book.png",
-    description: "A book by Nathan Critchett on designing AI systems that make people sharper instead of more obsolete, with a clear direction for education, the workforce, and hiring for adaptability in the AI era.",
+    description: "A book by Nathan Critchett on designing AI systems that make people sharper instead of more obsolete. Frameworks include the Cognitive Supply Chain, the Centaur Architecture, the Antifragile Ego, and the horizontal versus vertical distinction.",
   }),
   D.personNode({ full: true }),
   D.siteOrgNode(),
