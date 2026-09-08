@@ -48,23 +48,17 @@ window.submitWaitlist = async function submitWaitlist(data) {
     return { stored: false, unconfigured: true };
   }
 
-  // text/plain keeps this a "simple" CORS request (no preflight), which Apps
-  // Script handles cleanly. The Apps Script reads the raw JSON body.
-  var res = await fetch(cfg.endpoint, {
+  // Apps Script answers a POST with a cross-origin 302 that the browser refuses
+  // to read in normal CORS mode (it throws "Failed to fetch"), even though the
+  // row IS written server-side first. "no-cors" with a simple text/plain body
+  // lets the write go through cleanly; the response is opaque, so a resolved
+  // fetch is our success signal (we can't read status/duplicate back). A real
+  // network failure still rejects and is surfaced to the visitor.
+  await fetch(cfg.endpoint, {
     method: "POST",
+    mode: "no-cors",
     headers: { "Content-Type": "text/plain;charset=utf-8" },
     body: JSON.stringify(row),
   });
-
-  if (!res.ok) {
-    var detail = await res.text().catch(function () { return ""; });
-    throw new Error("Waitlist save failed (" + res.status + "): " + detail);
-  }
-
-  var out = await res.json().catch(function () { return { status: "ok" }; });
-  if (out && out.status === "error") {
-    throw new Error(out.message || "Waitlist save failed.");
-  }
-  // status "ok" (added) or "duplicate" (already on the list) are both success.
-  return { stored: true, duplicate: out && out.status === "duplicate" };
+  return { stored: true };
 };
