@@ -364,3 +364,22 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     }
   });
 });
+
+// ---- Generic scroll reveal (portrait unveil, etc.) ----
+(function () {
+  const revealEls = document.querySelectorAll('.reveal-on-scroll');
+  if (!revealEls.length) return;
+  if (!('IntersectionObserver' in window)) {
+    revealEls.forEach(el => el.classList.add('revealed'));
+    return;
+  }
+  const ro = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('revealed');
+        ro.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.2, rootMargin: '0px 0px -8% 0px' });
+  revealEls.forEach(el => ro.observe(el));
+})();
