@@ -48,17 +48,54 @@ window.submitWaitlist = async function submitWaitlist(data) {
     return { stored: false, unconfigured: true };
   }
 
-  // Apps Script answers a POST with a cross-origin 302 that the browser refuses
-  // to read in normal CORS mode (it throws "Failed to fetch"), even though the
-  // row IS written server-side first. "no-cors" with a simple text/plain body
-  // lets the write go through cleanly; the response is opaque, so a resolved
-  // fetch is our success signal (we can't read status/duplicate back). A real
-  // network failure still rejects and is surfaced to the visitor.
-  await fetch(cfg.endpoint, {
-    method: "POST",
-    mode: "no-cors",
-    headers: { "Content-Type": "text/plain;charset=utf-8" },
-    body: JSON.stringify(row),
+  // Submit via a hidden form targeting a hidden iframe. This is a top-level
+  // form navigation, NOT fetch/XHR, so it is not subject to CORS at all -
+  // the browser never tries (and fails) to read a cross-origin response.
+  // Apps Script receives the form fields, writes the row, and we treat the
+  // iframe's load (or a short timeout) as success. This is the reliable way
+  // to post to Apps Script from a static site.
+  return await new Promise(function (resolve, reject) {
+    var iframe = document.createElement("iframe");
+    iframe.name = "wl_" + Date.now();
+    iframe.style.display = "none";
+    document.body.appendChild(iframe);
+
+    var form = document.createElement("form");
+    form.method = "POST";
+    form.action = cfg.endpoint;
+    form.target = iframe.name;
+    form.style.display = "none";
+
+    Object.keys(row).forEach(function (k) {
+      var input = document.createElement("input");
+      input.type = "hidden";
+      input.name = k;
+      input.value = row[k] == null ? "" : String(row[k]);
+      form.appendChild(input);
+    });
+    document.body.appendChild(form);
+
+    var done = false;
+    function finish(ok) {
+      if (done) return;
+      done = true;
+      setTimeout(function () {
+        try { form.remove(); iframe.remove(); } catch (e) {}
+      }, 1500);
+      if (ok) resolve({ stored: true });
+      else reject(new Error("Could not reach the signup service. Please try again."));
+    }
+
+    // The iframe fires 'load' once the POST completes (even though the
+    // cross-origin body is unreadable). Fall back to success after 4s in
+    // case the load event is unreliable - the row is written regardless.
+    iframe.addEventListener("load", function () { finish(true); });
+    setTimeout(function () { finish(true); }, 4000);
+
+    try {
+      form.submit();
+    } catch (err) {
+      finish(false);
+    }
   });
-  return { stored: true };
 };

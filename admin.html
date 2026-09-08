@@ -62,7 +62,7 @@
     </div>
   </main>
 
-  <script src="/assets/waitlist.js"></script>
+  <script src="/assets/waitlist.js?v=2"></script>
   <script>
     (function () {
       var cfg = window.WAITLIST_CONFIG || {};
@@ -127,7 +127,7 @@
         try { localStorage.setItem("waitlist_admin_token", token); } catch (e) {}
 
         if (!endpoint || endpoint.indexOf("PASTE") === 0) {
-          msg.innerHTML = "The waitlist endpoint is not set yet. Finish the setup in WAITLIST-SETUP.md, then paste your Web App URL into <code>assets/waitlist.js</code>.";
+          msg.innerHTML = "The waitlist endpoint is not set yet. Finish the setup in WAITLIST-SETUP.md, then paste your Web App URL into <code>assets/waitlist.js?v=2</code>.";
           return;
         }
 

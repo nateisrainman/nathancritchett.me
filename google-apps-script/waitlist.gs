@@ -37,7 +37,14 @@ function json_(obj) {
 // New signups arrive here (POST from the website form).
 function doPost(e) {
   try {
-    var data = JSON.parse((e && e.postData && e.postData.contents) || "{}");
+    // Accept both the hidden-iframe form POST (fields in e.parameter) and a
+    // JSON body POST (e.postData.contents). The website uses the form method.
+    var data;
+    if (e && e.parameter && (e.parameter.email || e.parameter.name)) {
+      data = e.parameter;
+    } else {
+      data = JSON.parse((e && e.postData && e.postData.contents) || "{}");
+    }
     var email = String(data.email || "").trim().toLowerCase();
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
       return json_({ status: "error", message: "invalid email" });
