@@ -266,6 +266,7 @@
       <form class="waitlist-form" id="architects-form">
         <input type="text" name="name" placeholder="Your name" required class="waitlist-input" style="max-width: 200px;">
         <input type="email" name="email" placeholder="your@email.com" required class="waitlist-input">
+        <input type="text" name="company" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px;opacity:0;" hidden>
         <button type="submit" class="btn btn-primary btn-lg" id="architects-submit">Book Pre-sale &rarr;</button>
       </form>
 
@@ -292,18 +293,18 @@
             submit.textContent = 'Sending...';
 
             try {
-              await window.submitWaitlist({ name: name, email: email, source: 'book' });
-              form.style.display = 'none';
-              note.style.display = 'none';
-              success.style.display = 'block';
+              await window.submitWaitlist({ name: name, email: email, source: 'book', hp: form.company.value });
               if (window.posthog) {
                 window.posthog.identify(email, { name: name, email: email });
                 window.posthog.capture('signup_completed', { source: 'book' });
               }
+              form.style.display = 'none';
+              note.style.display = 'none';
+              success.style.display = 'block';
             } catch (err) {
               submit.disabled = false;
               submit.textContent = 'Try Again';
-              alert('Something went wrong. Please try again or email nathan.critch@outlook.com directly.');
+              alert((err && err.message) ? err.message : 'Something went wrong. Please try again or email nathan.critch@outlook.com directly.');
               if (window.track) window.track('signup_failed', { source: 'book' });
             }
           });

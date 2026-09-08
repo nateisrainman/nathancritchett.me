@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Waitlist Admin</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/styles.css">
+  <style>
+    .admin { max-width: 1100px; margin: 0 auto; padding: 4rem 1.5rem 5rem; }
+    .admin h1 { font-family: var(--serif); font-size: 2rem; color: var(--star); margin: 0 0 0.25rem; }
+    .admin .sub { color: var(--star-muted); margin: 0 0 2rem; }
+    .admin-bar { display: flex; flex-wrap: wrap; gap: 0.75rem; align-items: center; margin-bottom: 1.5rem; }
+    .admin-stat { font-family: var(--serif); font-size: 1.6rem; color: var(--dune); }
+    .admin-stat span { font-family: var(--sans); font-size: 0.85rem; color: var(--star-dim); margin-left: 0.4rem; }
+    .admin-input {
+      flex: 1; min-width: 220px; font-family: var(--sans); font-size: 0.92rem; color: var(--star);
+      background: rgba(0,0,0,0.25); border: 1px solid rgba(255,255,255,0.14); border-radius: 10px; padding: 0.6rem 0.85rem;
+    }
+    .admin-input:focus { outline: none; border-color: var(--dune); }
+    .admin-btn {
+      font-family: var(--sans); font-weight: 600; font-size: 0.88rem; cursor: pointer;
+      color: var(--abyss); background: var(--dune); border: none; border-radius: 10px; padding: 0.6rem 1rem;
+    }
+    .admin-btn.ghost { background: transparent; color: var(--star); border: 1px solid rgba(255,255,255,0.18); }
+    .admin-btn:hover { opacity: 0.9; }
+    .admin-msg { color: var(--star-dim); font-size: 0.9rem; margin: 1rem 0; line-height: 1.6; }
+    .admin-msg a { color: var(--dune); }
+    table { width: 100%; border-collapse: collapse; margin-top: 1rem; font-size: 0.9rem; }
+    th, td { text-align: left; padding: 0.6rem 0.7rem; border-bottom: 1px solid rgba(255,255,255,0.08); color: var(--star-muted); vertical-align: top; }
+    th { color: var(--star); font-weight: 600; position: sticky; top: 0; background: var(--abyss); cursor: pointer; }
+    tr:hover td { background: rgba(255,255,255,0.03); }
+    .table-wrap { overflow-x: auto; border: 1px solid rgba(255,255,255,0.08); border-radius: 12px; }
+    code { background: rgba(255,255,255,0.06); padding: 0.1rem 0.35rem; border-radius: 4px; }
+  </style>
+</head>
+<body>
+  <main class="admin">
+    <h1>Waitlist</h1>
+    <p class="sub">Everyone who signed up through the site. Live from your Google Sheet.</p>
+
+    <div class="admin-bar">
+      <input id="token" class="admin-input" type="password" placeholder="Admin token" autocomplete="off">
+      <button id="load" class="admin-btn">Load</button>
+      <button id="csv" class="admin-btn ghost" hidden>Download CSV</button>
+      <a id="sheet" class="admin-btn ghost" hidden target="_blank" rel="noopener">Open Google Sheet</a>
+    </div>
+
+    <div class="admin-bar" id="stats" hidden>
+      <span class="admin-stat" id="count">0<span>signups</span></span>
+      <span class="admin-stat" id="book" style="font-size:1.1rem;">0<span>book</span></span>
+      <span class="admin-stat" id="audit" style="font-size:1.1rem;">0<span>audit</span></span>
+    </div>
+
+    <p class="admin-msg" id="msg">Enter your admin token to view signups. The token is the one you set in the Apps Script (<code>ADMIN_TOKEN</code>). It is stored only in this browser, never on the site.</p>
+
+    <div class="table-wrap" id="wrap" hidden>
+      <table id="tbl"><thead></thead><tbody></tbody></table>
+    </div>
+  </main>
+
+  <script src="/assets/waitlist.js"></script>
+  <script>
+    (function () {
+      var cfg = window.WAITLIST_CONFIG || {};
+      var endpoint = cfg.endpoint || "";
+      var tokenInput = document.getElementById("token");
+      var msg = document.getElementById("msg");
+      var wrap = document.getElementById("wrap");
+      var tbl = document.getElementById("tbl");
+      var stats = document.getElementById("stats");
+      var csvBtn = document.getElementById("csv");
+      var sheetLink = document.getElementById("sheet");
+      var rowsCache = [];
+
+      // Restore token from this browser only.
+      try { tokenInput.value = localStorage.getItem("waitlist_admin_token") || ""; } catch (e) {}
+
+      if (cfg.sheetUrl) { sheetLink.href = cfg.sheetUrl; sheetLink.hidden = false; }
+
+      function esc(s) { return String(s == null ? "" : s).replace(/[&<>]/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;" }[c]; }); }
+
+      function render(rows) {
+        rowsCache = rows;
+        var cols = ["timestamp", "name", "email", "source", "score_total", "score_weakest", "page"];
+        var thead = tbl.querySelector("thead");
+        var tbody = tbl.querySelector("tbody");
+        thead.innerHTML = "<tr>" + cols.map(function (c) { return "<th>" + c + "</th>"; }).join("") + "</tr>";
+        tbody.innerHTML = rows.slice().reverse().map(function (r) {
+          return "<tr>" + cols.map(function (c) { return "<td>" + esc(r[c]) + "</td>"; }).join("") + "</tr>";
+        }).join("");
+        wrap.hidden = rows.length === 0;
+
+        document.getElementById("count").firstChild.nodeValue = rows.length;
+        document.getElementById("book").firstChild.nodeValue = rows.filter(function (r) { return r.source === "book"; }).length;
+        document.getElementById("audit").firstChild.nodeValue = rows.filter(function (r) { return r.source === "audit"; }).length;
+        stats.hidden = false;
+        csvBtn.hidden = rows.length === 0;
+      }
+
+      function toCsv(rows) {
+        var cols = ["timestamp", "name", "email", "source", "score_total", "score_weakest", "page", "referrer"];
+        var lines = [cols.join(",")];
+        rows.forEach(function (r) {
+          lines.push(cols.map(function (c) {
+            var v = String(r[c] == null ? "" : r[c]).replace(/"/g, '""');
+            return /[",\n]/.test(v) ? '"' + v + '"' : v;
+          }).join(","));
+        });
+        return lines.join("\n");
+      }
+
+      csvBtn.addEventListener("click", function () {
+        var blob = new Blob([toCsv(rowsCache)], { type: "text/csv" });
+        var a = document.createElement("a");
+        a.href = URL.createObjectURL(blob);
+        a.download = "waitlist-" + new Date().toISOString().slice(0, 10) + ".csv";
+        a.click();
+      });
+
+      document.getElementById("load").addEventListener("click", async function () {
+        var token = tokenInput.value.trim();
+        if (!token) { msg.textContent = "Enter your admin token first."; return; }
+        try { localStorage.setItem("waitlist_admin_token", token); } catch (e) {}
+
+        if (!endpoint || endpoint.indexOf("PASTE") === 0) {
+          msg.innerHTML = "The waitlist endpoint is not set yet. Finish the setup in WAITLIST-SETUP.md, then paste your Web App URL into <code>assets/waitlist.js</code>.";
+          return;
+        }
+
+        msg.textContent = "Loading...";
+        try {
+          var res = await fetch(endpoint + "?action=list&token=" + encodeURIComponent(token), { method: "GET" });
+          var data = await res.json();
+          if (data.status !== "ok") {
+            msg.textContent = data.message === "unauthorized" ? "That token was rejected. Check ADMIN_TOKEN in your Apps Script." : ("Error: " + (data.message || "unknown"));
+            return;
+          }
+          msg.textContent = "";
+          render(data.rows || []);
+        } catch (err) {
+          msg.innerHTML = "Could not reach the endpoint from the browser. This is usually a cross-origin (CORS) block. You can always view everything directly in your Google Sheet" + (cfg.sheetUrl ? " (button above)." : ".");
+        }
+      });
+    })();
+  </script>
+</body>
+</html>

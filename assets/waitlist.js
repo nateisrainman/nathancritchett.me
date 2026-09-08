@@ -1,50 +1,70 @@
 /**
- * Architects List waitlist -> Supabase.
+ * Architects List waitlist -> Google Sheet (via a Google Apps Script Web App).
  *
- * Fill in the two values below from your Supabase dashboard:
- *   Project Settings -> API -> "Project URL" and "Project API keys: anon public"
+ * WHY THIS SETUP: the site is static (GitHub Pages), so there is no server to
+ * receive form posts. A Google Apps Script Web App is a free, no-server endpoint
+ * that appends each signup as a row in a Google Sheet you own. You then see every
+ * signup in that Sheet, or in the on-site dashboard at /admin.html.
  *
- * The anon public key is SAFE to ship in the browser. Row Level Security on the
- * `waitlist` table only allows inserting new signups, never reading or editing
- * existing ones. (See SUPABASE-SETUP.md for the one-time table setup.)
+ * ONE-TIME SETUP (about 5 minutes): follow WAITLIST-SETUP.md, then paste the
+ * Web App URL below. The URL is safe to ship in the browser, it only accepts
+ * new signups; reading the list back requires a private token it never exposes.
  */
 window.WAITLIST_CONFIG = {
-  url: "PASTE_SUPABASE_PROJECT_URL",       // e.g. https://abcdwxyz.supabase.co
-  anonKey: "PASTE_SUPABASE_ANON_PUBLIC_KEY",
+  endpoint: "PASTE_APPS_SCRIPT_WEB_APP_URL", // e.g. https://script.google.com/macros/s/AKfyc.../exec
+  sheetUrl: "",                              // optional: your Google Sheet link, shown on /admin.html
 };
 
-window.submitWaitlist = async function submitWaitlist({ name, email, source, score }) {
-  var cfg = window.WAITLIST_CONFIG || {};
-  if (!cfg.url || cfg.url.indexOf("PASTE") === 0 ||
-      !cfg.anonKey || cfg.anonKey.indexOf("PASTE") === 0) {
-    throw new Error("Waitlist is not configured yet (set WAITLIST_CONFIG in assets/waitlist.js).");
+window.submitWaitlist = async function submitWaitlist(data) {
+  data = data || {};
+
+  // Honeypot: real people leave this empty. Bots fill every field.
+  // Pretend success so the bot moves on, but store nothing.
+  if (data.hp) return { stored: false, bot: true };
+
+  var email = String(data.email || "").trim().toLowerCase();
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+    throw new Error("Please enter a valid email address.");
   }
 
   var row = {
-    name: name ? String(name).trim() : null,
-    email: String(email || "").trim().toLowerCase(),
-    source: source || "book",
-    score_total: score && score.total != null ? score.total : null,
-    score_weakest: score && score.weakest ? score.weakest : null,
+    name: data.name ? String(data.name).trim() : "",
+    email: email,
+    source: data.source || "book",
+    score_total: data.score && data.score.total != null ? data.score.total : "",
+    score_weakest: data.score && data.score.weakest ? data.score.weakest : "",
+    page: location.pathname,
+    referrer: document.referrer || "",
+    ts: new Date().toISOString(),
   };
 
-  var endpoint = cfg.url.replace(/\/$/, "") + "/rest/v1/waitlist?on_conflict=email";
-  var res = await fetch(endpoint, {
+  var cfg = window.WAITLIST_CONFIG || {};
+  var configured = cfg.endpoint && cfg.endpoint.indexOf("PASTE") !== 0;
+
+  // Not wired to the Sheet yet: don't hard-fail the visitor. PostHog (fired by
+  // the form) still captures the lead, and this logs a reminder for the admin.
+  if (!configured) {
+    if (window.console) console.warn("[waitlist] endpoint not set in assets/waitlist.js, signup captured in PostHog only. See WAITLIST-SETUP.md.");
+    return { stored: false, unconfigured: true };
+  }
+
+  // text/plain keeps this a "simple" CORS request (no preflight), which Apps
+  // Script handles cleanly. The Apps Script reads the raw JSON body.
+  var res = await fetch(cfg.endpoint, {
     method: "POST",
-    headers: {
-      "apikey": cfg.anonKey,
-      "Authorization": "Bearer " + cfg.anonKey,
-      "Content-Type": "application/json",
-      // Ignore duplicate emails (already on the list) instead of erroring.
-      "Prefer": "resolution=ignore-duplicates,return=minimal",
-    },
+    headers: { "Content-Type": "text/plain;charset=utf-8" },
     body: JSON.stringify(row),
   });
 
-  // 2xx = added. 409 = already on the list. Both are success for the visitor.
-  if (!res.ok && res.status !== 409) {
+  if (!res.ok) {
     var detail = await res.text().catch(function () { return ""; });
-    throw new Error("Waitlist insert failed (" + res.status + "): " + detail);
+    throw new Error("Waitlist save failed (" + res.status + "): " + detail);
   }
-  return true;
+
+  var out = await res.json().catch(function () { return { status: "ok" }; });
+  if (out && out.status === "error") {
+    throw new Error(out.message || "Waitlist save failed.");
+  }
+  // status "ok" (added) or "duplicate" (already on the list) are both success.
+  return { stored: true, duplicate: out && out.status === "duplicate" };
 };
