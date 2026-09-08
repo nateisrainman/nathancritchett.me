@@ -2148,20 +2148,22 @@ a { text-decoration: none; color: inherit; }
 /* ---- Portrait reveal on scroll ---- */
 .portrait {
   background: var(--abyss);
-  padding: 4.5rem 1.5rem 5.5rem;
+  padding: 5rem 1.5rem 6rem;
   display: flex;
   justify-content: center;
 }
+/* Desktop: photo and text side by side (left/right). */
 .portrait-inner {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   align-items: center;
-  gap: 1.1rem;
+  gap: 3.5rem;
   width: 100%;
-  max-width: 480px;
+  max-width: 960px;
 }
 .portrait-frame {
-  width: 100%;
+  flex: 0 0 42%;
+  max-width: 420px;
   border-radius: 18px;
   overflow: hidden;
   box-shadow: 0 30px 80px rgba(0,0,0,0.5);
@@ -2178,21 +2180,45 @@ a { text-decoration: none; color: inherit; }
   opacity: 0;
   transition: transform 1.4s cubic-bezier(0.22, 1, 0.36, 1), opacity 1.1s ease;
 }
+.portrait-text {
+  flex: 1;
+  opacity: 0;
+  transform: translateY(14px);
+  transition: opacity 0.9s ease 0.35s, transform 0.9s ease 0.35s;
+}
 .portrait-caption {
   font-family: var(--serif);
-  font-size: 1.25rem;
+  font-size: clamp(1.6rem, 3vw, 2.2rem);
+  line-height: 1.15;
+  color: var(--star);
+  margin: 0.4rem 0 1rem;
+}
+.portrait-blurb {
+  font-size: 1.05rem;
+  line-height: 1.75;
   color: var(--star-muted);
   margin: 0;
-  opacity: 0;
-  transform: translateY(12px);
-  transition: opacity 0.8s ease 0.35s, transform 0.8s ease 0.35s;
+  max-width: 460px;
 }
 .reveal-on-scroll.revealed .portrait-frame { clip-path: inset(0 0 0 0); }
 .reveal-on-scroll.revealed .portrait-img { transform: scale(1); opacity: 1; }
-.reveal-on-scroll.revealed .portrait-caption { opacity: 1; transform: translateY(0); }
+.reveal-on-scroll.revealed .portrait-text { opacity: 1; transform: translateY(0); }
+
+/* Mobile: stack (photo on top, text below), same as before. */
+@media (max-width: 760px) {
+  .portrait-inner {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 1.5rem;
+    max-width: 480px;
+  }
+  .portrait-frame { flex: none; width: 100%; max-width: 100%; }
+  .portrait-blurb { margin-left: auto; margin-right: auto; }
+}
 
 @media (prefers-reduced-motion: reduce) {
   .portrait-frame { clip-path: none; transition: none; }
   .portrait-img { transform: none; opacity: 1; transition: none; }
-  .portrait-caption { opacity: 1; transform: none; transition: none; }
+  .portrait-text { opacity: 1; transform: none; transition: none; }
 }
