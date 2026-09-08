@@ -2222,3 +2222,27 @@ a { text-decoration: none; color: inherit; }
   .portrait-img { transform: none; opacity: 1; transition: none; }
   .portrait-text { opacity: 1; transform: none; transition: none; }
 }
+
+/* ---- Built-card branded fallback (shown when no screenshot exists) ---- */
+.built-brand {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.55rem;
+  text-align: center;
+  padding: 2rem;
+}
+.built-brand-name {
+  font-family: var(--serif);
+  font-size: 2.1rem;
+  color: var(--star);
+  letter-spacing: 0.01em;
+}
+.built-brand-sub {
+  font-family: var(--sans);
+  font-size: 0.82rem;
+  color: var(--star-dim);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  max-width: 280px;
+}
