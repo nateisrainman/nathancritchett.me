@@ -241,7 +241,6 @@ document.addEventListener('DOMContentLoaded', () => {
   initCardTilt();
   initParallax();
   initTextReveal();
-  createWaveSection();
   initButtonRipple();
   initActiveNav();
 
