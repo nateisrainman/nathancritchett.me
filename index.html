@@ -37,7 +37,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
-  <link rel="stylesheet" href="styles.css?v=5">  <script defer src="/assets/analytics.js"></script>
+  <link rel="stylesheet" href="styles.css?v=6">  <script defer src="/assets/analytics.js"></script>
 <!--SEO:HEAD-->
   <script type="application/ld+json">
 {
@@ -152,35 +152,19 @@
 
   <!-- Hero -->
   <header class="hero">
-    <div class="hero-inner">
-      <p class="hero-label animate-in" data-delay="0">AI Strategist, Builder &amp; Author</p>
-      <h1 class="hero-headline animate-in" data-delay="1">Nathan Critchett</h1>
-
-      <div class="hero-soundtrack animate-in" data-delay="2">
-        <p class="soundtrack-eyebrow">Experience the work the way it gets made</p>
-        <button class="spotify-toggle" id="spotify-toggle" aria-label="Play the soundtrack" aria-expanded="false">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.559.3z"/></svg>
-          <span class="spotify-label">Pull up a chair, hit play</span>
-        </button>
-        <p class="soundtrack-note">Turn your volume down before you hit play. No jumpscares.</p>
-        <div class="spotify-player" id="spotify-player">
-          <iframe
-            src="https://open.spotify.com/embed/playlist/4tTt8c44dMYQFl2kr6mynh?utm_source=generator&theme=0"
-            width="300"
-            height="152"
-            frameBorder="0"
-            allowfullscreen=""
-            allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
-            loading="lazy"
-            style="border-radius: 12px;"
-          ></iframe>
+    <div class="hero-split">
+      <div class="hero-copy">
+        <p class="hero-label animate-in" data-delay="0">AI Strategist, Builder &amp; Author</p>
+        <h1 class="hero-headline animate-in" data-delay="1">Nathan Critchett</h1>
+        <p class="hero-mission animate-in" data-delay="2">On a mission to empower every person to become the best version of themselves.</p>
+        <p class="hero-sub animate-in" data-delay="3">Studying how people and machines think together, and turning that research into products, writing, and a book. Here is the work and the writing.</p>
+        <div class="hero-actions animate-in" data-delay="4">
+          <a href="#work" class="btn btn-primary">See the Work</a>
+          <a href="book.html#preorder" class="btn btn-ghost">Reserve the Book</a>
         </div>
       </div>
-
-      <p class="hero-sub animate-in" data-delay="3">Studying how people and machines think together. Turning cognitive-science research into products people can use, writing about it, and putting it in a book. Here is the work, the writing, and the book.</p>
-      <div class="hero-actions animate-in" data-delay="4">
-        <a href="#work" class="btn btn-primary">See the Work</a>
-        <a href="book.html#preorder" class="btn btn-ghost">Reserve the Book</a>
+      <div class="hero-photo animate-in" data-delay="2">
+        <img src="assets/nathan-hero.jpg?v=2" alt="Nathan Critchett" onerror="this.onerror=null; this.src='assets/headshot.jpg';">
       </div>
     </div>
     <div class="proof-bar animate-in" data-delay="5">
@@ -191,21 +175,6 @@
       <span>Former D1 pitcher</span>
     </div>
   </header>
-
-  <!-- Portrait reveal on scroll -->
-  <section class="portrait" id="portrait">
-    <div class="portrait-inner reveal-on-scroll">
-      <div class="portrait-frame">
-        <img src="assets/nathan-hero.jpg?v=2" alt="Nathan Critchett" class="portrait-img"
-             onerror="this.onerror=null; this.src='assets/headshot.jpg';">
-      </div>
-      <div class="portrait-text">
-        <p class="section-label">Put a Face to the Name</p>
-        <h2 class="portrait-caption">Nathan Critchett.</h2>
-        <p class="portrait-blurb">Former Division I pitcher turned builder and writer. The through-line across all of it is the same question: how people actually grow, on the field and off it.</p>
-      </div>
-    </div>
-  </section>
 
   <!-- Work -->
   <section class="built" id="work">
@@ -394,6 +363,27 @@
     </div>
   </section>
 
+
+  <!-- Floating Spotify Player -->
+  <div class="spotify-float" id="spotify-float">
+    <button class="spotify-toggle" id="spotify-toggle" aria-label="Toggle music player">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.559.3z"/></svg>
+      <span class="spotify-label">Pull up a chair, hit play</span>
+    </button>
+    <p class="spotify-note">Turn your volume down first. No jumpscares.</p>
+    <div class="spotify-player" id="spotify-player">
+      <iframe
+        src="https://open.spotify.com/embed/playlist/4tTt8c44dMYQFl2kr6mynh?utm_source=generator&theme=0"
+        width="300"
+        height="152"
+        frameBorder="0"
+        allowfullscreen=""
+        allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+        loading="lazy"
+        style="border-radius: 12px;"
+      ></iframe>
+    </div>
+  </div>
 
   <footer class="footer">
     <div class="footer-inner">
