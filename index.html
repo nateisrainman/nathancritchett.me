@@ -35,9 +35,9 @@
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Hanken+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
-  <link rel="stylesheet" href="styles.css?v=7">  <script defer src="/assets/analytics.js"></script>
+  <link rel="stylesheet" href="styles.css?v=8">  <script defer src="/assets/analytics.js"></script>
 <!--SEO:HEAD-->
   <script type="application/ld+json">
 {
@@ -150,31 +150,41 @@
     </div>
   </nav>
 
-  <!-- Hero -->
-  <header class="hero">
-    <div class="hero-split">
-      <div class="hero-copy">
-        <p class="hero-label animate-in" data-delay="0">AI Strategist, Builder &amp; Author</p>
-        <h1 class="hero-headline animate-in" data-delay="1">Nathan Critchett</h1>
-        <p class="hero-mission animate-in" data-delay="2">On a mission to empower every person to become the best version of themselves.</p>
-        <p class="hero-sub animate-in" data-delay="3">Studying how people and machines think together, and turning that research into products, writing, and a book. Here is the work and the writing.</p>
-        <div class="hero-actions animate-in" data-delay="4">
+  <!-- Hero (minimal: name + mission) -->
+  <header class="hero hero-minimal">
+    <div class="hero-min">
+      <h1 class="hero-headline animate-in" data-delay="0">Nathan Critchett</h1>
+      <p class="hero-mission animate-in" data-delay="1">Empower every person to become the best version of themselves.</p>
+    </div>
+    <a href="#intro" class="hero-scroll animate-in" data-delay="2" aria-label="Scroll down">
+      <span>Scroll</span>
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg>
+    </a>
+  </header>
+
+  <!-- Intro (revealed on scroll) -->
+  <section class="intro" id="intro">
+    <div class="intro-inner">
+      <div class="intro-photo">
+        <img src="assets/nathan-hero.jpg?v=2" alt="Nathan Critchett" onerror="this.onerror=null; this.src='assets/headshot.jpg';">
+      </div>
+      <div class="intro-copy">
+        <p class="hero-label">AI Strategist, Builder &amp; Author</p>
+        <p class="intro-sub">Studying how people and machines think together, and turning that research into products, writing, and a book. Here is the work and the writing.</p>
+        <div class="hero-actions">
           <a href="#work" class="btn btn-primary">See the Work</a>
           <a href="book.html#preorder" class="btn btn-ghost">Reserve the Book</a>
         </div>
-      </div>
-      <div class="hero-photo animate-in" data-delay="2">
-        <img src="assets/nathan-hero.jpg?v=2" alt="Nathan Critchett" onerror="this.onerror=null; this.src='assets/headshot.jpg';">
+        <div class="proof-bar">
+          <span>Author of Cognitive Architecture</span>
+          <span class="proof-dot">&middot;</span>
+          <span>Founder of Arq.Training &amp; CritchPitch</span>
+          <span class="proof-dot">&middot;</span>
+          <span>Former D1 pitcher</span>
+        </div>
       </div>
     </div>
-    <div class="proof-bar animate-in" data-delay="5">
-      <span>Author of Cognitive Architecture</span>
-      <span class="proof-dot">&middot;</span>
-      <span>Founder of Arq.Training &amp; CritchPitch</span>
-      <span class="proof-dot">&middot;</span>
-      <span>Former D1 pitcher</span>
-    </div>
-  </header>
+  </section>
 
   <!-- Work -->
   <section class="built" id="work">
@@ -226,6 +236,11 @@
           </div>
         </div>
 
+      </div>
+
+      <div class="work-shorthand">
+        <p>Don't have time to read the book?</p>
+        <a href="/writing/" class="btn btn-outline btn-sm">Thoughts, in Shorthand &#8594;</a>
       </div>
     </div>
   </section>
