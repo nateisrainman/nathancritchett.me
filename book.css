@@ -600,3 +600,35 @@
   .waitlist-form { flex-direction: column; }
   .waitlist-input { min-width: 0; width: 100%; }
 }
+
+/* ---- You'll learn list ---- */
+.book-learn { background: var(--abyss-light); }
+.learn-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.1rem 2.75rem;
+  max-width: 920px;
+}
+.learn-list li {
+  position: relative;
+  padding-left: 1.9rem;
+  font-size: 1.05rem;
+  line-height: 1.6;
+  color: var(--star-muted);
+}
+.learn-list li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.5em;
+  width: 0.6rem;
+  height: 0.6rem;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--dune), var(--peach));
+}
+@media (max-width: 640px) {
+  .learn-list { grid-template-columns: 1fr; }
+}
