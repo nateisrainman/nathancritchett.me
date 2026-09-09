@@ -2332,3 +2332,7 @@ a { text-decoration: none; color: inherit; }
   text-shadow: 0 2px 10px rgba(0,0,0,0.6);
 }
 .spotify-toggle.active ~ .spotify-note { display: block; }
+
+/* ---- Book cover inside a Work card ---- */
+.built-card-visual-cover { background: var(--abyss); }
+.built-img-contain { object-fit: contain !important; padding: 1.75rem; }
