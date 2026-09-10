@@ -2453,3 +2453,18 @@ body { font-size: 1.05rem; }
 .writing-intro, .for-whom-intro, .inside-intro, .preorder-sub, .about-content p { font-size: 1.2rem; }
 .bc-title { font-size: 1.2rem; }
 .bc-desc { font-size: 1.12rem; }
+
+/* ---- Requested emphasis tweaks ---- */
+.hero-label { font-size: 1.6rem; }
+.btn-thought { font-size: 1.7rem; }
+.work-shorthand p { color: var(--star); font-weight: 700; }
+.work-shorthand .btn-outline {
+  color: var(--dune);
+  border-color: rgba(196, 135, 77, 0.5);
+  font-weight: 700;
+}
+.work-shorthand .btn-outline:hover {
+  background: rgba(196, 135, 77, 0.1);
+  border-color: var(--dune);
+  color: var(--dune);
+}
