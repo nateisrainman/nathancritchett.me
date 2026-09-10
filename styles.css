@@ -35,8 +35,8 @@
   --star: #F0ECF8;
   --star-muted: #B0B4CC;
   --star-dim: #8088A8;
-  --serif: 'Bricolage Grotesque', system-ui, sans-serif;
-  --sans: 'Familjen Grotesk', -apple-system, sans-serif;
+  --serif: 'Cormorant Garamond', Georgia, serif;
+  --sans: 'Hanken Grotesk', -apple-system, sans-serif;
 }
 
 html {
@@ -2405,4 +2405,27 @@ a { text-decoration: none; color: inherit; }
   min-height: 100vh;
   min-height: 100dvh;
   align-content: center;
+}
+
+/* ---- Cormorant display refinement ---- */
+.section-headline, .hero-headline, .book-hero-title, .hub-name,
+.presale-title, .callout-number, .stack-total-value {
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+.hero-minimal .hero-headline {
+  font-weight: 600;
+  font-size: clamp(3.6rem, 9.5vw, 7rem);
+  line-height: 1.02;
+  letter-spacing: -0.015em;
+}
+/* Mission in the clean sans, for contrast with the serif name */
+.hero-minimal .hero-mission {
+  font-family: var(--sans);
+  font-weight: 400;
+  font-size: clamp(1.05rem, 2vw, 1.5rem);
+  line-height: 1.6;
+  letter-spacing: 0.005em;
+  color: var(--star-muted);
+  max-width: 640px;
 }
