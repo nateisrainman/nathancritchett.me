@@ -2392,20 +2392,7 @@ a { text-decoration: none; color: inherit; }
 }
 .work-shorthand p { color: var(--star-muted); margin: 0; font-size: 1.05rem; }
 
-/* ---- Every homepage section fills the viewport ---- */
-.hero { min-height: 100vh; min-height: 100dvh; }
-.intro, .built, .book, .writing, .contact {
-  min-height: 100vh;
-  min-height: 100dvh;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-}
-.about {
-  min-height: 100vh;
-  min-height: 100dvh;
-  align-content: center;
-}
+/* Sections size to their content (hero keeps its own full-height rule). */
 
 /* ---- Cormorant display refinement ---- */
 .section-headline, .hero-headline, .book-hero-title, .hub-name,
