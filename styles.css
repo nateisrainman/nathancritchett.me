@@ -2416,3 +2416,40 @@ a { text-decoration: none; color: inherit; }
   color: var(--star-muted);
   max-width: 640px;
 }
+
+/* ---- Thoughts: three big orange buttons (bold navy text) ---- */
+.thoughts-buttons {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.25rem;
+  margin-top: 1.5rem;
+}
+.btn-thought {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  text-align: center;
+  background: linear-gradient(135deg, var(--dune), var(--dune-hover));
+  color: var(--abyss);
+  font-family: var(--sans);
+  font-weight: 800;
+  font-size: 1.4rem;
+  line-height: 1.2;
+  padding: 2.1rem 1.5rem;
+  border-radius: 16px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.btn-thought:hover { transform: translateY(-3px); box-shadow: 0 14px 36px rgba(196,135,77,0.32); }
+@media (max-width: 760px) { .thoughts-buttons { grid-template-columns: 1fr; } }
+
+/* ---- Larger type across the site ---- */
+body { font-size: 1.05rem; }
+.hero-label { font-size: 1.25rem; letter-spacing: 0.16em; }
+.built-card-content h3 { font-size: 2.4rem; }
+.built-tagline { font-size: 1.25rem; }
+.built-card-content p { font-size: 1.12rem; line-height: 1.7; }
+.intro-sub { font-size: 1.4rem; line-height: 1.65; }
+.writing-intro, .for-whom-intro, .inside-intro, .preorder-sub, .about-content p { font-size: 1.2rem; }
+.bc-title { font-size: 1.2rem; }
+.bc-desc { font-size: 1.12rem; }
