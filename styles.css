@@ -35,8 +35,8 @@
   --star: #F0ECF8;
   --star-muted: #B0B4CC;
   --star-dim: #8088A8;
-  --serif: 'Instrument Serif', Georgia, serif;
-  --sans: 'Schibsted Grotesk', -apple-system, sans-serif;
+  --serif: 'Bricolage Grotesque', system-ui, sans-serif;
+  --sans: 'Familjen Grotesk', -apple-system, sans-serif;
 }
 
 html {
