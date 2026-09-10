@@ -35,8 +35,8 @@
   --star: #F0ECF8;
   --star-muted: #B0B4CC;
   --star-dim: #8088A8;
-  --serif: 'Fraunces', Georgia, serif;
-  --sans: 'Hanken Grotesk', -apple-system, sans-serif;
+  --serif: 'Instrument Serif', Georgia, serif;
+  --sans: 'Schibsted Grotesk', -apple-system, sans-serif;
 }
 
 html {
@@ -2391,3 +2391,18 @@ a { text-decoration: none; color: inherit; }
   gap: 1.1rem; flex-wrap: wrap;
 }
 .work-shorthand p { color: var(--star-muted); margin: 0; font-size: 1.05rem; }
+
+/* ---- Every homepage section fills the viewport ---- */
+.hero { min-height: 100vh; min-height: 100dvh; }
+.intro, .built, .book, .writing, .contact {
+  min-height: 100vh;
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.about {
+  min-height: 100vh;
+  min-height: 100dvh;
+  align-content: center;
+}
