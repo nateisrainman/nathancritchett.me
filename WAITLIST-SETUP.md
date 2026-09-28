@@ -1,4 +1,28 @@
-# Waitlist setup (Google Sheet + automatic emails, ~10 minutes, no server)
+# Waitlist
+
+## How it works now (no Google setup required)
+
+Signups go through **FormSubmit** (formsubmit.co, free, no account):
+
+- **You get an email** at `nathan.critch@outlook.com` for every signup (name,
+  email, source). Your inbox *is* the list: search "New waitlist signup".
+- **The subscriber gets a welcome email** automatically with the kit links.
+- The site only says "You're in" once FormSubmit confirms. If it can't, it tries
+  the Google Apps Script below, and if that fails too, the visitor gets a
+  one-click "email Nathan" link. Every attempt is also logged in PostHog
+  (`waitlist_signup_attempt`, with the email).
+
+**One-time activation:** the first signup after this went live sends an
+**"Activate Form"** email from FormSubmit to `nathan.critch@outlook.com`
+(check Junk). Click the button once. Every signup after that is delivered.
+
+To change the address: edit `notifyEmail` in `assets/waitlist.js` (the new
+address will need activating once, too).
+
+---
+
+# Optional backup: Google Sheet via Apps Script
+
 
 Signups from the book page and the audit page go to a **Google Apps Script Web
 App** ([`google-apps-script/waitlist.gs`](google-apps-script/waitlist.gs)) that:

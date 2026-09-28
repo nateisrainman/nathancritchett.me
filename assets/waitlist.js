@@ -1,20 +1,78 @@
 /**
- * Architects List waitlist -> Google Sheet (via a Google Apps Script Web App).
+ * Architects List waitlist.
  *
- * WHY THIS SETUP: the site is static (GitHub Pages), so there is no server to
- * receive form posts. A Google Apps Script Web App (google-apps-script/waitlist.gs)
- * stores each signup in a Google Sheet, emails the subscriber their kit, and
- * emails Nathan. See WAITLIST-SETUP.md.
+ * PRIMARY: FormSubmit (formsubmit.co). No server, no account. Every signup
+ * emails Nathan (notifyEmail) with the person's details, and FormSubmit sends
+ * the subscriber an automatic welcome email (_autoresponse) with the kit links.
+ * The very first submission triggers a one-time "Activate form" email to
+ * notifyEmail; click it once and every signup after that is delivered.
  *
- * The endpoint MUST be a public deployment ("Who has access: Anyone"), so its
- * URL looks like https://script.google.com/macros/s/.../exec. A URL containing
- * /a/macros/<company-domain>/ is restricted to that company and rejects visitors.
+ * FALLBACK: the Google Apps Script endpoint (google-apps-script/waitlist.gs),
+ * used only if FormSubmit does not confirm, so nobody gets two welcome emails.
+ *
+ * Every attempt is also logged in PostHog (waitlist_signup_attempt, with email).
  */
 window.WAITLIST_CONFIG = {
+  notifyEmail: "nathan.critch@outlook.com",  // where signup notifications go (FormSubmit)
   endpoint: "https://script.google.com/macros/s/AKfycbxncLfsB7ioAWLW5Jtaf-vtNT2p34ooJaiKMUKBCJJMIBVCayaiwH4pl6z7WVNFH4Ay9Q/exec",
   sheetUrl: "",                              // optional: your Google Sheet link, shown on /admin.html
   contactEmail: "nathan.critch@outlook.com", // fallback shown to visitors if the signup can't be confirmed
 };
+
+var WL_SITE = "https://nathancritchett.me";
+
+function wlWelcomeText(name) {
+  var first = name ? name.split(/\s+/)[0] : "";
+  return [
+    (first ? "Hi " + first + "," : "Hi,"),
+    "",
+    "You're on the Architects List for Cognitive Architecture. You'll get 30% off and first-edition access the day the book goes live.",
+    "",
+    "Your kit, ready now:",
+    "- The Intro + The Architect's Mandate (PDF): " + WL_SITE + "/assets/intro-and-mandate.pdf",
+    "- Cognitive Supply Chain Self-Audit, Org Edition: " + WL_SITE + "/worksheets/supply-chain-org.html",
+    "- Cognitive Supply Chain Self-Audit, Classroom Edition: " + WL_SITE + "/worksheets/supply-chain-classroom.html",
+    "- The Cognitive Audit: " + WL_SITE + "/audit.html",
+    "",
+    "Questions? Email nathan.critch@outlook.com.",
+    "",
+    "Nathan Critchett",
+  ].join("\n");
+}
+
+// FormSubmit's AJAX endpoint answers with JSON and allows cross-origin calls,
+// so we know for certain whether the signup went through.
+async function wlFormSubmit(row) {
+  var cfg = window.WAITLIST_CONFIG || {};
+  var ctrl = typeof AbortController !== "undefined" ? new AbortController() : null;
+  var timer = setTimeout(function () { if (ctrl) ctrl.abort(); }, 15000);
+  try {
+    var res = await fetch("https://formsubmit.co/ajax/" + cfg.notifyEmail, {
+      method: "POST",
+      headers: { "Content-Type": "application/json", "Accept": "application/json" },
+      body: JSON.stringify({
+        name: row.name,
+        email: row.email,
+        source: row.source,
+        audit_score: row.score_total,
+        audit_weakest: row.score_weakest,
+        page: row.page,
+        _subject: "New waitlist signup: " + (row.name || row.email) + " (" + row.source + ")",
+        _template: "table",
+        _captcha: "false",
+        _replyto: row.email,
+        _autoresponse: wlWelcomeText(row.name),
+      }),
+      signal: ctrl ? ctrl.signal : undefined,
+    });
+    var data = await res.json().catch(function () { return {}; });
+    return { ok: res.ok && (data.success === true || data.success === "true"), message: data.message || ("HTTP " + res.status) };
+  } catch (err) {
+    return { ok: false, message: (err && err.message) || "network error" };
+  } finally {
+    clearTimeout(timer);
+  }
+}
 
 // Load a JSONP response from the Apps Script endpoint. A <script> tag is not
 // subject to CORS, and unlike the old hidden-iframe POST we get the actual
@@ -114,6 +172,15 @@ window.submitWaitlist = async function submitWaitlist(data) {
   wlTrack("waitlist_signup_attempt", { email: email, name: row.name, source: row.source });
 
   var cfg = window.WAITLIST_CONFIG || {};
+
+  // 1) FormSubmit: emails Nathan + auto-replies to the subscriber.
+  var fs = cfg.notifyEmail ? await wlFormSubmit(row) : { ok: false, message: "notifyEmail not set" };
+  if (fs.ok) {
+    wlTrack("waitlist_signup_stored", { email: email, source: row.source, via: "formsubmit" });
+    return { stored: true, via: "formsubmit" };
+  }
+
+  // 2) Fallback: Google Apps Script (saves to the Sheet and sends its own emails).
   var result;
   try {
     if (!cfg.endpoint) throw new Error("endpoint not set");
@@ -121,10 +188,11 @@ window.submitWaitlist = async function submitWaitlist(data) {
   } catch (err) {
     result = { status: "error", message: err && err.message };
   }
-
   if (result.status === "ok" || result.status === "duplicate") {
-    return { stored: true, duplicate: result.status === "duplicate" };
+    wlTrack("waitlist_signup_stored", { email: email, source: row.source, via: "apps_script" });
+    return { stored: true, via: "apps_script", duplicate: result.status === "duplicate" };
   }
+  result.message = "formsubmit: " + fs.message + " | apps script: " + result.message;
 
   if (cfg.endpoint) wlLegacyPost(cfg.endpoint, row);
   wlTrack("waitlist_signup_failed", { email: email, name: row.name, source: row.source, reason: String(result.message || "unknown") });
