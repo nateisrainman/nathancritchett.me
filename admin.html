@@ -55,6 +55,8 @@
       <span class="admin-stat" id="audit" style="font-size:1.1rem;">0<span>audit</span></span>
     </div>
 
+    <p class="admin-msg" id="health" hidden style="border:1px solid; border-radius:12px; padding:0.9rem 1rem;"></p>
+
     <p class="admin-msg" id="msg">Enter your admin token to view signups. The token is the one you set in the Apps Script (<code>ADMIN_TOKEN</code>). It is stored only in this browser, never on the site.</p>
 
     <div class="table-wrap" id="wrap" hidden>
@@ -62,7 +64,7 @@
     </div>
   </main>
 
-  <script src="/assets/waitlist.js?v=2"></script>
+  <script src="/assets/waitlist.js?v=3"></script>
   <script>
     (function () {
       var cfg = window.WAITLIST_CONFIG || {};
@@ -81,11 +83,38 @@
 
       if (cfg.sheetUrl) { sheetLink.href = cfg.sheetUrl; sheetLink.hidden = false; }
 
+      // Health check: tells you immediately whether the public signup form can
+      // actually reach your Apps Script, before any visitor finds out the hard way.
+      var health = document.getElementById("health");
+      function setHealth(ok, html) {
+        health.hidden = false;
+        health.style.borderColor = ok ? "rgba(120,200,140,0.5)" : "rgba(240,110,90,0.6)";
+        health.innerHTML = html;
+      }
+      if (!endpoint) {
+        setHealth(false, "<strong>Signups are NOT being saved.</strong> No endpoint is set in <code>assets/waitlist.js</code>. See WAITLIST-SETUP.md.");
+      } else {
+        var domainLocked = /\/a\/macros\//.test(endpoint);
+        window.waitlistJsonp({ action: "ping" }, 12000).then(function (d) {
+          if (d.status === "ok" && d.version >= 3) {
+            setHealth(!domainLocked, domainLocked
+              ? "<strong>Warning:</strong> the endpoint answers <em>you</em>, but its URL contains <code>/a/macros/…/</code>, meaning it may be restricted to your company account. Open this page in a private window to check what the public sees."
+              : "<strong>Signup endpoint is live</strong> (v" + d.version + "). Signups are saved, welcome emails go out, and you get notified.");
+          } else {
+            setHealth(false, "<strong>The endpoint answers but is running old code.</strong> Paste the latest <code>google-apps-script/waitlist.gs</code> and redeploy (Manage deployments → Edit → New version).");
+          }
+        }).catch(function () {
+          setHealth(false, "<strong>Signups are NOT being saved.</strong> The form can't get a valid answer from your Apps Script (it is blocked, or still running old code)" +
+            (domainLocked ? ". Its URL contains <code>/a/macros/…/</code>, which means the deployment is restricted to a company account, so public visitors are rejected." : ".") +
+            " Redeploy with <em>Who has access: Anyone</em> (see WAITLIST-SETUP.md). Meanwhile every attempt is logged in PostHog as <code>waitlist_signup_attempt</code>, with the email.");
+        });
+      }
+
       function esc(s) { return String(s == null ? "" : s).replace(/[&<>]/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;" }[c]; }); }
 
       function render(rows) {
         rowsCache = rows;
-        var cols = ["timestamp", "name", "email", "source", "score_total", "score_weakest", "page"];
+        var cols = ["timestamp", "name", "email", "source", "score_total", "score_weakest", "welcome_email"];
         var thead = tbl.querySelector("thead");
         var tbody = tbl.querySelector("tbody");
         thead.innerHTML = "<tr>" + cols.map(function (c) { return "<th>" + c + "</th>"; }).join("") + "</tr>";
@@ -102,7 +131,7 @@
       }
 
       function toCsv(rows) {
-        var cols = ["timestamp", "name", "email", "source", "score_total", "score_weakest", "page", "referrer"];
+        var cols = ["timestamp", "name", "email", "source", "score_total", "score_weakest", "page", "referrer", "welcome_email"];
         var lines = [cols.join(",")];
         rows.forEach(function (r) {
           lines.push(cols.map(function (c) {
@@ -126,23 +155,25 @@
         if (!token) { msg.textContent = "Enter your admin token first."; return; }
         try { localStorage.setItem("waitlist_admin_token", token); } catch (e) {}
 
-        if (!endpoint || endpoint.indexOf("PASTE") === 0) {
-          msg.innerHTML = "The waitlist endpoint is not set yet. Finish the setup in WAITLIST-SETUP.md, then paste your Web App URL into <code>assets/waitlist.js?v=2</code>.";
+        if (!endpoint) {
+          msg.innerHTML = "The waitlist endpoint is not set. See WAITLIST-SETUP.md.";
           return;
         }
 
         msg.textContent = "Loading...";
         try {
-          var res = await fetch(endpoint + "?action=list&token=" + encodeURIComponent(token), { method: "GET" });
-          var data = await res.json();
+          var data = await window.waitlistJsonp({ action: "list", token: token }, 20000);
           if (data.status !== "ok") {
-            msg.textContent = data.message === "unauthorized" ? "That token was rejected. Check ADMIN_TOKEN in your Apps Script." : ("Error: " + (data.message || "unknown"));
+            msg.innerHTML = data.message === "unauthorized" ? "That token was rejected. Check <code>ADMIN_TOKEN</code> in your Apps Script."
+              : data.message === "token_not_set" ? "Set <code>ADMIN_TOKEN</code> in your Apps Script to a long random string, redeploy, then use that value here."
+              : ("Error: " + esc(data.message || "unknown"));
             return;
           }
           msg.textContent = "";
+          if (data.sheetUrl) { sheetLink.href = data.sheetUrl; sheetLink.hidden = false; }
           render(data.rows || []);
         } catch (err) {
-          msg.innerHTML = "Could not reach the endpoint from the browser. This is usually a cross-origin (CORS) block. You can always view everything directly in your Google Sheet" + (cfg.sheetUrl ? " (button above)." : ".");
+          msg.innerHTML = "Could not reach your Apps Script. See the status box above.";
         }
       });
     })();

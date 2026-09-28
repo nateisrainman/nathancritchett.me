@@ -382,7 +382,7 @@
 
       <p class="preorder-note" id="architects-note">No spam. No filler. The kit arrives within minutes of signing up. Or email <a href="mailto:nathan.critch@outlook.com">nathan.critch@outlook.com</a> to inquire about bulk pricing for organizations and conferences.</p>
 
-      <script src="/assets/waitlist.js?v=2"></script>
+      <script src="/assets/waitlist.js?v=3"></script>
       <script>
         (function() {
           var form = document.getElementById('architects-form');
@@ -399,18 +399,19 @@
 
             try {
               await window.submitWaitlist({ name: name, email: email, source: 'book', hp: form.company.value });
-              if (window.posthog) {
-                window.posthog.identify(email, { name: name, email: email });
-                window.posthog.capture('signup_completed', { source: 'book' });
-              }
+              if (window.posthog) window.posthog.capture('signup_completed', { source: 'book', email: email });
               form.style.display = 'none';
               note.style.display = 'none';
               success.style.display = 'block';
             } catch (err) {
               submit.disabled = false;
               submit.textContent = 'Try Again';
-              alert((err && err.message) ? err.message : 'Something went wrong. Please try again or email nathan.critch@outlook.com directly.');
-              if (window.track) window.track('signup_failed', { source: 'book' });
+              if (err && err.waitlistFailed) {
+                note.innerHTML = '<strong>We couldn\u2019t confirm your signup.</strong> <a href="' + err.mailto + '">Tap here to email Nathan</a> and he\u2019ll add you to the list by hand.';
+                note.style.display = 'block';
+              } else {
+                alert((err && err.message) ? err.message : 'Something went wrong. Please try again or email nathan.critch@outlook.com directly.');
+              }
             }
           });
         })();

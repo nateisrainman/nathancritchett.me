@@ -2,18 +2,86 @@
  * Architects List waitlist -> Google Sheet (via a Google Apps Script Web App).
  *
  * WHY THIS SETUP: the site is static (GitHub Pages), so there is no server to
- * receive form posts. A Google Apps Script Web App is a free, no-server endpoint
- * that appends each signup as a row in a Google Sheet you own. You then see every
- * signup in that Sheet, or in the on-site dashboard at /admin.html.
+ * receive form posts. A Google Apps Script Web App (google-apps-script/waitlist.gs)
+ * stores each signup in a Google Sheet, emails the subscriber their kit, and
+ * emails Nathan. See WAITLIST-SETUP.md.
  *
- * ONE-TIME SETUP (about 5 minutes): follow WAITLIST-SETUP.md, then paste the
- * Web App URL below. The URL is safe to ship in the browser, it only accepts
- * new signups; reading the list back requires a private token it never exposes.
+ * The endpoint MUST be a public deployment ("Who has access: Anyone"), so its
+ * URL looks like https://script.google.com/macros/s/.../exec. A URL containing
+ * /a/macros/<company-domain>/ is restricted to that company and rejects visitors.
  */
 window.WAITLIST_CONFIG = {
   endpoint: "https://script.google.com/a/macros/edapt.com/s/AKfycbzhWtuy8AOiYpud6CCt5pO_y0Xx6S6hla9xPpjH_m2IRDsr4S6G1fDJjrOnoQvrnt7BWw/exec",
   sheetUrl: "",                              // optional: your Google Sheet link, shown on /admin.html
+  contactEmail: "nathan.critch@outlook.com", // fallback shown to visitors if the signup can't be confirmed
 };
+
+// Load a JSONP response from the Apps Script endpoint. A <script> tag is not
+// subject to CORS, and unlike the old hidden-iframe POST we get the actual
+// answer back, so we only report success when the row was really stored.
+window.waitlistJsonp = function waitlistJsonp(params, timeoutMs) {
+  var cfg = window.WAITLIST_CONFIG || {};
+  return new Promise(function (resolve, reject) {
+    var cb = "__wl_cb_" + Date.now() + "_" + Math.floor(Math.random() * 1e6);
+    var script = document.createElement("script");
+    var timer;
+
+    function cleanup() {
+      clearTimeout(timer);
+      try { delete window[cb]; } catch (e) { window[cb] = undefined; }
+      if (script.parentNode) script.parentNode.removeChild(script);
+    }
+
+    window[cb] = function (data) { cleanup(); resolve(data || {}); };
+    script.onerror = function () { cleanup(); reject(new Error("unreachable")); };
+    // The script loaded but never called back: Google served something else
+    // (a sign-in page, an error page, or an old deployment of the script).
+    script.onload = function () {
+      setTimeout(function () {
+        if (window[cb]) { cleanup(); reject(new Error("bad response")); }
+      }, 50);
+    };
+    timer = setTimeout(function () { cleanup(); reject(new Error("timeout")); }, timeoutMs || 15000);
+
+    var qs = Object.keys(params).map(function (k) {
+      return encodeURIComponent(k) + "=" + encodeURIComponent(params[k] == null ? "" : String(params[k]));
+    });
+    qs.push("callback=" + cb);
+    script.src = cfg.endpoint + (cfg.endpoint.indexOf("?") === -1 ? "?" : "&") + qs.join("&");
+    document.head.appendChild(script);
+  });
+};
+
+function wlTrack(event, props) {
+  try { if (window.posthog) window.posthog.capture(event, props); } catch (e) {}
+}
+
+// Old delivery path: fire-and-forget form POST into a hidden iframe. Used only
+// as a best-effort extra when the confirmed path fails, so that an older
+// deployment of the Apps Script still gets the row if it can.
+function wlLegacyPost(endpoint, row) {
+  try {
+    var iframe = document.createElement("iframe");
+    iframe.name = "wl_" + Date.now();
+    iframe.style.display = "none";
+    document.body.appendChild(iframe);
+    var form = document.createElement("form");
+    form.method = "POST";
+    form.action = endpoint;
+    form.target = iframe.name;
+    form.style.display = "none";
+    Object.keys(row).forEach(function (k) {
+      var input = document.createElement("input");
+      input.type = "hidden";
+      input.name = k;
+      input.value = row[k] == null ? "" : String(row[k]);
+      form.appendChild(input);
+    });
+    document.body.appendChild(form);
+    form.submit();
+    setTimeout(function () { try { form.remove(); iframe.remove(); } catch (e) {} }, 10000);
+  } catch (e) {}
+}
 
 window.submitWaitlist = async function submitWaitlist(data) {
   data = data || {};
@@ -38,64 +106,34 @@ window.submitWaitlist = async function submitWaitlist(data) {
     ts: new Date().toISOString(),
   };
 
-  var cfg = window.WAITLIST_CONFIG || {};
-  var configured = cfg.endpoint && cfg.endpoint.indexOf("PASTE") !== 0;
+  // Record the lead in PostHog BEFORE contacting the Sheet, so there is a
+  // second copy of every signup attempt (with the email) no matter what.
+  try {
+    if (window.posthog) window.posthog.identify(email, { name: row.name, email: email });
+  } catch (e) {}
+  wlTrack("waitlist_signup_attempt", { email: email, name: row.name, source: row.source });
 
-  // Not wired to the Sheet yet: don't hard-fail the visitor. PostHog (fired by
-  // the form) still captures the lead, and this logs a reminder for the admin.
-  if (!configured) {
-    if (window.console) console.warn("[waitlist] endpoint not set in assets/waitlist.js, signup captured in PostHog only. See WAITLIST-SETUP.md.");
-    return { stored: false, unconfigured: true };
+  var cfg = window.WAITLIST_CONFIG || {};
+  var result;
+  try {
+    if (!cfg.endpoint) throw new Error("endpoint not set");
+    result = await window.waitlistJsonp(Object.assign({ action: "signup" }, row));
+  } catch (err) {
+    result = { status: "error", message: err && err.message };
   }
 
-  // Submit via a hidden form targeting a hidden iframe. This is a top-level
-  // form navigation, NOT fetch/XHR, so it is not subject to CORS at all -
-  // the browser never tries (and fails) to read a cross-origin response.
-  // Apps Script receives the form fields, writes the row, and we treat the
-  // iframe's load (or a short timeout) as success. This is the reliable way
-  // to post to Apps Script from a static site.
-  return await new Promise(function (resolve, reject) {
-    var iframe = document.createElement("iframe");
-    iframe.name = "wl_" + Date.now();
-    iframe.style.display = "none";
-    document.body.appendChild(iframe);
+  if (result.status === "ok" || result.status === "duplicate") {
+    return { stored: true, duplicate: result.status === "duplicate" };
+  }
 
-    var form = document.createElement("form");
-    form.method = "POST";
-    form.action = cfg.endpoint;
-    form.target = iframe.name;
-    form.style.display = "none";
+  if (cfg.endpoint) wlLegacyPost(cfg.endpoint, row);
+  wlTrack("waitlist_signup_failed", { email: email, name: row.name, source: row.source, reason: String(result.message || "unknown") });
+  if (window.console) console.error("[waitlist] signup not confirmed:", result);
 
-    Object.keys(row).forEach(function (k) {
-      var input = document.createElement("input");
-      input.type = "hidden";
-      input.name = k;
-      input.value = row[k] == null ? "" : String(row[k]);
-      form.appendChild(input);
-    });
-    document.body.appendChild(form);
-
-    var done = false;
-    function finish(ok) {
-      if (done) return;
-      done = true;
-      setTimeout(function () {
-        try { form.remove(); iframe.remove(); } catch (e) {}
-      }, 1500);
-      if (ok) resolve({ stored: true });
-      else reject(new Error("Could not reach the signup service. Please try again."));
-    }
-
-    // The iframe fires 'load' once the POST completes (even though the
-    // cross-origin body is unreadable). Fall back to success after 4s in
-    // case the load event is unreliable - the row is written regardless.
-    iframe.addEventListener("load", function () { finish(true); });
-    setTimeout(function () { finish(true); }, 4000);
-
-    try {
-      form.submit();
-    } catch (err) {
-      finish(false);
-    }
-  });
+  var err = new Error("We couldn't confirm your signup. Please email " + (cfg.contactEmail || "us") + " and we'll add you by hand.");
+  err.waitlistFailed = true;
+  err.mailto = "mailto:" + (cfg.contactEmail || "") +
+    "?subject=" + encodeURIComponent("Add me to the Architects List") +
+    "&body=" + encodeURIComponent("Please add me to the waitlist.\n\nName: " + row.name + "\nEmail: " + email);
+  throw err;
 };

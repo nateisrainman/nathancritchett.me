@@ -1,57 +1,80 @@
-# Waitlist setup (Google Sheet, ~5 minutes, no server)
+# Waitlist setup (Google Sheet + automatic emails, ~10 minutes, no server)
 
-The site is static, so signups are stored in a **Google Sheet you own**, via a
-free **Google Apps Script Web App**. You can see every signup two ways:
+Signups from the book page and the audit page go to a **Google Apps Script Web
+App** ([`google-apps-script/waitlist.gs`](google-apps-script/waitlist.gs)) that:
 
-1. **In the Google Sheet** itself, and
-2. **On the site** at `https://nathancritchett.me/admin.html` (a private dashboard).
+1. saves each signup as a row in a **Google Sheet you own**,
+2. **emails the subscriber** their kit (Intro PDF + both worksheets + audit link),
+3. **emails you** (`NOTIFY_EMAIL`) every time someone joins.
+
+You can see the list in the Sheet, or at `https://nathancritchett.me/admin.html`.
+That page also shows a **status box** telling you whether signups are actually
+working right now.
+
+## Why it broke before (Sept 2026 audit)
+
+- The deployment URL was `script.google.com/a/macros/edapt.com/...`. The
+  `/a/macros/edapt.com/` part means the deployment is tied to the edapt.com
+  Workspace account, and public visitors get bounced to a Google sign-in page.
+- The site showed "You're in" no matter what happened, so failures were invisible.
+- The script never sent any email.
+
+The site now only says "You're in" after Google confirms the row was saved. If
+that fails, visitors see a one-click "email Nathan" link instead, and every
+attempt is logged in PostHog (`waitlist_signup_attempt`, with the email) as a
+backup record.
 
 ## One-time setup
 
-1. **Create the Sheet.** Go to [sheets.new](https://sheets.new) and name it
-   e.g. "Cognitive Architecture Waitlist". Leave it empty (the script adds a
-   `Signups` tab with headers automatically).
+1. **Use a personal Google account (e.g. Gmail), not edapt.com.** Workspace
+   admins often block "Anyone" access, which is exactly what broke this.
 
-2. **Add the script.** In that Sheet: **Extensions → Apps Script**. Delete the
-   starter code, then paste the entire contents of
-   [`google-apps-script/waitlist.gs`](google-apps-script/waitlist.gs).
+2. **Create the Sheet.** Go to [sheets.new](https://sheets.new), name it
+   "Cognitive Architecture Waitlist".
 
-3. **Set your admin token.** Near the top of the script, change:
-   ```js
-   var ADMIN_TOKEN = "CHANGE_ME_TO_A_LONG_RANDOM_STRING";
-   ```
-   to a long random string (e.g. from a password manager). This gates the
-   `/admin.html` dashboard. Keep it private, do **not** commit it anywhere.
+3. **Add the script.** In the Sheet: **Extensions → Apps Script**. Delete the
+   starter code and paste the whole of `google-apps-script/waitlist.gs`.
+
+4. **Edit the settings at the top:**
+   - `ADMIN_TOKEN`: a long random string (from a password manager). The list
+     stays locked until you change it. Don't commit the real value.
+   - `NOTIFY_EMAIL` / `REPLY_TO`: where notifications and replies go.
    Save (disk icon).
 
-4. **Deploy it.** Click **Deploy → New deployment**. Gear icon → **Web app**.
-   Set **Execute as: Me**, **Who has access: Anyone**. Click **Deploy**,
-   authorize when prompted, and copy the **Web app URL** (ends in `/exec`).
+5. **Authorize + test email.** In the function dropdown pick **`testSetup`**,
+   click **Run**, and approve the permissions (Sheets + send email). You should
+   get a test welcome email at `NOTIFY_EMAIL`.
 
-5. **Wire the site.** In [`assets/waitlist.js`](assets/waitlist.js), set:
-   ```js
-   window.WAITLIST_CONFIG = {
-     endpoint: "https://script.google.com/macros/s/AKfyc.../exec",  // your Web app URL
-     sheetUrl: "https://docs.google.com/spreadsheets/d/.../edit",   // your Sheet link (optional)
-   };
-   ```
-   Commit and push. Signups now flow into the Sheet.
+6. **Deploy.** **Deploy → New deployment** → gear → **Web app**.
+   - **Execute as: Me**
+   - **Who has access: Anyone** ← *not* "Anyone within ..."
+   Click **Deploy**, copy the **Web app URL**. It must look like
+   `https://script.google.com/macros/s/AKfyc.../exec` with **no `/a/macros/<domain>/`**.
 
-6. **Use the dashboard.** Open `https://nathancritchett.me/admin.html`, paste
-   your `ADMIN_TOKEN`, and click **Load**. It shows the full list, counts by
-   source (book vs audit), a **Download CSV** button, and an **Open Google
-   Sheet** link. The token is stored only in your browser.
+7. **Wire the site.** Put that URL in `endpoint` in
+   [`assets/waitlist.js`](assets/waitlist.js) (optionally the Sheet link in
+   `sheetUrl`), commit, push. Or send the URL to Claude and it will do this.
+
+8. **Check it.** Open `https://nathancritchett.me/admin.html` **in a private /
+   incognito window** (that's what the public sees). The status box should say
+   **"Signup endpoint is live"**. Paste your `ADMIN_TOKEN`, click **Load**.
+
+## Recovering signups from before the fix
+
+Anyone who signed up while it was broken saw "You're in" and got nothing. The
+page fired `signup_completed` in PostHog and identified the person by email, so
+their emails are in PostHog: **PostHog → People** (or **Activity**, filtered by
+event `signup_completed`, property `site = nathancritchett.me`). Visitors with
+ad blockers won't be there. Add the rest from the emails and DMs you've received.
 
 ## Notes
 
-- **The Web app URL is safe to ship** in the browser, it only accepts new
-  signups. Reading the list back requires the private token, which never
-  appears in the site's code.
-- **Updating the script later:** re-deploy with **Deploy → Manage deployments
-  → Edit → Version: New version**. The `/exec` URL stays the same.
-- **Before setup is finished:** signups won't error out, they're still
-  captured in PostHog (see `assets/analytics.js`), and the form shows success.
-  Only the Sheet is empty until step 5 is done.
-- **Duplicates** (same email) are ignored automatically, counted as success.
-- **Spam:** the form includes a hidden honeypot field; bot submissions are
-  silently dropped and never hit the Sheet.
+- **The Web app URL is safe to ship** in the browser. Reading the list needs the
+  private token.
+- **Updating the script later:** **Deploy → Manage deployments → Edit (pencil) →
+  Version: New version → Deploy**. The URL stays the same.
+- **Email limits:** a free Gmail account can send about 100 emails a day through
+  Apps Script (Workspace: 1,500). The `welcome_email` column shows `sent` or the
+  error for each row.
+- **Duplicates** (same email) are ignored and count as success, with no second email.
+- **Spam:** a hidden honeypot field drops bot submissions before they reach the Sheet.

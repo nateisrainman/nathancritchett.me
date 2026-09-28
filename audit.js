@@ -404,8 +404,8 @@ auditForm.addEventListener('submit', async (e) => {
     window.scrollTo({ top: resultsUnlocked.offsetTop - 100, behavior: 'smooth' });
 
     if (window.posthog) {
-      window.posthog.identify(email, { name: name, email: email });
       window.posthog.capture('signup_completed', {
+        email: email,
         source: 'audit',
         audit_score: window._auditResults ? window._auditResults.total : null,
         audit_weakest: window._auditResults ? window._auditResults.weakest : null,
@@ -414,7 +414,10 @@ auditForm.addEventListener('submit', async (e) => {
   } catch (err) {
     gateSubmit.disabled = false;
     gateSubmit.textContent = 'Try Again';
-    alert('Something went wrong. Please try again or email nathan.critch@outlook.com directly.');
-    if (window.track) window.track('signup_failed', { source: 'audit' });
+    if (err && err.waitlistFailed) {
+      if (confirm(err.message + '\n\nOpen an email to Nathan now?')) window.location.href = err.mailto;
+    } else {
+      alert((err && err.message) ? err.message : 'Something went wrong. Please try again or email nathan.critch@outlook.com directly.');
+    }
   }
 });
