@@ -24,15 +24,23 @@ var NOTIFY_EMAIL = "nathan.critch@outlook.com";
 // Replies to the welcome email go here.
 var REPLY_TO = "nathan.critch@outlook.com";
 
+// The "Book Waitlist" Google Sheet. Using its ID means signups land there
+// even if this script was created on its own instead of from inside the Sheet.
+var SHEET_ID = "1zoCmMa9hZKlsU0nrVnFoKlDI3Fh0MmJiuSg5QmZXEm8";
+
 // ---------------------------------------------------------------------------
 
-var VERSION = 4;
+var VERSION = 5;
 var SITE = "https://nathancritchett.me";
 var SHEET_NAME = "Signups";
 var HEADERS = ["timestamp", "name", "email", "source", "score_total", "score_weakest", "page", "referrer", "welcome_email"];
 
+function ss_() {
+  return SHEET_ID ? SpreadsheetApp.openById(SHEET_ID) : SpreadsheetApp.getActiveSpreadsheet();
+}
+
 function sheet_() {
-  var ss = SpreadsheetApp.getActiveSpreadsheet();
+  var ss = ss_();
   var sh = ss.getSheetByName(SHEET_NAME);
   if (!sh) {
     sh = ss.insertSheet(SHEET_NAME);
@@ -130,7 +138,7 @@ function handleSignup_(data, quiet) {
           "Source: " + source,
           "Welcome email: " + mailStatus,
           "",
-          "Full list: " + SpreadsheetApp.getActiveSpreadsheet().getUrl(),
+          "Full list: " + ss_().getUrl(),
         ].join("\n"),
       });
     }
@@ -141,30 +149,41 @@ function handleSignup_(data, quiet) {
 
 function sendWelcome_(name, email, source) {
   var first = name ? name.split(/\s+/)[0] : "";
-  var hi = first ? "Hi " + first + "," : "Hi,";
-  var links = [
-    ["The Intro + The Architect's Mandate (PDF)", SITE + "/assets/intro-and-mandate.pdf"],
-    ["Cognitive Supply Chain Self-Audit, Org Edition", SITE + "/worksheets/supply-chain-org.html"],
-    ["Cognitive Supply Chain Self-Audit, Classroom Edition", SITE + "/worksheets/supply-chain-classroom.html"],
-    ["The Cognitive Audit", SITE + "/audit.html"],
-  ];
-  var intro = "You're on the Architects List for Cognitive Architecture. " +
-    "You'll get 30% off and first-edition access the day the book goes live.";
-
-  var text = [hi, "", intro, "", "Your kit, ready now:"]
-    .concat(links.map(function (l) { return "- " + l[0] + ": " + l[1]; }))
-    .concat(["", "Just reply to this email if you have questions.", "", "Nathan"])
-    .join("\n");
-
-  var html = "<p>" + hi + "</p><p>" + intro + "</p><p><strong>Your kit, ready now:</strong></p><ul>" +
-    links.map(function (l) { return '<li><a href="' + l[1] + '">' + l[0] + "</a></li>"; }).join("") +
-    "</ul><p>Just reply to this email if you have questions.</p><p>Nathan</p>";
+  var text = [
+    (first ? "Hi " + first + "," : "Hi there,"),
+    "",
+    "Thank you for signing up for a book that isn't out yet! I have some resources to share ASAP, and a message to help shed light on my \"why\" with this book.",
+    "",
+    "You're on the Architects List, which means 30% off and a first-edition copy the day the book launches. Here's what you can dig into today:",
+    "",
+    "1. The Intro + The Architect's Mandate",
+    "This is the opening of the book and my main driver behind the pages. You can get a feel for my voice and the stakes, as well as decide if this is a book you want to share with your team, or not read at all! Imagine that...",
+    SITE + "/assets/intro-and-mandate.pdf",
+    "",
+    "2. The Cognitive Audit",
+    "A short self-assessment that shows where AI is sharpening your thinking and where you don't realize you're engaging in cognitive offloading. This is the first-step assessment for organizations I work with, and I would feel very fulfilled if I could get more people started on this sooner.",
+    SITE + "/audit.html",
+    "",
+    "3. Cognitive Supply Chain Self-Audit (Org Edition)",
+    "If you lead a team, sit down with this in one session. It maps whether your people's judgment is growing as fast as the tools you're giving them.",
+    SITE + "/worksheets/supply-chain-org.html",
+    "",
+    "4. Cognitive Supply Chain Self-Audit (Classroom Edition)",
+    "For teachers and school leaders. The same map, built for a classroom, so you can see where AI is helping students think and where it's thinking for them.",
+    SITE + "/worksheets/supply-chain-classroom.html",
+    "",
+    "These are just things that I wanted to share because I care deeply about empowering humans over machines. I see a narrow path where we can grow ourselves, but only with a strong sense of self and metacognition. Unfortunately, we grossly lack these skills in the world today, so I hope we can embark on this journey to change the lives of ourselves and our loved ones together.",
+    "",
+    "If anything in here sparks a thought or a question, write me at nathan.critch@outlook.com. I read every one.",
+    "",
+    "Grateful you're here,",
+    "Nathan",
+    ].join("\n");
 
   MailApp.sendEmail({
     to: email,
-    subject: "You're on the Architects List",
+    subject: "Thank you for joining the Architects List",
     body: text,
-    htmlBody: html,
     name: "Nathan Critchett",
     replyTo: REPLY_TO,
   });
@@ -201,7 +220,7 @@ function doGet(e) {
         HEADERS.forEach(function (h, i) { o[h] = r[i]; });
         return o;
       });
-      return respond_({ status: "ok", count: rows.length, rows: rows, sheetUrl: SpreadsheetApp.getActiveSpreadsheet().getUrl() }, cb);
+      return respond_({ status: "ok", count: rows.length, rows: rows, sheetUrl: ss_().getUrl() }, cb);
     }
 
     return respond_({ status: "ok", service: "waitlist", version: VERSION }, cb);
@@ -214,7 +233,8 @@ function doGet(e) {
 // the Sheet + email permissions and sends you a test welcome email, so you
 // know mail works before real visitors arrive.
 function testSetup() {
-  sheet_();
+  var sh = sheet_();
+  Logger.log("Signups tab ready in: " + ss_().getName() + " " + ss_().getUrl() + " (rows: " + sh.getLastRow() + ")");
   sendWelcome_("Test", NOTIFY_EMAIL || Session.getActiveUser().getEmail(), "test");
   Logger.log("OK. Check " + (NOTIFY_EMAIL || "your inbox") + " for the test welcome email.");
 }

@@ -14,8 +14,8 @@
  */
 window.WAITLIST_CONFIG = {
   notifyEmail: "nathan.critch@outlook.com",  // where signup notifications go (FormSubmit)
-  endpoint: "https://script.google.com/macros/s/AKfycbxncLfsB7ioAWLW5Jtaf-vtNT2p34ooJaiKMUKBCJJMIBVCayaiwH4pl6z7WVNFH4Ay9Q/exec",
-  sheetUrl: "",                              // optional: your Google Sheet link, shown on /admin.html
+  endpoint: "https://script.google.com/macros/s/AKfycbz-u5RPxsaGbd6s7AjcH5uWGuJru--cOujd_L3RE0YfjrO9xEP2X6mKBFCd5zYKPIOKZQ/exec",
+  sheetUrl: "https://docs.google.com/spreadsheets/d/1zoCmMa9hZKlsU0nrVnFoKlDI3Fh0MmJiuSg5QmZXEm8/edit",                              // optional: your Google Sheet link, shown on /admin.html
   contactEmail: "nathan.critch@outlook.com", // fallback shown to visitors if the signup can't be confirmed
 };
 
