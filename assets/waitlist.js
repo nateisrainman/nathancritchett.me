@@ -35,7 +35,7 @@ function wlWelcomeText(name) {
     WL_SITE + "/assets/intro-and-mandate.pdf",
     "",
     "2. The Cognitive Audit",
-    "A short self-assessment that shows where AI is sharpening your thinking and where it's quietly doing the thinking for you. This is the first-step assessment for organizations I work with, and I would feel very fulfilled if I could get more people started on this sooner.",
+    "A short self-assessment that shows where AI is sharpening your thinking and where you don't realize you're engaging in cognitive offloading. This is the first-step assessment for organizations I work with, and I would feel very fulfilled if I could get more people started on this sooner.",
     WL_SITE + "/audit.html",
     "",
     "3. Cognitive Supply Chain Self-Audit (Org Edition)",
@@ -191,6 +191,9 @@ window.submitWaitlist = async function submitWaitlist(data) {
   // 1) FormSubmit: emails Nathan + auto-replies to the subscriber.
   var fs = cfg.notifyEmail ? await wlFormSubmit(row) : { ok: false, message: "notifyEmail not set" };
   if (fs.ok) {
+    // Also save a copy to the Google Sheet (no emails) so there is one full
+    // list with a running total. Fire-and-forget: the signup already succeeded.
+    if (cfg.endpoint) window.waitlistJsonp(Object.assign({ action: "record" }, row)).catch(function () {});
     wlTrack("waitlist_signup_stored", { email: email, source: row.source, via: "formsubmit" });
     return { stored: true, via: "formsubmit" };
   }

@@ -64,7 +64,7 @@
     </div>
   </main>
 
-  <script src="/assets/waitlist.js?v=6"></script>
+  <script src="/assets/waitlist.js?v=7"></script>
   <script>
     (function () {
       var cfg = window.WAITLIST_CONFIG || {};
@@ -96,7 +96,7 @@
       } else {
         var domainLocked = /\/a\/macros\//.test(endpoint);
         window.waitlistJsonp({ action: "ping" }, 12000).then(function (d) {
-          if (d.status === "ok" && d.version >= 3) {
+          if (d.status === "ok" && d.version >= 4) {
             setHealth(!domainLocked, domainLocked
               ? "<strong>Warning:</strong> the endpoint answers <em>you</em>, but its URL contains <code>/a/macros/…/</code>, meaning it may be restricted to your company account. Open this page in a private window to check what the public sees."
               : "<strong>Signup endpoint is live</strong> (v" + d.version + "). Signups are saved, welcome emails go out, and you get notified.");

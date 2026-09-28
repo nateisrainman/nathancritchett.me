@@ -26,7 +26,7 @@ var REPLY_TO = "nathan.critch@outlook.com";
 
 // ---------------------------------------------------------------------------
 
-var VERSION = 3;
+var VERSION = 4;
 var SITE = "https://nathancritchett.me";
 var SHEET_NAME = "Signups";
 var HEADERS = ["timestamp", "name", "email", "source", "score_total", "score_weakest", "page", "referrer", "welcome_email"];
@@ -61,7 +61,7 @@ function clean_(v, max) {
   return String(v == null ? "" : v).trim().slice(0, max || 500);
 }
 
-function handleSignup_(data) {
+function handleSignup_(data, quiet) {
   var email = clean_(data.email, 254).toLowerCase();
   if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
     return { status: "error", message: "invalid email" };
@@ -100,6 +100,13 @@ function handleSignup_(data) {
     var count = row - 1;
   } finally {
     lock.releaseLock();
+  }
+
+  // "record" calls come from the site after FormSubmit already emailed
+  // everyone, so just keep the row.
+  if (quiet) {
+    sh.getRange(row, HEADERS.indexOf("welcome_email") + 1).setValue("via FormSubmit");
+    return { status: "ok" };
   }
 
   // Emails go out after the row is safely written, so a mail failure never
@@ -179,6 +186,7 @@ function doGet(e) {
   var cb = p.callback;
   try {
     if (p.action === "signup") return respond_(handleSignup_(p), cb);
+    if (p.action === "record") return respond_(handleSignup_(p, true), cb);
 
     if (p.action === "list") {
       if (ADMIN_TOKEN === "CHANGE_ME_TO_A_LONG_RANDOM_STRING") {
