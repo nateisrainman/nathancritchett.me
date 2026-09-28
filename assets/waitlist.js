@@ -11,7 +11,7 @@
  * /a/macros/<company-domain>/ is restricted to that company and rejects visitors.
  */
 window.WAITLIST_CONFIG = {
-  endpoint: "https://script.google.com/a/macros/edapt.com/s/AKfycbzhWtuy8AOiYpud6CCt5pO_y0Xx6S6hla9xPpjH_m2IRDsr4S6G1fDJjrOnoQvrnt7BWw/exec",
+  endpoint: "https://script.google.com/macros/s/AKfycbxncLfsB7ioAWLW5Jtaf-vtNT2p34ooJaiKMUKBCJJMIBVCayaiwH4pl6z7WVNFH4Ay9Q/exec",
   sheetUrl: "",                              // optional: your Google Sheet link, shown on /admin.html
   contactEmail: "nathan.critch@outlook.com", // fallback shown to visitors if the signup can't be confirmed
 };
