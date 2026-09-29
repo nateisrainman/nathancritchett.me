@@ -218,6 +218,7 @@ window.submitWaitlist = async function submitWaitlist(data) {
 
   var err = new Error("We couldn't confirm your signup. Please email " + (cfg.contactEmail || "us") + " and we'll add you by hand.");
   err.waitlistFailed = true;
+  err.reason = String(result.message || "unknown");
   err.mailto = "mailto:" + (cfg.contactEmail || "") +
     "?subject=" + encodeURIComponent("Add me to the Architects List") +
     "&body=" + encodeURIComponent("Please add me to the waitlist.\n\nName: " + row.name + "\nEmail: " + email);

@@ -382,7 +382,7 @@
 
       <p class="preorder-note" id="architects-note">No spam. No filler. The kit arrives within minutes of signing up. Or email <a href="mailto:nathan.critch@outlook.com">nathan.critch@outlook.com</a> to inquire about bulk pricing for organizations and conferences.</p>
 
-      <script src="/assets/waitlist.js?v=8"></script>
+      <script src="/assets/waitlist.js?v=9"></script>
       <script>
         (function() {
           var form = document.getElementById('architects-form');
@@ -407,7 +407,7 @@
               submit.disabled = false;
               submit.textContent = 'Try Again';
               if (err && err.waitlistFailed) {
-                note.innerHTML = '<strong>We couldn\u2019t confirm your signup.</strong> <a href="' + err.mailto + '">Tap here to email Nathan</a> and he\u2019ll add you to the list by hand.';
+                note.innerHTML = '<strong>We couldn\u2019t confirm your signup.</strong> <a href="' + err.mailto + '">Tap here to email Nathan</a> and he\u2019ll add you to the list by hand.<br><small style="opacity:.6">Details: ' + String(err.reason || '').replace(/[<>&]/g, '') + '</small>';
                 note.style.display = 'block';
               } else {
                 alert((err && err.message) ? err.message : 'Something went wrong. Please try again or email nathan.critch@outlook.com directly.');
