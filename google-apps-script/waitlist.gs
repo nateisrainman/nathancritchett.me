@@ -26,11 +26,11 @@ var REPLY_TO = "nathan.critch@outlook.com";
 
 // The "Book Waitlist" Google Sheet. Using its ID means signups land there
 // even if this script was created on its own instead of from inside the Sheet.
-var SHEET_ID = "1zoCmMa9hZKlsU0nrVnFoKlDI3Fh0MmJiuSg5QmZXEm8";
+var SHEET_ID = ""; // blank = the Sheet this script is attached to (the live setup)
 
 // ---------------------------------------------------------------------------
 
-var VERSION = 5;
+var VERSION = 6;
 var SITE = "https://nathancritchett.me";
 var SHEET_NAME = "Signups";
 var HEADERS = ["timestamp", "name", "email", "source", "score_total", "score_weakest", "page", "referrer", "welcome_email"];

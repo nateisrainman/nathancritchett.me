@@ -1,5 +1,11 @@
 # Waitlist
 
+> **Live setup (Sept 2026):** the Apps Script is attached to Nathan's Google
+> Sheet in the nathan.lumspirits@gmail.com account and deployed as a public web
+> app (URL in `assets/waitlist.js`). Every signup lands in that Sheet's
+> **Signups** tab. To update the script: paste the new code, then
+> Deploy → Manage deployments → pencil → New version → Deploy.
+
 ## How it works now (no Google setup required)
 
 Signups go through **FormSubmit** (formsubmit.co, free, no account):
