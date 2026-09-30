@@ -64,7 +64,7 @@
     </div>
   </main>
 
-  <script src="/assets/waitlist.js?v=10"></script>
+  <script src="/assets/waitlist.js?v=11"></script>
   <script>
     (function () {
       var cfg = window.WAITLIST_CONFIG || {};
@@ -95,7 +95,7 @@
         setHealth(false, "<strong>Signups are NOT being saved.</strong> No endpoint is set in <code>assets/waitlist.js</code>. See WAITLIST-SETUP.md.");
       } else {
         var domainLocked = /\/a\/macros\//.test(endpoint);
-        window.waitlistJsonp({ action: "ping" }, 12000).then(function (d) {
+        window.waitlistCall({ action: "ping" }, 20000).then(function (d) {
           if (d.status === "ok" && d.version >= 5) {
             setHealth(!domainLocked, domainLocked
               ? "<strong>Warning:</strong> the endpoint answers <em>you</em>, but its URL contains <code>/a/macros/…/</code>, meaning it may be restricted to your company account. Open this page in a private window to check what the public sees."
@@ -162,7 +162,7 @@
 
         msg.textContent = "Loading...";
         try {
-          var data = await window.waitlistJsonp({ action: "list", token: token }, 20000);
+          var data = await window.waitlistCall({ action: "list", token: token }, 30000);
           if (data.status !== "ok") {
             msg.innerHTML = data.message === "unauthorized" ? "That token was rejected. Check <code>ADMIN_TOKEN</code> in your Apps Script."
               : data.message === "token_not_set" ? "Set <code>ADMIN_TOKEN</code> in your Apps Script to a long random string, redeploy, then use that value here."

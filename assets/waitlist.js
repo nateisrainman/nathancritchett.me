@@ -92,6 +92,36 @@ async function wlFormSubmit(row) {
 // Load a JSONP response from the Apps Script endpoint. A <script> tag is not
 // subject to CORS, and unlike the old hidden-iframe POST we get the actual
 // answer back, so we only report success when the row was really stored.
+// Call the Apps Script endpoint. First with fetch() and NO cookies: when a
+// visitor's browser is signed into more than one Google account, Google can
+// answer a cookie-carrying request with an error page instead of the script's
+// JSON. Omitting credentials avoids that entirely. JSONP stays as a fallback.
+window.waitlistCall = async function waitlistCall(params, timeoutMs) {
+  var cfg = window.WAITLIST_CONFIG || {};
+  var qs = Object.keys(params).map(function (k) {
+    return encodeURIComponent(k) + "=" + encodeURIComponent(params[k] == null ? "" : String(params[k]));
+  }).join("&");
+  var url = cfg.endpoint + (cfg.endpoint.indexOf("?") === -1 ? "?" : "&") + qs;
+  var ctrl = typeof AbortController !== "undefined" ? new AbortController() : null;
+  var timer = setTimeout(function () { if (ctrl) ctrl.abort(); }, timeoutMs || 30000);
+  var fetchErr;
+  try {
+    var res = await fetch(url, { method: "GET", credentials: "omit", redirect: "follow", cache: "no-store", signal: ctrl ? ctrl.signal : undefined });
+    var text = await res.text();
+    try { return JSON.parse(text); } catch (e) { fetchErr = new Error("unexpected reply (HTTP " + res.status + ")"); }
+  } catch (err) {
+    fetchErr = err;
+    if (err && err.name === "AbortError") throw new Error("timeout");
+  } finally {
+    clearTimeout(timer);
+  }
+  try {
+    return await window.waitlistJsonp(params, timeoutMs || 30000);
+  } catch (err) {
+    throw new Error((fetchErr && fetchErr.message ? fetchErr.message : "fetch failed") + " / jsonp: " + err.message);
+  }
+};
+
 window.waitlistJsonp = function waitlistJsonp(params, timeoutMs) {
   var cfg = window.WAITLIST_CONFIG || {};
   return new Promise(function (resolve, reject) {
@@ -114,7 +144,7 @@ window.waitlistJsonp = function waitlistJsonp(params, timeoutMs) {
         if (window[cb]) { cleanup(); reject(new Error("bad response")); }
       }, 50);
     };
-    timer = setTimeout(function () { cleanup(); reject(new Error("timeout")); }, timeoutMs || 15000);
+    timer = setTimeout(function () { cleanup(); reject(new Error("timeout")); }, timeoutMs || 30000);
 
     var qs = Object.keys(params).map(function (k) {
       return encodeURIComponent(k) + "=" + encodeURIComponent(params[k] == null ? "" : String(params[k]));
@@ -188,21 +218,12 @@ window.submitWaitlist = async function submitWaitlist(data) {
 
   var cfg = window.WAITLIST_CONFIG || {};
 
-  // 1) FormSubmit: emails Nathan + auto-replies to the subscriber.
-  var fs = cfg.notifyEmail ? await wlFormSubmit(row) : { ok: false, message: "notifyEmail not set" };
-  if (fs.ok) {
-    // Also save a copy to the Google Sheet (no emails) so there is one full
-    // list with a running total. Fire-and-forget: the signup already succeeded.
-    if (cfg.endpoint) window.waitlistJsonp(Object.assign({ action: "record" }, row)).catch(function () {});
-    wlTrack("waitlist_signup_stored", { email: email, source: row.source, via: "formsubmit" });
-    return { stored: true, via: "formsubmit" };
-  }
-
-  // 2) Fallback: Google Apps Script (saves to the Sheet and sends its own emails).
+  // 1) Google Apps Script: saves the row to the Sheet, emails the subscriber
+  //    and emails Nathan. This is the live, working path.
   var result;
   try {
     if (!cfg.endpoint) throw new Error("endpoint not set");
-    result = await window.waitlistJsonp(Object.assign({ action: "signup" }, row));
+    result = await window.waitlistCall(Object.assign({ action: "signup" }, row));
   } catch (err) {
     result = { status: "error", message: err && err.message };
   }
@@ -210,7 +231,14 @@ window.submitWaitlist = async function submitWaitlist(data) {
     wlTrack("waitlist_signup_stored", { email: email, source: row.source, via: "apps_script" });
     return { stored: true, via: "apps_script", duplicate: result.status === "duplicate" };
   }
-  result.message = "formsubmit: " + fs.message + " | apps script: " + result.message;
+
+  // 2) Backup: FormSubmit (emails Nathan + auto-replies to the subscriber).
+  var fs = cfg.notifyEmail ? await wlFormSubmit(row) : { ok: false, message: "notifyEmail not set" };
+  if (fs.ok) {
+    wlTrack("waitlist_signup_stored", { email: email, source: row.source, via: "formsubmit" });
+    return { stored: true, via: "formsubmit" };
+  }
+  result.message = "apps script: " + result.message + " | formsubmit: " + fs.message;
 
   if (cfg.endpoint) wlLegacyPost(cfg.endpoint, row);
   wlTrack("waitlist_signup_failed", { email: email, name: row.name, source: row.source, reason: String(result.message || "unknown") });
