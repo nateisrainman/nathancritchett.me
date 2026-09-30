@@ -6,24 +6,21 @@
 > **Signups** tab. To update the script: paste the new code, then
 > Deploy → Manage deployments → pencil → New version → Deploy.
 
-## How it works now (no Google setup required)
+## How it works now
 
-Signups go through **FormSubmit** (formsubmit.co, free, no account):
+1. The book and audit forms call the Apps Script (`google-apps-script/waitlist.gs`)
+   with `fetch` and **no cookies**. Cookie-carrying requests fail for visitors
+   signed into several Google accounts, which caused on-and-off failures.
+2. The script saves the row (the **Signups** tab is the full list), emails the
+   subscriber the welcome email, and emails `nathan.critch@outlook.com`.
+3. An email already on the list counts as success but sends **no** new emails,
+   so testing with the same address twice looks like "nothing happened".
+4. Backup only: if the script can't be reached, FormSubmit is tried (it needs a
+   one-time "Activate Form" click from its email to work). If both fail, the
+   visitor sees an error with a "Details:" line and a one-click email link.
 
-- **You get an email** at `nathan.critch@outlook.com` for every signup (name,
-  email, source). Your inbox *is* the list: search "New waitlist signup".
-- **The subscriber gets a welcome email** automatically with the kit links.
-- The site only says "You're in" once FormSubmit confirms. If it can't, it tries
-  the Google Apps Script below, and if that fails too, the visitor gets a
-  one-click "email Nathan" link. Every attempt is also logged in PostHog
-  (`waitlist_signup_attempt`, with the email).
-
-**One-time activation:** the first signup after this went live sends an
-**"Activate Form"** email from FormSubmit to `nathan.critch@outlook.com`
-(check Junk). Click the button once. Every signup after that is delivered.
-
-To change the address: edit `notifyEmail` in `assets/waitlist.js` (the new
-address will need activating once, too).
+Every attempt is also logged in PostHog (`waitlist_signup_attempt`, with email).
+The list with a running total: the Sheet, or `/admin.html` with the admin token.
 
 ---
 
