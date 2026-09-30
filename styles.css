@@ -995,6 +995,16 @@ a { text-decoration: none; color: inherit; }
   pointer-events: none;
 }
 
+.atlas-preview-img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 66% center;
+  filter: saturate(.92) contrast(1.02);
+}
+
 .atlas-mini-orbit {
   position: absolute;
   width: 285px;
