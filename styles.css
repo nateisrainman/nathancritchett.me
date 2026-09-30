@@ -1857,6 +1857,13 @@ a { text-decoration: none; color: inherit; }
   left: 0;
 }
 
+/* Keep the complete Baseball Atlas campaign card visible inside its taller project panel. */
+.atlas-card-visual .atlas-preview-img {
+  object-fit: contain;
+  object-position: center;
+  background: #f1eee6;
+}
+
 .built-video {
   width: 100%;
   height: 100%;
