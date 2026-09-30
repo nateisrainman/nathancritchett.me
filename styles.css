@@ -1001,7 +1001,7 @@ a { text-decoration: none; color: inherit; }
   width: 100%;
   height: 100%;
   object-fit: cover;
-  object-position: 66% center;
+  object-position: center;
   filter: saturate(.92) contrast(1.02);
 }
 
