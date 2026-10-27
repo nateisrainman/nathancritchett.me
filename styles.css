@@ -2649,3 +2649,82 @@ body { font-size: 1.05rem; }
 #ventures .wave-divider svg { color: var(--abyss-light); }
 .services .wave-divider svg { color: var(--abyss); }
 .contact .wave-divider svg { color: var(--abyss); }
+
+/* ---- Training & Upskilling ---- */
+.training { padding: 7rem 2.5rem; background: var(--abyss-light); }
+.training-inner { max-width: 1200px; margin: 0 auto; }
+.training-intro {
+  font-size: 1.2rem;
+  line-height: 1.75;
+  color: var(--star-muted);
+  max-width: 760px;
+  margin-bottom: 3rem;
+}
+.training-scale {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  max-width: 820px;
+}
+.training-scale-end { display: flex; flex-direction: column; gap: 0.4rem; max-width: 220px; }
+.training-scale-end:last-child { text-align: right; align-items: flex-end; }
+.training-scale-num {
+  font-family: var(--serif);
+  font-weight: 600;
+  font-size: clamp(3.2rem, 7vw, 5rem);
+  line-height: 1;
+  color: var(--dune);
+  font-variant-numeric: lining-nums;
+}
+.training-scale-label { font-size: 1rem; line-height: 1.45; color: var(--star-muted); }
+.training-scale-line {
+  flex: 1;
+  height: 2px;
+  background: linear-gradient(90deg, var(--dune), var(--cyan));
+  opacity: 0.6;
+}
+.training-scale-note { margin: 1.25rem 0 3rem; font-size: 1.12rem; color: var(--star); font-weight: 500; }
+.training-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.25rem;
+}
+.training-item {
+  background: var(--nebula-slate);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 16px;
+  padding: 1.8rem 1.6rem;
+}
+.training-item h3 {
+  font-family: var(--serif);
+  font-weight: 600;
+  font-size: 1.55rem;
+  line-height: 1.15;
+  color: var(--star);
+  margin-bottom: 0.75rem;
+}
+.training-item p { font-size: 1.05rem; line-height: 1.65; color: var(--star-muted); }
+.training-audiences { margin-top: 3rem; }
+.training-audiences-label {
+  font-size: 0.95rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--star-dim);
+  margin-bottom: 1rem;
+}
+.training-audiences ul { list-style: none; display: flex; flex-wrap: wrap; gap: 0.75rem; }
+.training-audiences li {
+  padding: 0.55rem 1.1rem;
+  border: 1px solid rgba(255,255,255,0.14);
+  border-radius: 14px;
+  font-size: 0.98rem;
+  color: var(--star-muted);
+}
+.service-proof a { color: var(--star); text-decoration: underline; text-underline-offset: 3px; }
+@media (max-width: 1024px) { .training-grid { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 640px) {
+  .training { padding: 5rem 1.5rem; }
+  .training-grid { grid-template-columns: 1fr; }
+  .training-scale { gap: 1rem; }
+}
