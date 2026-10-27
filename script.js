@@ -102,7 +102,7 @@ function initTextReveal() {
 
 // ---- Wave Canvas (subtle water motif) ----
 function createWaveSection() {
-  const dividers = document.querySelectorAll('.thesis, .built, .writing, .contact');
+  const dividers = document.querySelectorAll('.thesis, .services, .built, .writing, .contact');
 
   dividers.forEach(section => {
     const wave = document.createElement('div');
