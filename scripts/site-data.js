@@ -46,23 +46,25 @@ const person = {
   name: "Nathan Critchett",
   givenName: "Nathan",
   familyName: "Critchett",
-  jobTitle: "Enterprise AI Architect & Strategist",
+  jobTitle: "Enterprise AI Architect & Operations Strategist",
   // Used as a brand tagline in copy, not in schema jobTitle.
-  tagline: "Enterprise AI Architect & Strategist",
+  tagline: "Enterprise AI Architect & Operations Strategist",
   description:
-    "Nathan Critchett is an Enterprise AI Architect who transitions legacy, " +
-    "high-regulation organizations into the AI age. He builds bespoke, " +
-    "closed-loop AI infrastructure for legacy organizations and law firms, " +
-    "so clients own the tech and protect their data. Also the author of " +
-    "Cognitive Architecture and founder of Arq.Training and CritchPitch.",
+    "Nathan Critchett is an Enterprise AI Architect who transitions " +
+    "high-regulation, legacy organizations into the modern technology age. " +
+    "He builds private, secure, closed-loop AI systems for mid-market " +
+    "businesses and legacy organizations, so clients own their technology " +
+    "and keep their data private. Also the author of Cognitive Architecture " +
+    "and founder of Arq.Training and CritchPitch.",
   url: SITE,
   image: SITE + "/assets/headshot.jpg",
   email: "nathan.critch@outlook.com",
   knowsAbout: [
     "Enterprise AI architecture",
     "Closed-loop and privately hosted LLMs",
-    "AI for law firms and transactional diligence",
-    "Contract QA automation",
+    "On-premise and private AI systems",
+    "Compliance automation",
+    "Voice AI agents",
     "Workflow and process automation",
     "AI training and upskilling",
     "AI strategy",
