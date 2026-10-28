@@ -2506,6 +2506,7 @@ a { text-decoration: none; color: inherit; }
   letter-spacing: 0.002em;
   color: var(--dune);
   max-width: 900px;
+  text-wrap: balance;
 }
 
 /* ---- Thoughts: three big orange buttons (bold navy text) ---- */
@@ -2615,43 +2616,65 @@ body { font-size: 1.05rem; }
   .services-grid { grid-template-columns: 1fr; }
 }
 
-/* ---- Case Study ---- */
-.case-study { padding: 6rem 2.5rem; background: var(--abyss); }
-.case-study-inner {
-  max-width: 900px;
+/* ---- Philosophy ---- */
+.philosophy { padding: 6.5rem 2.5rem; background: var(--abyss-light); }
+.philosophy-inner {
+  max-width: 1200px;
   margin: 0 auto;
-  padding-left: 2rem;
-  border-left: 3px solid var(--dune);
+  display: grid;
+  grid-template-columns: 1fr 1.3fr;
+  gap: 1rem 4rem;
+  align-items: start;
 }
-.case-study-body {
-  font-size: 1.4rem;
-  line-height: 1.65;
-  color: var(--star);
-  margin-bottom: 1.5rem;
+.philosophy-inner .section-label { grid-column: 1 / -1; margin-bottom: 0; }
+.philosophy-body p {
+  font-size: 1.2rem;
+  line-height: 1.75;
+  color: var(--star-muted);
+  margin-bottom: 1.25rem;
 }
-.case-study-meta {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.6rem;
-  font-size: 0.95rem;
-  letter-spacing: 0.08em;
+.philosophy-body p:last-child { color: var(--star); margin-bottom: 0; }
+@media (max-width: 860px) {
+  .philosophy { padding: 5rem 1.5rem; }
+  .philosophy-inner { grid-template-columns: 1fr; }
+}
+
+/* ---- Proven Results ---- */
+.results { padding: 7rem 2.5rem; background: var(--abyss-light); position: relative; }
+.results-inner { max-width: 1200px; margin: 0 auto; }
+.results-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
+  margin-top: 2.5rem;
+}
+.result { padding-left: 1.5rem; border-left: 3px solid var(--dune); }
+.result-tag {
+  display: block;
+  font-size: 0.9rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: var(--star-dim);
+  color: var(--cyan);
+  margin-bottom: 0.9rem;
 }
-@media (max-width: 760px) {
-  .case-study { padding: 4.5rem 1.5rem; }
-  .case-study-inner { padding-left: 1.25rem; }
-  .case-study-body { font-size: 1.2rem; }
+.result p { font-size: 1.12rem; line-height: 1.7; color: var(--star); }
+@media (max-width: 960px) {
+  .results { padding: 5rem 1.5rem; }
+  .results-grid { grid-template-columns: 1fr; }
 }
+
+/* Alternate section backgrounds: philosophy (light), services (dark), results (light). */
+.services { background: var(--abyss); }
 
 /* Ventures & Research now sits below About, so the tail of the page runs dark. */
 #ventures { background: var(--abyss); }
 #ventures .wave-divider svg { color: var(--abyss-light); }
-.services .wave-divider svg { color: var(--abyss); }
+.services .wave-divider svg { color: var(--abyss-light); }
 .contact .wave-divider svg { color: var(--abyss); }
 
 /* ---- Training & Upskilling ---- */
-.training { padding: 7rem 2.5rem; background: var(--abyss-light); }
+.training { padding: 7rem 2.5rem; background: var(--abyss); }
 .training-inner { max-width: 1200px; margin: 0 auto; }
 .training-intro {
   font-size: 1.2rem;

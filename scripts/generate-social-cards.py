@@ -101,15 +101,15 @@ def home_card():
     d = ImageDraw.Draw(img)
     padx = 76
     # eyebrow
-    tracked(d, (padx, 92), "ENTERPRISE AI ARCHITECT  ·  STRATEGIST",
-            font(SANS, 24), GOLD, 2)
+    tracked(d, (padx, 92), "ENTERPRISE AI ARCHITECT  ·  OPERATIONS STRATEGIST",
+            font(SANS, 20), GOLD, 2)
     # name
     name_f = font(SERIF, 92)
     d.text((padx - 3, 150), "Nathan", font=name_f, fill=CLOUD)
     d.text((padx - 3, 250), "Critchett", font=name_f, fill=CLOUD)
     # positioning line
     mis_f = font(SANS, 30)
-    lines = wrap(d, "Closed-loop AI infrastructure for legacy organizations and law firms.",
+    lines = wrap(d, "Private, secure AI systems your company owns entirely.",
                  mis_f, 620)
     y = 385
     for ln in lines:
