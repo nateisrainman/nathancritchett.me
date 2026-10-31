@@ -6,6 +6,7 @@ Outputs:
   assets/og-pitching.png   CritchPitch library
   assets/og-arq.png        Arq library
   assets/og-writing.png    AI & Cognition writing
+  assets/og-cognitive-architecture-brief.png  Cognitive Architecture book brief
 
 Brand palette + real site fonts (DM Serif Display, Plus Jakarta Sans).
 Run: python3 scripts/build-og-cards.py
@@ -138,6 +139,11 @@ card("og-writing.png", "WRITING", GOLD,
      "Cognitive Strategy for the AI Era",
      "Essays and whitepapers on closing the gap between AI and human thinking.",
      "Nathan Critchett, Cognitive Strategist")
+
+card("og-cognitive-architecture-brief.png", "BOOK BRIEF", GOLD,
+     "The Book, Compressed",
+     "What makes a human mind valuable when expert-level answers are nearly free?",
+     "Nathan Critchett, Author of Cognitive Architecture")
 
 card("og-home.png", "FRACTIONAL CHIEF AI OFFICER", GOLD,
      "Get a return on the AI you already pay for.",
