@@ -32,7 +32,6 @@ function navHtml() {
         <a href="/#work">Work</a>
         <a href="/book.html">Book</a>
         ${writingDropdown()}
-        <a href="/intelligence-report.html">Intelligence Report</a>
         <a href="/about.html">About</a>
         <a href="/#contact" class="nav-cta">Get in Touch</a>
       </div>
